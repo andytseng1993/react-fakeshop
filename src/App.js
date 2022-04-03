@@ -1,8 +1,35 @@
+import axios from 'axios';
+import { useEffect } from 'react';
+import HomePage from './pages/HomePage';
 import './App.css';
+import { Route, Routes } from 'react-router-dom';
+import StorePage from './pages/StorePage';
+import Layout from './component/layout/Layout';
 
+const axiosData = ()=>{
+    return axios.get('https://fakestoreapi.com/products')
+    .then((res) => {
+      console.log(res.data);
+      return res.data
+    })
+    .catch(err=>console.error(err))
+  }
+  
 function App() {
+  
+  useEffect(()=>{
+    axiosData()
+  },[])
+  
   return (
     <div className="App">
+      <Layout>
+        <Routes>
+          <Route path='/' element={<HomePage/>}/>
+          <Route path='store' element={<StorePage/>}/>
+        </Routes>
+      </Layout>
+      
     </div>
   );
 }
