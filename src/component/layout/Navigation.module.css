@@ -1,0 +1,25 @@
+.header{
+    position: relative;
+    height: 10vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    background-color: white;
+    padding: 0px 10%;
+}
+.logo{
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+.logo a{
+    text-decoration: none;
+}
+nav a{
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-right: 1rem;
+    text-decoration: none;
+}

@@ -1,0 +1,23 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+.mvArea{
+    background-color: beige;
+    position: relative;
+    width: 100%;
+    height: 90vh;
+}
+.mvList{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: cadetblue;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+}
+.mvList.scroll{
+    width: 60%;
+    height: 40%;
+}
