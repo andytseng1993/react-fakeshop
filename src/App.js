@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import HomePage from './pages/HomePage';
 import './App.css';
 import { Route, Routes } from 'react-router-dom';
-import StorePage from './pages/StorePage';
+import ShopPage from './pages/ShopPage';
 import Layout from './component/layout/Layout';
 
 const axiosData = ()=>{
@@ -26,7 +26,7 @@ function App() {
       <Layout>
         <Routes>
           <Route path='/' element={<HomePage/>}/>
-          <Route path='store' element={<StorePage/>}/>
+          <Route path='store' element={<ShopPage/>}/>
         </Routes>
       </Layout>
       

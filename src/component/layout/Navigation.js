@@ -14,7 +14,7 @@ function Navigation(){
                     Home
                 </NavLink>
                 <NavLink to='store'>
-                    Store
+                    Shop
                 </NavLink>
             </nav>
         </header>
