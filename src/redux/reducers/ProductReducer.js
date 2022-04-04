@@ -1,7 +1,11 @@
 import { ACTIONS } from "../actions/action-type"
 
 const intialState={
-    products:[]
+    products:[{
+        id:1,
+        title: 'Dispatch',
+        category: 'program'
+    }]
 }
 
 export const productReducer=(state=intialState,action)=>{

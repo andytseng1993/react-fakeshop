@@ -1,5 +1,15 @@
+import ProductComponent  from "../component/shopPage/ProductComponent"
+import  ProductDetail  from "../component/shopPage/ProductDetail"
+import ProductListing from "../component/shopPage/ProductListing"
+
 function ShopPage(){
-    return <h1>Store</h1>
+    return (
+        <>
+            <ProductComponent/>
+            <ProductDetail/>
+            <ProductListing/>
+        </>
+    )
 }
 
 export default ShopPage
