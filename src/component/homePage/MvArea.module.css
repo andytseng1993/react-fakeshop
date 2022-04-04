@@ -1,0 +1,138 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+.mvArea{
+    position: relative;
+    width: 100%;
+    height: 90vh;
+}
+.mvList{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    transition: all .5s;
+    list-style: none;
+}
+.scroll .mvList{
+    top: 35%;
+    width: 1200px;
+    height: 300px;
+}
+
+.mvList > li{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: brightness(0.7);
+    opacity: 0;
+    transition: width height .5s,filter .3s;
+}
+.image1{
+    background-image: url('../../../public/cloth-ga0d53c58a_1920.jpg');
+    animation: fade 10s linear infinite;
+}
+.image2{
+    background-image: url('../../../public/cotton-g0c8bd6f4d_1920.jpg');
+    animation: fade 10s linear infinite;
+    animation-delay: 5s;
+}
+.scroll .mvList li{
+    filter: brightness(1);
+}
+
+.mvText{
+    position: absolute;
+    top: 50%;
+    left: 20%;
+    transform: translateY(-50%);
+    color: white;
+    z-index: 10;
+    text-align: left;
+    transition: all 0.3s;
+}
+.mvText h1{
+    font-size: 100px;
+}
+.mvText h2{
+    font-size: 50px;
+}
+.scroll .mvText{
+    opacity: 0;
+}
+.mainTitle{
+    position: absolute;
+    transform: translate(-50%,-50%);
+    left: 50%;
+    top: 75%;
+    transition: .3s;
+    opacity: 0;
+}
+.scroll .mainTitle{
+    opacity: 1;
+}
+.mainTitle> h1{
+    font-size: 70px;
+}
+.scrollDown{
+    position: absolute;
+    transform: translate(-50%,-50%);
+    left: 50%;
+    top: 80%;
+    z-index: 10;
+    color: white;
+    font-weight: 600;
+}
+.scroll .scrollDown{
+    opacity: 0;
+}
+.scrollDown::after{
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    height: 0px;
+    width: 1px;
+    background-color: white;
+    z-index: 10;
+    animation: scroll 3s infinite;
+}
+@keyframes scroll{
+    0%{
+        transform: translateY(0px);
+        height:0px;
+    }
+    50%{
+        transform: translateY(30px);
+        height: 100px;
+    }
+    100%{
+        transform: translateY(120px);
+        height: 0px;
+    }
+}
+
+@keyframes fade {
+    0%{
+        opacity: 0;
+        background-size: 150% auto;
+    }
+    25%{
+        opacity: 1;
+    }
+    50%{
+        opacity: 1;
+    }
+    75%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 0;
+        background-size: 120% auto;
+    }
+}

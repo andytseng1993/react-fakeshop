@@ -1,19 +1,20 @@
 import { NavLink } from "react-router-dom"
+import classes from './Navigation.module.css'
 
 function Navigation(){
     return(
-        <header>
-            <div className="logo">
+        <header className={classes.header}>
+            <div className={classes.logo}>
                 <NavLink to='/'>
                     FakeStore
                 </NavLink>
             </div>
             <nav>
                 <NavLink to='/'>
-                    Home Page
+                    Home
                 </NavLink>
                 <NavLink to='store'>
-                    Store Page
+                    Store
                 </NavLink>
             </nav>
         </header>

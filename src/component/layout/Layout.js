@@ -1,5 +1,3 @@
-
-import { Outlet } from "react-router-dom"
 import Navigation from "./Navigation"
 
 function Layout(props){
@@ -7,7 +5,6 @@ function Layout(props){
         <>
             <Navigation/>
             <main>
-                <Outlet/>
                 {props.children}
             </main>
         </>
