@@ -5,7 +5,7 @@ function HomePage(){
     <>
         <MvArea/>
         <section>
-            <h1>Text</h1>
+            <h1 style={{height:'1000px'}}>Text</h1>
             <h1>Text</h1>
             <h1>Text</h1>
         </section>
