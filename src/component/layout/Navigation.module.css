@@ -1,6 +1,6 @@
 .header{
     position: relative;
-    height: 10vh;
+    height: 70px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -9,6 +9,7 @@
     z-index: 100;
     background-color: white;
     padding: 0px 10%;
+    border-bottom: 2px solid #ddd;
 }
 .logo{
     font-size: 1.8rem;

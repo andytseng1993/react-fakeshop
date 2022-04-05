@@ -1,10 +1,10 @@
-import  ProductDetail  from "../component/shopPage/ProductDetail"
+
 import ProductListing from "../component/shopPage/ProductListing"
 
 function ShopPage(){
     return (
-        <>
-            <ProductDetail/>
+        <>  
+            <h1>All Products</h1>
             <ProductListing/>
         </>
     )

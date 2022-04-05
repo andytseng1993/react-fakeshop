@@ -1,0 +1,35 @@
+.cards{
+    display: flex;
+    flex-direction: column;
+    
+    width: 260px;
+    border-radius: 7px;
+    border: solid #ddd 1px;
+    margin: 10px;
+}
+.image img{
+    width: 250px;
+    height: 250px;
+    object-fit: contain;
+}
+.content{
+    margin-top: 15px;
+    border-top: solid #ddd 1px;
+    text-align: start;
+    padding: 10px;
+}
+.header{
+    height: 75px;
+    font-size: 1rem;
+    font-weight: 600;
+    
+}
+.price{
+    margin: 5px 0px;
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+.category{
+    color: #999;
+    margin: 5px 0px;
+}
