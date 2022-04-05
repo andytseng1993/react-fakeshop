@@ -4,23 +4,23 @@ import { useDispatch, useSelector } from "react-redux"
 import { setProducts } from "../../redux/actions";
 import ProductComponent from "./ProductComponent";
 
-
+export const useAxios = (url)=>{
+    return axios.get(url)
+    .then((res) => {
+        return res.data
+    })
+    .catch(err=>console.error(err))
+}
 
 const ProductListing=()=>{
     const products = useSelector((state)=>state.allProducts.products)
     const dispatch = useDispatch()
     const [isLoading,setIsLoading] = useState(true)
-
+    const data = useAxios('https://fakestoreapi.com/products')
+    
     useEffect(()=>{
         setIsLoading(true)
-        const axiosData = ()=>{
-                return axios.get('https://fakestoreapi.com/products')
-             .then((res) => {
-                return res.data
-            })
-            .catch(err=>console.error(err))
-        }
-        axiosData().then((data)=>{
+        data.then((data)=>{
             dispatch(setProducts(data))
             setIsLoading(false)
         })
