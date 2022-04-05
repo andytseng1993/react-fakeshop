@@ -1,13 +1,30 @@
+.container{
+    cursor: pointer;
+    transition: .2s;
+}
+.container:hover{
+    transform: translate(-1px,-1px);
+}
+.container:hover .cards{
+    transform: translate(-1px,-1px);
+    box-shadow: 2px 2px 8px 0px #ddd;
+}
+a{
+    text-decoration: none;
+    color: #111;
+}
 .cards{
+    transition: .2s;
     display: flex;
     flex-direction: column;
-    
     width: 260px;
     border-radius: 7px;
     border: solid #ddd 1px;
     margin: 10px;
+    box-shadow: 1px 1px 5px 0px #ccc;
 }
 .image img{
+    margin-top: 15px;
     width: 250px;
     height: 250px;
     object-fit: contain;
