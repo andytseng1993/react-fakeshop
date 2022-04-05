@@ -13,8 +13,8 @@ function Navigation(){
                 <NavLink to='/'>
                     Home
                 </NavLink>
-                <NavLink to='store'>
-                    Store
+                <NavLink to='shop'>
+                    Shop
                 </NavLink>
             </nav>
         </header>
