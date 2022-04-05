@@ -4,7 +4,7 @@ import ProductListing from "../component/shopPage/ProductListing"
 function ShopPage(){
     return (
         <>  
-            <h1>All Products</h1>
+            <h1 style={{marginTop:'20px'}}>All Products</h1>
             <ProductListing/>
         </>
     )
