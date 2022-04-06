@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { setProducts } from "../../redux/actions";
+import ProductCategory from "./ProductCategory";
 import ProductComponent from "./ProductComponent";
 
 const ProductListing=()=>{
@@ -28,10 +29,18 @@ const ProductListing=()=>{
         )
      }
     return (
-        <div className='productList'>
-             <ProductComponent/>
-             <span className="wrap" />
-        </div>
+        <>
+            <nav className='category'>
+                <ProductCategory/>
+            </nav>
+            <div className='productList'>
+                <ProductComponent/>
+                <span className="wrap" />
+                <span className="wrap" />
+                <span className="wrap" />
+                <span className="wrap" />
+            </div>
+        </>
     )
 }
 export default ProductListing

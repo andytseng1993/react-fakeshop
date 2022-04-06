@@ -7,15 +7,16 @@
     margin: 20px auto 0;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: stretch;
     flex-direction: row;
     border: 1px solid #ddd;
     border-radius: 5px;
 }
 .image{
-    width: auto;
-    height: 80vh;
-    padding: 40px;
+    width: 50%;
+    
+    padding: 20px;
+    border-right: #ddd 1px solid;
 }
 .image img{
     width: 100%;
@@ -23,6 +24,7 @@
     object-fit: contain;
 }
 .content{
+    width: 50%;
     height: 80vh;
     align-self: flex-start;
     display: flex;
@@ -31,7 +33,6 @@
     justify-content: flex-start;
     text-align: left;
     padding: 20px;
-    border-left: #ddd 1px solid;
 }
 .title{
     font-size: 1.4rem;

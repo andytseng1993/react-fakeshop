@@ -1,0 +1,28 @@
+.category {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    padding: 5px 10px;
+    margin: 20px 15px 0px;
+    font-weight: 600;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.category:after{
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    transition: width .4s cubic-bezier(.45,.05,.5,.1);
+    border-bottom: 2px solid #222;  
+}
+.category:hover:after{
+    width: 100%;
+}
+.category.isActive{
+    background-color: rgb(191, 16, 16);
+    color: white;
+    border-radius: 3px;
+}
