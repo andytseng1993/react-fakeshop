@@ -1,4 +1,4 @@
-
+import classes from './LogIn.module.css'
 import { useRef } from "react";
 
 
@@ -10,15 +10,14 @@ const LogIn=(props)=>{
         console.log(emailRef.current.value,passwordRef.current.value);
     }
     return(
-        <section>
-            <div>
-                <div></div>
+        <section className={classes.login}>
+            <div className={classes.content}>
+                <div className={classes.title}>Welcome Back!</div>
+                <div className={classes.closeBtn}>X</div>
                 <form onSubmit={submitHandler}>
-                    <label htmlFor="email">Email :</label>
-                    <input type='text' required id='email' ref={emailRef}></input>
-                    <label htmlFor="password">Password :</label>
-                    <input type='password' required id='password' ref={passwordRef}></input>
-                    <button>Log In</button>
+                    <input type='email' required id='email' ref={emailRef} placeholder='Email Adress'></input>
+                    <input type='password' required id='password' ref={passwordRef} placeholder='Password'></input>
+                    <button className={classes.submit}>Log In</button>
                 </form>
             </div>
         </section>
