@@ -18,3 +18,10 @@ export const removeProduct=(product)=>{
         payload: product
     }
 }
+
+export const setProductCategory=(product)=>{
+    return {
+        type: ACTIONS.SET_CATEGORY,
+        payload: product
+    }
+}

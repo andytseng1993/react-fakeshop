@@ -18,3 +18,9 @@ span.wrap{
   width: 284px;
   height: 0px;
 }
+.category{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+}

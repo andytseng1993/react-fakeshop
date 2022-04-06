@@ -23,3 +23,11 @@ export const selectProducer =(state={},action)=>{
             return state
     }
 }
+export const selectCategoryReducer=(state='All Products',action)=>{
+    switch(action.type){
+        case ACTIONS.SET_CATEGORY:
+            return action.payload
+        default:
+            return state
+    }
+}
