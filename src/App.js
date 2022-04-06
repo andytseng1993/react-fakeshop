@@ -1,6 +1,6 @@
 import HomePage from './pages/HomePage';
 import './App.css';
-import { Outlet, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import ShopPage from './pages/ShopPage';
 import Layout from './component/layout/Layout';
 import ProductDetail from './component/shopPage/ProductDetail';
@@ -26,7 +26,6 @@ function App() {
           />
         </Routes>
       </Layout>
-      <Outlet/>
     </div>
   );
 }

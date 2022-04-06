@@ -16,6 +16,9 @@ function Navigation(){
                 <NavLink to='shop'>
                     Shop
                 </NavLink>
+                <button>
+                    Log In
+                </button>
             </nav>
         </header>
     )

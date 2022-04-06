@@ -1,3 +1,4 @@
+import LogIn from "../logIn/LogIn"
 import Navigation from "./Navigation"
 
 function Layout(props){
@@ -7,6 +8,7 @@ function Layout(props){
             <main>
                 {props.children}
             </main>
+            <LogIn/>
         </>
     )
 }
