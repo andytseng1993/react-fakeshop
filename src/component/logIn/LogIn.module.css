@@ -14,9 +14,11 @@
 .content{
     position: relative;
     width: 45%;
-    max-width: 750px;
-    min-width: 400px;
-    height: 40%;
+    max-width: 650px;
+    min-width: 350px;
+    height: 50%;
+    min-height: 300px;
+    max-height: 450px;
     background-color: white;
     border-radius: 5px;
     display: flex;
@@ -48,11 +50,19 @@ input[type=email]{
     padding: 2px;
     border-bottom: 1px solid #ccc;
 }
-input[type=password]{
+.password{
     width: 100%;
+    margin-bottom: 20px;
+    display: flex;
+}
+.password input{
+    flex-grow: 10;
     font-size: 1rem;
     border: none;
     border-bottom: 1px solid #ccc;
     padding: 2px;
-    margin-bottom: 20px;
+    margin-right: 4px;
+}
+.hide{
+    font-size: 18px;
 }
