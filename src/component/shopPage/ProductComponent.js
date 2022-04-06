@@ -1,9 +1,18 @@
+import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import classes from './ProductComponent.module.css'
 
 const ProductComponent=()=>{
-    const products = useSelector((state)=>state.allProducts.products)
+    const [productCategory,setProductCategory] = useState('')
+    const allProducts = useSelector((state)=>state.allProducts.products)
+    let products
+    if(productCategory!== ''){
+        products= allProducts.filter(({category})=> category===productCategory)
+    }
+    if(productCategory=== ''){
+        products= allProducts
+    }
     const renderList = products.map((product)=>{
         const {id,title,image,price,category} = product
         return(
@@ -25,7 +34,7 @@ const ProductComponent=()=>{
     })
     
     return (
-        <>
+        <>  
             {renderList}
         </>
     )
