@@ -4,6 +4,7 @@ import { setLogInBox, setRegisterBox } from "../../redux/actions"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faEyeSlash,faEye,faXmark} from "@fortawesome/free-solid-svg-icons";
 import classes from './Register.module.css'
+import axios from "axios";
 
 const Register=()=>{
     const firstNameRef = useRef('')
@@ -20,7 +21,12 @@ const Register=()=>{
       }, [])
     const submitHandler=(event)=>{
         event.preventDefault()
-        console.log(emailRef.current.value,passwordRef.current.value);
+        let userInfo={
+            firstName:firstNameRef.current.value,
+            lastName:lastNameRef.current.value,
+            email:emailRef.current.value,
+            password:passwordRef.current.value
+        }
     }
     const hideHandler=()=>{
         setHide(!hide)
@@ -43,17 +49,17 @@ const Register=()=>{
                 <div className={classes.detail}>Get free shipping on every order.</div>
                 <div className={classes.closeBtn} onClick={closeHandler}><FontAwesomeIcon icon={faXmark} /></div>
                 <form className={classes.form}  onSubmit={submitHandler}>
-                    <div className={classes.emailArea}>
+                    <div className={classes.inputArea}>
                             <div className={classes.email}>First Name</div>
                             <input type='text' required id='first' ref={firstNameRef} placeholder='First Name'></input>
                         </div>
-                    <div className={classes.emailArea}>
+                    <div className={classes.inputArea}>
                         <div className={classes.email}>Last Name</div>
                         <input type='text' required id='last' ref={lastNameRef} placeholder='Last Name'></input>
                     </div>
-                    <div className={classes.emailArea}>
+                    <div className={classes.inputArea}>
                         <div className={classes.email}>Email</div>
-                        <input type='email' required id='email' ref={emailRef} placeholder='Email Adress'></input>
+                        <input type='text' required id='email' ref={emailRef} placeholder='Email Adress'></input>
                     </div>
                     <div className={classes.passwordArea}>
                         <div className={classes.password}>Password</div>
