@@ -12,10 +12,9 @@ export const selectProduct=(product)=>{
         payload: product
     }
 }
-export const removeProduct=(product)=>{
+export const removeProduct=()=>{
     return {
         type: ACTIONS.REMOVE_PRODUCT,
-        payload: product
     }
 }
 
@@ -23,5 +22,18 @@ export const setProductCategory=(product)=>{
     return {
         type: ACTIONS.SET_CATEGORY,
         payload: product
+    }
+}
+
+export const setLogInBox = (isActive)=>{
+    return{
+        type:ACTIONS.SET_LOGINBOX,
+        payload: isActive
+    }
+}
+export const setRegisterBox = (isActive)=>{
+    return{
+        type:ACTIONS.SET_REGISTER,
+        payload: isActive
     }
 }
