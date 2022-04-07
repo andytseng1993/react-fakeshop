@@ -31,3 +31,12 @@ export const selectCategoryReducer=(state='All Products',action)=>{
             return state
     }
 }
+
+export const openLogInBoxReducer = (state=false,action)=>{
+    switch(action.type){
+        case ACTIONS.SET_LOGINBOX:
+            return action.payload
+        default:
+            return state
+    }
+}
