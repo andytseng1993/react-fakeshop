@@ -1,11 +1,9 @@
-import classes from './LogIn.module.css'
-import { useRef, useState } from "react";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faEyeSlash,faEye,faXmark} from "@fortawesome/free-solid-svg-icons";
-import { useDispatch, useSelector } from 'react-redux';
-import { setLogInBox } from '../../redux/actions';
+import { useRef, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { setLogInBox } from "../../redux/actions"
+import classes from './Register.module.css'
 
-const LogIn=(props)=>{
+const Register=()=>{
     const emailRef = useRef('')
     const passwordRef = useRef('')
     const [hide,setHide] = useState(true)
@@ -55,4 +53,4 @@ const LogIn=(props)=>{
     )
 }
 
-export default LogIn
+export default Register
