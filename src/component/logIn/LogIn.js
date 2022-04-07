@@ -3,7 +3,7 @@ import { useRef, useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faEyeSlash,faEye,faXmark} from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from 'react-redux';
-import { setLogInBox } from '../../redux/actions';
+import { setLogInBox, setRegisterBox } from '../../redux/actions';
 
 const LogIn=(props)=>{
     const emailRef = useRef('')
@@ -20,9 +20,14 @@ const LogIn=(props)=>{
         setHide(!hide)
     }
     const closeHandler=()=>{
-        dispatch(setLogInBox(!openLogIn))
+        dispatch(setLogInBox(false))
+        dispatch(setRegisterBox(false))
     }
-    console.log(openLogIn);
+    const createAccount=()=>{
+        dispatch(setRegisterBox(true))
+        dispatch(setLogInBox(false))
+    }
+
     if(!openLogIn) return(<></>)
     return(
         <section className={classes.login}>
@@ -48,7 +53,7 @@ const LogIn=(props)=>{
                 </form>
                 
                 <div className={classes.account}>No account?
-                    <button>Create one</button>
+                    <button onClick={createAccount}>Create one</button>
                 </div>                    
             </div>
         </section>

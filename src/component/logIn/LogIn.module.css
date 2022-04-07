@@ -16,9 +16,7 @@
     width: 50%;
     max-width: 550px;
     min-width: 500px;
-    height: 50%;
-    min-height: 450px;
-    max-height: 500px;
+    height: 500px;
     background-color: white;
     border-radius: 5px;
     display: flex;
@@ -43,7 +41,7 @@
 .title{
     font-size: 25px;
     font-weight: 500;
-    margin: 0px 0px 20px;
+    margin: 0px 0px 45px;
 }
 form{
     display: flex;
@@ -65,7 +63,7 @@ form{
 
 .emailArea input{
     width: 100%;
-    font-size: 0.9rem;
+    font-size: 1rem;
     padding: 9px 10px 5px;
     border: 1px solid #ccc;
     outline: none;
@@ -83,7 +81,7 @@ form{
 }
 .passwordArea input{
     flex-grow: 10;
-    font-size: 0.9rem;
+    font-size: 1rem;
     border: none;
     border: 1px solid #ccc;
     border-right: none;

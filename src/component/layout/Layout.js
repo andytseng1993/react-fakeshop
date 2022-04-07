@@ -1,4 +1,5 @@
 import LogIn from "../logIn/LogIn"
+import Register from "../logIn/Register"
 import Navigation from "./Navigation"
 
 function Layout(props){
@@ -9,6 +10,7 @@ function Layout(props){
                 {props.children}
             </main>
             <LogIn/>
+            <Register/>
         </>
     )
 }
