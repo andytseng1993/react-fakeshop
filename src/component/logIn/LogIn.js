@@ -1,5 +1,5 @@
 import classes from './LogIn.module.css'
-import { useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faEyeSlash,faEye,faXmark} from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,6 +12,10 @@ const LogIn=(props)=>{
     const dispatch = useDispatch()
     const openLogIn = useSelector((state)=> state.openLogInbox.logIn)
     
+    const unlockScroll = useCallback(() => {
+        document.body.style.overflow = '';
+        document.body.style.paddingRight = ''
+      }, [])
     const submitHandler=(event)=>{
         event.preventDefault()
         console.log(emailRef.current.value,passwordRef.current.value);
@@ -22,6 +26,7 @@ const LogIn=(props)=>{
     const closeHandler=()=>{
         dispatch(setLogInBox(false))
         dispatch(setRegisterBox(false))
+        unlockScroll()
     }
     const createAccount=()=>{
         dispatch(setRegisterBox(true))
@@ -35,7 +40,7 @@ const LogIn=(props)=>{
                 <div className={classes.title}>Welcome Back!</div>
                 <div className={classes.detail}>Log in for faster checkout.</div>
                 <div className={classes.closeBtn} onClick={closeHandler}><FontAwesomeIcon icon={faXmark} /></div>
-                <form onSubmit={submitHandler}>
+                <form className={classes.form} onSubmit={submitHandler}>
                     <div className={classes.emailArea}>
                         <div className={classes.email}>Email</div>
                         <input type='email' required id='email' ref={emailRef} placeholder='Email Adress'></input>

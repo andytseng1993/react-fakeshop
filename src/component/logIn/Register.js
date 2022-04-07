@@ -1,4 +1,4 @@
-import { useRef, useState } from "react"
+import { useCallback, useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { setLogInBox, setRegisterBox } from "../../redux/actions"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -13,7 +13,11 @@ const Register=()=>{
     const [hide,setHide] = useState(true)
     const dispatch = useDispatch()
     const register = useSelector((state)=> state.openLogInbox.register)
-    console.log(register);
+    
+    const unlockScroll = useCallback(() => {
+        document.body.style.overflow = '';
+        document.body.style.paddingRight = ''
+      }, [])
     const submitHandler=(event)=>{
         event.preventDefault()
         console.log(emailRef.current.value,passwordRef.current.value);
@@ -24,6 +28,7 @@ const Register=()=>{
     const closeHandler=()=>{
         dispatch(setLogInBox(false))
         dispatch(setRegisterBox(false))
+        unlockScroll()
     }
     const logIn=()=>{
         dispatch(setLogInBox(true))
@@ -37,7 +42,7 @@ const Register=()=>{
                 <div className={classes.title}>Join FakeStore</div>
                 <div className={classes.detail}>Get free shipping on every order.</div>
                 <div className={classes.closeBtn} onClick={closeHandler}><FontAwesomeIcon icon={faXmark} /></div>
-                <form onSubmit={submitHandler}>
+                <form className={classes.form}  onSubmit={submitHandler}>
                     <div className={classes.emailArea}>
                             <div className={classes.email}>First Name</div>
                             <input type='text' required id='first' ref={firstNameRef} placeholder='First Name'></input>
