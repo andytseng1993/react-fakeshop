@@ -5,7 +5,7 @@ import { setLogInBox } from "../../redux/actions"
 import classes from './Navigation.module.css'
 
 function Navigation(props){
-    const openLogIn = useSelector((state)=> state.openLogInbox)
+    const openLogIn = useSelector((state)=> state.openLogInbox.logIn)
     const dispatch=useDispatch()
     const openLogInHandler=()=>{
         dispatch(setLogInBox(!openLogIn))  

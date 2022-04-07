@@ -32,10 +32,12 @@ export const selectCategoryReducer=(state='All Products',action)=>{
     }
 }
 
-export const openLogInBoxReducer = (state=false,action)=>{
+export const openLogInBoxReducer = (state={logIn:false,register:false},action)=>{
     switch(action.type){
         case ACTIONS.SET_LOGINBOX:
-            return action.payload
+            return {...state,logIn:action.payload}
+            case ACTIONS.SET_REGISTER:
+                return {...state,register:action.payload}
         default:
             return state
     }

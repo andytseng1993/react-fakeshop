@@ -10,7 +10,7 @@ const LogIn=(props)=>{
     const passwordRef = useRef('')
     const [hide,setHide] = useState(true)
     const dispatch = useDispatch()
-    const openLogIn = useSelector((state)=> state.openLogInbox)
+    const openLogIn = useSelector((state)=> state.openLogInbox.logIn)
     
     const submitHandler=(event)=>{
         event.preventDefault()

@@ -31,3 +31,9 @@ export const setLogInBox = (isActive)=>{
         payload: isActive
     }
 }
+export const setRegisterBox = (isActive)=>{
+    return{
+        type:ACTIONS.SET_REGISTER,
+        payload: isActive
+    }
+}
