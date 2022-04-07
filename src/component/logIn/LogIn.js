@@ -1,7 +1,7 @@
 import classes from './LogIn.module.css'
 import { useRef, useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faEyeSlash,faEye} from "@fortawesome/free-solid-svg-icons";
+import {faEyeSlash,faEye,faXmark} from "@fortawesome/free-solid-svg-icons";
 
 const LogIn=(props)=>{
     const emailRef = useRef('')
@@ -20,7 +20,7 @@ const LogIn=(props)=>{
             <div className={classes.content}>
                 <div className={classes.title}>Welcome Back!</div>
                 <div className={classes.detail}>Log in for faster checkout.</div>
-                <div className={classes.closeBtn}>X</div>
+                <div className={classes.closeBtn}><FontAwesomeIcon icon={faXmark} /></div>
                 <form onSubmit={submitHandler}>
                     <div className={classes.emailArea}>
                         <div className={classes.email}>Email</div>
@@ -35,9 +35,12 @@ const LogIn=(props)=>{
                             }
                         </div>
                     </div>
-
                     <button className={classes.submit}>Log In</button>
                 </form>
+                
+                <div className={classes.account}>No account?
+                    <button>Create one</button>
+                </div>                    
             </div>
         </section>
     )

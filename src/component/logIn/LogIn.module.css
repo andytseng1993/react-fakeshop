@@ -24,16 +24,26 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
 }
 .closeBtn{
     position: absolute;
     right: 25px;
     top: 25px;
+    font-size: 22px;
+    cursor: pointer;
+    transition: .2s;
+}
+.closeBtn:hover{
+    transform: translate(0px,-1px);
+}
+.closeBtn:active{
+    transform: translate(0px,1px);
 }
 .title{
     font-size: 25px;
     font-weight: 500;
-    margin: 20px 0px 10px;
+    margin: 0px 0px 20px;
 }
 form{
     display: flex;
@@ -41,6 +51,8 @@ form{
     align-items: flex-start;
     width: 300px;
     text-align: left;
+    padding-bottom: 20px;
+    border-bottom: rgb(182, 182, 182) solid 1px;
 }
 .detail{
     margin-bottom: 20px;
@@ -48,7 +60,7 @@ form{
 .emailArea{
     position: relative;
     width: 100%;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
 .emailArea input{
@@ -66,7 +78,7 @@ form{
 .passwordArea{
     position: relative;
     width: 100%;
-    margin-bottom: 20px;
+    margin-bottom: 50px;
     display: flex; 
 }
 .passwordArea input{
@@ -107,7 +119,7 @@ form{
 }
 .submit{
     color: white;
-    padding: 7px 40px;
+    padding: 10px 45px;
     border-radius: 10px;
     font-size: 15px;
     font-weight: 600;
@@ -118,4 +130,16 @@ form{
 }
 .submit:hover{
     transform: translate(0px,-1px);
+}
+.account{
+    padding-top: 10px;
+}
+.account button{
+    color: blue;
+    margin-left: 5px;
+    font-size: 14px;
+    border: none;
+    background: none;
+    text-decoration: underline;
+    cursor: pointer;
 }
