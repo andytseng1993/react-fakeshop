@@ -4,16 +4,17 @@ import { setLogInBox, setRegisterBox } from "../../redux/actions"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faEyeSlash,faEye,faXmark} from "@fortawesome/free-solid-svg-icons";
 import classes from './Register.module.css'
-import axios from "axios";
 
 const Register=()=>{
-    const firstNameRef = useRef('')
-    const lastNameRef = useRef('')
+    const NameRef = useRef('')
     const emailRef = useRef('')
     const passwordRef = useRef('')
+    const passwordConfirmRef = useRef('')
     const [hide,setHide] = useState(true)
+    const [confirmHide,setConfirmHide] = useState(true)
+    const [error,setError] = useState('')
     const dispatch = useDispatch()
-    const register = useSelector((state)=> state.openLogInbox.register)
+    const registerActive = useSelector((state)=> state.openLogInbox.register)
     
     const unlockScroll = useCallback(() => {
         document.body.style.overflow = '';
@@ -21,15 +22,20 @@ const Register=()=>{
       }, [])
     const submitHandler=(event)=>{
         event.preventDefault()
+        if(passwordRef!==passwordConfirmRef){
+           return  setError('Password do not match')
+        } 
         let userInfo={
-            firstName:firstNameRef.current.value,
-            lastName:lastNameRef.current.value,
+            Name:NameRef.current.value,
             email:emailRef.current.value,
             password:passwordRef.current.value
         }
     }
     const hideHandler=()=>{
         setHide(!hide)
+    }
+    const confirmHideHandler=()=>{
+        setConfirmHide(!confirmHide)
     }
     const closeHandler=()=>{
         dispatch(setLogInBox(false))
@@ -41,21 +47,18 @@ const Register=()=>{
         dispatch(setRegisterBox(false))
     }
     
-    if(!register) return(<></>)
+    if(!registerActive) return(<></>)
     return(
         <section className={classes.login}>
             <div className={classes.content}>
                 <div className={classes.title}>Join FakeStore</div>
                 <div className={classes.detail}>Get free shipping on every order.</div>
+                {error && <div className={classes.error}>{error}</div>}
                 <div className={classes.closeBtn} onClick={closeHandler}><FontAwesomeIcon icon={faXmark} /></div>
                 <form className={classes.form}  onSubmit={submitHandler}>
                     <div className={classes.inputArea}>
-                            <div className={classes.email}>First Name</div>
-                            <input type='text' required id='first' ref={firstNameRef} placeholder='First Name'></input>
-                        </div>
-                    <div className={classes.inputArea}>
-                        <div className={classes.email}>Last Name</div>
-                        <input type='text' required id='last' ref={lastNameRef} placeholder='Last Name'></input>
+                        <div className={classes.email}>Name</div>
+                        <input type='text' required id='name' ref={NameRef} placeholder='Name'></input>
                     </div>
                     <div className={classes.inputArea}>
                         <div className={classes.email}>Email</div>
@@ -67,6 +70,15 @@ const Register=()=>{
                         <div className={classes.hide} onClick={hideHandler}>
                             {
                                 hide? <FontAwesomeIcon icon={faEyeSlash} />:<FontAwesomeIcon icon={faEye}/> 
+                            }
+                        </div>
+                    </div>
+                    <div className={classes.passwordArea}>
+                        <div className={classes.password}>Password Confirmation</div>
+                        <input type={confirmHide?'password':'text'} required id='passwordconfirm' ref={passwordConfirmRef} placeholder='Password Confirmation'></input>
+                        <div className={classes.hide} onClick={confirmHideHandler}>
+                            {
+                                confirmHide? <FontAwesomeIcon icon={faEyeSlash} />:<FontAwesomeIcon icon={faEye}/> 
                             }
                         </div>
                     </div>

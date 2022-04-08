@@ -17,7 +17,7 @@
     width: 50%;
     max-width: 550px;
     min-width: 500px;
-    height: 500px;
+    height: 550px;
     background-color: white;
     border-radius: 5px;
     display: flex;
@@ -54,7 +54,7 @@
     border-bottom: rgb(182, 182, 182) solid 1px;
 }
 .detail{
-    margin-bottom: 30px;
+    margin-bottom: 15px;
 }
 .inputArea{
     position: relative;
@@ -141,4 +141,11 @@
     background: none;
     text-decoration: underline;
     cursor: pointer;
+}
+.error{
+    padding: 10px 30px;
+    background-color: rgb(253, 182, 182);
+    color: rgb(138, 0, 0);
+    border-radius: 5px;
+    margin-bottom: 15px;
 }
