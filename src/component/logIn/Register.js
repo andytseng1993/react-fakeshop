@@ -4,6 +4,8 @@ import { setLogInBox, setRegisterBox } from "../../redux/actions"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faEyeSlash,faEye,faXmark} from "@fortawesome/free-solid-svg-icons";
 import classes from './Register.module.css'
+import {useUserAuth} from '../../context/UserAuthContext'
+
 
 const Register=()=>{
     const NameRef = useRef('')
@@ -15,16 +17,30 @@ const Register=()=>{
     const [error,setError] = useState('')
     const dispatch = useDispatch()
     const registerActive = useSelector((state)=> state.openLogInbox.register)
+    const {signup} = useUserAuth()
+    const [loading,setLoading] =useState(false)
+    
     
     const unlockScroll = useCallback(() => {
         document.body.style.overflow = '';
         document.body.style.paddingRight = ''
       }, [])
-    const submitHandler=(event)=>{
+    const submitHandler= async (event)=>{
         event.preventDefault()
         if(passwordRef!==passwordConfirmRef){
-           return  setError('Password do not match')
+            setError('Password do not match.')
+            return setTimeout(()=>{
+                setError('')
+            },3000)
         } 
+        try {
+            setError('')
+            setLoading(true)
+            await signup(emailRef.current.value,passwordRef.current.value)
+        } catch (error) {
+            setError('Failed to create an account.')
+        }
+        setLoading(true)
         let userInfo={
             Name:NameRef.current.value,
             email:emailRef.current.value,
@@ -87,7 +103,7 @@ const Register=()=>{
                 
                 <div className={classes.account}>
                     Already have an account?
-                    <button onClick={logIn}>Log in</button>
+                    <button disabled={loading} onClick={logIn}>Log in</button>
                 </div>                    
             </div>
         </section>
