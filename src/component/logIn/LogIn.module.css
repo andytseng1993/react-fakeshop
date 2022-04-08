@@ -141,3 +141,10 @@
     text-decoration: underline;
     cursor: pointer;
 }
+.error{
+    padding: 10px 30px;
+    background-color: rgb(253, 182, 182);
+    color: rgb(138, 0, 0);
+    border-radius: 5px;
+    margin-bottom: 15px;
+}

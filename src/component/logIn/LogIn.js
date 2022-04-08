@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faEyeSlash,faEye,faXmark} from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from 'react-redux';
 import { setLogInBox, setRegisterBox } from '../../redux/actions';
+import { useUserAuth } from '../../context/UserAuthContext';
 
 const LogIn=(props)=>{
     const emailRef = useRef('')
@@ -11,13 +12,29 @@ const LogIn=(props)=>{
     const [hide,setHide] = useState(true)
     const dispatch = useDispatch()
     const openLogIn = useSelector((state)=> state.openLogInbox.logIn)
+    const [error,setError] = useState('')
+    const [loading,setLoading] =useState(false)
+    const {login} = useUserAuth()
     
     const unlockScroll = useCallback(() => {
         document.body.style.overflow = '';
         document.body.style.paddingRight = ''
       }, [])
-    const submitHandler=(event)=>{
+    const submitHandler= async (event)=>{
         event.preventDefault()
+    
+        try {
+            setError('')
+            setLoading(true)
+            await login(emailRef.current.value,passwordRef.current.value)
+        } catch (error) {
+            setError('Failed to log in.')
+            setTimeout(()=>{
+                setError('')
+            },3000)
+        }
+        setLoading(false)
+        
         console.log(emailRef.current.value,passwordRef.current.value);
     }
     const hideHandler=()=>{
@@ -39,6 +56,7 @@ const LogIn=(props)=>{
             <div className={classes.content}>
                 <div className={classes.title}>Welcome Back!</div>
                 <div className={classes.detail}>Log in for faster checkout.</div>
+                {error && <div className={classes.error}>{error}</div>}
                 <div className={classes.closeBtn} onClick={closeHandler}><FontAwesomeIcon icon={faXmark} /></div>
                 <form className={classes.form} onSubmit={submitHandler}>
                     <div className={classes.emailArea}>
@@ -58,7 +76,7 @@ const LogIn=(props)=>{
                 </form>
                 
                 <div className={classes.account}>No account?
-                    <button onClick={createAccount}>Create one</button>
+                    <button disabled={loading} onClick={createAccount}>Create one</button>
                 </div>                    
             </div>
         </section>

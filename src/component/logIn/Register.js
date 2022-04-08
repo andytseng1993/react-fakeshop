@@ -17,7 +17,7 @@ const Register=()=>{
     const [error,setError] = useState('')
     const dispatch = useDispatch()
     const registerActive = useSelector((state)=> state.openLogInbox.register)
-    const {signup ,updatfile ,currentUser} = useUserAuth()
+    const {signup ,updatfile} = useUserAuth()
     const [loading,setLoading] =useState(false)
     
     
@@ -40,7 +40,7 @@ const Register=()=>{
         } catch (error) {
             setError('Failed to create an account.')
         }
-        setLoading(true)
+        setLoading(false)
         updatfile(NameRef.current.value)
 
     }
@@ -59,7 +59,7 @@ const Register=()=>{
         dispatch(setLogInBox(true))
         dispatch(setRegisterBox(false))
     }
-    console.log(currentUser);
+    
     if(!registerActive) return(<></>)
     return(
         <section className={classes.login}>
