@@ -6,7 +6,6 @@ import ProductCategory from "./ProductCategory";
 import ProductComponent from "./ProductComponent";
 
 const ProductListing=()=>{
-    const products = useSelector((state)=>state.allProducts.products)
     const dispatch = useDispatch()
     const [isLoading,setIsLoading] = useState(true)
     
@@ -19,7 +18,6 @@ const ProductListing=()=>{
             setIsLoading(false)
         })
       },[])
-      console.log(products);
 
      if(isLoading){
         return (

@@ -8,7 +8,7 @@ import classes from './Navigation.module.css'
 function Navigation(props){
     const openLogIn = useSelector((state)=> state.openLogInbox.logIn)
     const dispatch=useDispatch()
-    const {logout,currentUser} = useUserAuth()
+    const {logout,currentUser,User} = useUserAuth()
     const lockScroll = useCallback(
         () => {
           const scrollBarCompensation = window.innerWidth - document.body.offsetWidth;
@@ -19,7 +19,6 @@ function Navigation(props){
         dispatch(setLogInBox(!openLogIn))
         lockScroll()  
     }
-    console.log(currentUser)
     const logOutHandler= async ()=>{
         try {
             await logout()
@@ -35,12 +34,17 @@ function Navigation(props){
                 </NavLink>
             </div>
             <nav>
+                
                 <NavLink to='/'>
                     Home
                 </NavLink>
                 <NavLink to='shop'>
                     Shop
                 </NavLink>
+                <div>
+                    {User && `Hello, ${User}`} 
+                </div>
+                
                 { currentUser===null?
                     <button onClick={openLogInHandler}>
                     Log In

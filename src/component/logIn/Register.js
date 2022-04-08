@@ -37,11 +37,14 @@ const Register=()=>{
             setError('')
             setLoading(true)
             await signup(emailRef.current.value,passwordRef.current.value)
+            await updatfile(NameRef.current.value)
         } catch (error) {
-            setError('Failed to create an account.')
+            setError(error.message)
+            setTimeout(()=>{
+                setError('')
+            },3000)
         }
         setLoading(false)
-        updatfile(NameRef.current.value)
 
     }
     const hideHandler=()=>{

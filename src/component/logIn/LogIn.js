@@ -27,6 +27,7 @@ const LogIn=(props)=>{
             setError('')
             setLoading(true)
             await login(emailRef.current.value,passwordRef.current.value)
+            .then(()=>{dispatch(setLogInBox(false)) })
         } catch (error) {
             setError('Failed to log in.')
             setTimeout(()=>{
@@ -34,8 +35,6 @@ const LogIn=(props)=>{
             },3000)
         }
         setLoading(false)
-        
-        console.log(emailRef.current.value,passwordRef.current.value);
     }
     const hideHandler=()=>{
         setHide(!hide)
