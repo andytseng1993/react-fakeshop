@@ -21,7 +21,7 @@ export const UserAuthContextProvider=({children})=>{
         return signInWithEmailAndPassword(auth,email,password)
     }
     function logout (){
-        return signOut()
+        return signOut(auth)
     }
     function updatfile(name){
         updateProfile(auth.currentUser, {
