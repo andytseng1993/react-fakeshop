@@ -17,7 +17,7 @@ const Register=()=>{
     const [error,setError] = useState('')
     const dispatch = useDispatch()
     const registerActive = useSelector((state)=> state.openLogInbox.register)
-    const {signup} = useUserAuth()
+    const {signup ,updatfile ,currentUser} = useUserAuth()
     const [loading,setLoading] =useState(false)
     
     
@@ -27,7 +27,7 @@ const Register=()=>{
       }, [])
     const submitHandler= async (event)=>{
         event.preventDefault()
-        if(passwordRef!==passwordConfirmRef){
+        if(passwordRef.current.value!==passwordConfirmRef.current.value){
             setError('Password do not match.')
             return setTimeout(()=>{
                 setError('')
@@ -41,11 +41,8 @@ const Register=()=>{
             setError('Failed to create an account.')
         }
         setLoading(true)
-        let userInfo={
-            Name:NameRef.current.value,
-            email:emailRef.current.value,
-            password:passwordRef.current.value
-        }
+        updatfile(NameRef.current.value)
+
     }
     const hideHandler=()=>{
         setHide(!hide)
@@ -62,7 +59,7 @@ const Register=()=>{
         dispatch(setLogInBox(true))
         dispatch(setRegisterBox(false))
     }
-    
+    console.log(currentUser);
     if(!registerActive) return(<></>)
     return(
         <section className={classes.login}>
