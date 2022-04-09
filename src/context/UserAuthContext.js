@@ -13,27 +13,20 @@ const UserAuthContext = createContext()
 
 export const UserAuthContextProvider=({children})=>{
     const [currentUser,setCurrentUser] =useState('')
-    const [User,setUser] =useState('')
+    
 
     function signup (email,password){
         return createUserWithEmailAndPassword(auth,email,password)
     }
     function login (email,password){
         return signInWithEmailAndPassword(auth,email,password)
-        .then(()=>{
-            setUser(auth.currentUser.displayName)
-          })
     }
     function logout (){
-        return signOut(auth).then(()=>{
-            setUser('')
-          })
+        return signOut(auth)
     }
     function updatfile(name){
         updateProfile(auth.currentUser, {
             displayName: name
-          }).then(()=>{
-            setUser(auth.currentUser.displayName)
           })
     }
     useEffect(()=>{
@@ -45,7 +38,6 @@ export const UserAuthContextProvider=({children})=>{
         }
     },[])
     const value={
-        User,
         currentUser,
         signup,
         login,

@@ -8,7 +8,7 @@ import classes from './Navigation.module.css'
 function Navigation(props) {
     const openLogIn = useSelector((state) => state.openLogInbox.logIn)
     const dispatch = useDispatch()
-    const { logout, currentUser, User } = useUserAuth()
+    const { logout, currentUser } = useUserAuth()
     const lockScroll = useCallback(
         () => {
             const scrollBarCompensation = window.innerWidth - document.body.offsetWidth;
@@ -27,7 +27,7 @@ function Navigation(props) {
         }
     }
 
-    console.log(currentUser, User);
+
     return (
         <header className={classes.header}>
             <div className={classes.logo}>
@@ -43,9 +43,9 @@ function Navigation(props) {
                     Shop
                 </NavLink>
 
-                {currentUser ?
+                {currentUser?.displayName?
                     <div className={classes.user}>
-                        {currentUser.displayName? `Hello, ${currentUser.displayName}`:''}
+                        {`Hello, ${currentUser.displayName}`}
                         <div className={classes.userBox}>
                             <NavLink to='profile' className={classes.signout}>
                                 Profile

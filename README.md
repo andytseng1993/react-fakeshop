@@ -53,3 +53,7 @@ add firebase SDK into ```firebase.js```
 then follow ther [firebase build document](https://firebase.google.com/docs/auth/web/start)
 
 create ```signup (email,password),login(email,password),logout()``` function in ```UserAuthContext.js```
+
+### Protected Routes
+create a ProtectedRoute, when there is a logged in user, the Home component does not run into the if-else condition's block and renders the actual content of the Home component instead.```return <Navigate to={redirectPath} replace />;```
+ If there is no logged in user, the user will experience a redirect from the protected page. ```return children ? children : <Outlet />;```

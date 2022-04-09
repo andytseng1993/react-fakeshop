@@ -45,9 +45,9 @@ const Register=()=>{
             })
         } catch (error) {
             setError(error.message)
-            // setTimeout(()=>{
-            //     setError('')
-            // },3000)
+            setTimeout(()=>{
+                setError('')
+            },3000)
         }
         setLoading(false)
 

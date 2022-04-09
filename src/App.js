@@ -6,6 +6,7 @@ import Layout from './component/layout/Layout';
 import ProductDetail from './component/shopPage/ProductDetail';
 import { UserAuthContextProvider } from './context/UserAuthContext';
 import Profile from './component/logIn/Profile';
+import ProtectedRoute from './component/layout/ProtectedRoute';
 
   
 function App() {
@@ -16,10 +17,12 @@ function App() {
       <UserAuthContextProvider>
         <Layout>
           <Routes>
-            <Route path='/' element={<HomePage/>}/>
+            <Route path='/' element={<HomePage/>} exact/>
             <Route path='shop' element={<ShopPage/>}/>
             <Route path='product/:productId' element={<ProductDetail/>}/>
-            <Route path='profile' element={<Profile/>}/>
+            <Route element={<ProtectedRoute/>}>
+              <Route path='profile' element={<Profile/>}/>
+            </Route>
             <Route
               path="*"
               element={
