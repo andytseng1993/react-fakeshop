@@ -37,12 +37,17 @@ const Register=()=>{
             setError('')
             setLoading(true)
             await signup(emailRef.current.value,passwordRef.current.value)
-            await updatfile(NameRef.current.value)
+            .then(()=>{
+                updatfile(NameRef.current.value)
+            })
+            .then(()=>{
+                dispatch(setRegisterBox(false)) 
+            })
         } catch (error) {
             setError(error.message)
-            setTimeout(()=>{
-                setError('')
-            },3000)
+            // setTimeout(()=>{
+            //     setError('')
+            // },3000)
         }
         setLoading(false)
 
