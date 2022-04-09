@@ -5,6 +5,7 @@ import ShopPage from './pages/ShopPage';
 import Layout from './component/layout/Layout';
 import ProductDetail from './component/shopPage/ProductDetail';
 import { UserAuthContextProvider } from './context/UserAuthContext';
+import Profile from './component/logIn/Profile';
 
   
 function App() {
@@ -18,6 +19,7 @@ function App() {
             <Route path='/' element={<HomePage/>}/>
             <Route path='shop' element={<ShopPage/>}/>
             <Route path='product/:productId' element={<ProductDetail/>}/>
+            <Route path='profile' element={<Profile/>}/>
             <Route
               path="*"
               element={
