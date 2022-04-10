@@ -9,7 +9,7 @@ import classes from './Profile.module.css'
 
 const Profile=()=>{
     const [profileDisabledBtn,setProfileDisabledBtn] = useState(true)
-    const [passwordBtn,setPasswordBtn] = useState(true)
+    const [passwordDisabledBtn,setPasswordDisabledBtn] = useState(true)
     const NameRef = useRef('')
     const [hide,setHide] = useState(true)
     const [confirmHide,setConfirmHide] = useState(true)
@@ -33,16 +33,16 @@ const Profile=()=>{
     const passwordInput = (event)=>{
         setNewPassword(event.target.value)
         event.target.value.length>0 && newConfirmPassword.length>0?
-        setPasswordBtn(false) 
+        setPasswordDisabledBtn(false) 
         :
-        setPasswordBtn(true) 
+        setPasswordDisabledBtn(true) 
     }
     const confirmpasswordInput = (event)=>{
         setNewConfirmPassword(event.target.value)
         event.target.value.length>0 && newPassword.length>0?
-        setPasswordBtn(false) 
+        setPasswordDisabledBtn(false) 
         :
-        setPasswordBtn(true) 
+        setPasswordDisabledBtn(true) 
     }
     const nameSubmitHandler= async (event)=>{
         event.preventDefault()
@@ -60,13 +60,18 @@ const Profile=()=>{
             },3000)
         }
         try {
-            console.log('1111')
            await updateNewPassword(newPassword)
         .then(()=>{
             console.log('success');
+            setPasswordDisabledBtn(true)
+            setNewPassword('')
+            setNewConfirmPassword('')
         }) 
         } catch (error) {
-            console.error(error);
+            setError(error.message)
+            return setTimeout(()=>{
+                setError('')
+            },3000)
         }  
     }
     return (
@@ -107,7 +112,7 @@ const Profile=()=>{
                         </div>    
                     </div>
                     <div>Password must have at least 6 characters. </div>
-                    <button disabled={passwordBtn}>Update Password</button>
+                    <button disabled={passwordDisabledBtn}>Update Password</button>
                 </form>
             </div>
         </section>
