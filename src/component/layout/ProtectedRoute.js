@@ -5,7 +5,7 @@ const ProtectedRoute= ({children})=>{
     const location = useLocation()
     console.log(auth);
     return(
-        auth?.currentUser?
+        auth.currentUser!==null ?
             children? children:<Outlet/>
             :
             <Navigate to={'/'} replaced state={{from:location}}/> 
