@@ -1,4 +1,4 @@
-import { useCallback } from "react"
+import { useCallback, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { NavLink,useNavigate } from "react-router-dom"
 import { useUserAuth } from "../../context/UserAuthContext"
@@ -8,11 +8,20 @@ import classes from './Navigation.module.css'
 function Navigation() {
     const openLogIn = useSelector((state) => state.openLogInbox.logIn)
     const userName = useSelector((state)=> state.setUserName) 
-    const { logout } = useUserAuth()
+    const { logout,currentUser } = useUserAuth()
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
+
+    useEffect(()=>{
+        currentUser?.displayName? 
+            dispatch(setUserName(currentUser.displayName))
+            :
+            dispatch(setUserName(''))
+        console.log('1111');
+    },[currentUser?.displayName])
     
+
     const lockScroll = useCallback(
         () => {
             const scrollBarCompensation = window.innerWidth - document.body.offsetWidth;
