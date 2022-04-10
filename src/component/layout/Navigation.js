@@ -1,14 +1,18 @@
 import { useCallback } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { NavLink } from "react-router-dom"
+import { NavLink,useNavigate } from "react-router-dom"
 import { useUserAuth } from "../../context/UserAuthContext"
-import { setLogInBox } from "../../redux/actions"
+import { setLogInBox, setUserName } from "../../redux/actions"
 import classes from './Navigation.module.css'
 
-function Navigation(props) {
+function Navigation() {
     const openLogIn = useSelector((state) => state.openLogInbox.logIn)
+    const userName = useSelector((state)=> state.setUserName) 
+    const { logout } = useUserAuth()
+    const navigate = useNavigate()
     const dispatch = useDispatch()
-    const { logout, currentUser } = useUserAuth()
+
+    
     const lockScroll = useCallback(
         () => {
             const scrollBarCompensation = window.innerWidth - document.body.offsetWidth;
@@ -22,6 +26,10 @@ function Navigation(props) {
     const logOutHandler = async () => {
         try {
             await logout()
+            .then(()=>{
+                dispatch(setUserName(''))
+                navigate('/')
+            })
         } catch (error) {
             console.log(error);
         }
@@ -43,9 +51,9 @@ function Navigation(props) {
                     Shop
                 </NavLink>
 
-                {currentUser?.displayName?
+                {userName?
                     <div className={classes.user}>
-                        {`Hello, ${currentUser.displayName}`}
+                        {`Hello, ${userName}`}
                         <div className={classes.userBox}>
                             <NavLink to='profile' className={classes.signout}>
                                 Profile

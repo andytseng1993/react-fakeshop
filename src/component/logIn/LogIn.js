@@ -3,18 +3,18 @@ import { useCallback, useRef, useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEyeSlash, faEye, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from 'react-redux';
-import { setLogInBox, setRegisterBox } from '../../redux/actions';
+import { setLogInBox, setRegisterBox, setUserName } from '../../redux/actions';
 import { useUserAuth } from '../../context/UserAuthContext';
 
 const LogIn = () => {
     const emailRef = useRef('')
     const passwordRef = useRef('')
     const [hide, setHide] = useState(true)
-    const dispatch = useDispatch()
-    const openLogIn = useSelector((state) => state.openLogInbox.logIn)
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
-    const { login } = useUserAuth()
+    const { login ,currentUser} = useUserAuth()
+    const openLogIn = useSelector((state) => state.openLogInbox.logIn)
+    const dispatch = useDispatch()
 
     const unlockScroll = useCallback(() => {
         document.body.style.overflow = '';
@@ -27,7 +27,10 @@ const LogIn = () => {
             setError('')
             setLoading(true)
             await login(emailRef.current.value, passwordRef.current.value)
-                .then(() => { dispatch(setLogInBox(false)) })
+                .then(() => { 
+                    dispatch(setLogInBox(false))
+                    dispatch(setUserName(currentUser.displayName))
+                })
         } catch (error) {
             setError('Failed to log in.')
             setTimeout(() => {

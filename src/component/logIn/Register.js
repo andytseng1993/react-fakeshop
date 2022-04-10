@@ -1,6 +1,6 @@
 import { useCallback, useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { setLogInBox, setRegisterBox } from "../../redux/actions"
+import { setLogInBox, setRegisterBox, setUserName } from "../../redux/actions"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faEyeSlash,faEye,faXmark} from "@fortawesome/free-solid-svg-icons";
 import classes from './Register.module.css'
@@ -15,10 +15,10 @@ const Register=()=>{
     const [hide,setHide] = useState(true)
     const [confirmHide,setConfirmHide] = useState(true)
     const [error,setError] = useState('')
-    const dispatch = useDispatch()
-    const registerActive = useSelector((state)=> state.openLogInbox.register)
     const {signup ,updatfile} = useUserAuth()
     const [loading,setLoading] =useState(false)
+    const registerActive = useSelector((state)=> state.openLogInbox.register)
+    const dispatch = useDispatch()
     
     
     const unlockScroll = useCallback(() => {
@@ -37,11 +37,9 @@ const Register=()=>{
             setError('')
             setLoading(true)
             await signup(emailRef.current.value,passwordRef.current.value)
+            await updatfile(NameRef.current.value)
             .then(()=>{
-                updatfile(NameRef.current.value)
-            })
-            .then(()=>{
-                dispatch(setRegisterBox(false)) 
+                dispatch(setRegisterBox(false))
             })
         } catch (error) {
             setError(error.message)
@@ -50,7 +48,7 @@ const Register=()=>{
             },3000)
         }
         setLoading(false)
-
+        dispatch(setUserName(NameRef.current.value))
     }
     const hideHandler=()=>{
         setHide(!hide)

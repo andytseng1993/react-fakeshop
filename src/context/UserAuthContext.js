@@ -25,7 +25,7 @@ export const UserAuthContextProvider=({children})=>{
         return signOut(auth)
     }
     function updatfile(name){
-        updateProfile(auth.currentUser, {
+        return updateProfile(auth.currentUser, {
             displayName: name
           })
     }
