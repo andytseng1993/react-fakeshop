@@ -24,10 +24,8 @@ export const UserAuthContextProvider=({children})=>{
     function logout (){
         return signOut(auth)
     }
-    function updatfile(name){
-        return updateProfile(auth.currentUser, {
-            displayName: name
-          })
+    function updatfile(objectProfle){
+        return updateProfile(auth.currentUser, objectProfle)
     }
     useEffect(()=>{
         const unsubscirbe = onAuthStateChanged(auth,(currentUser)=>{

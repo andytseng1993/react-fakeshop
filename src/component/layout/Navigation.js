@@ -18,7 +18,6 @@ function Navigation() {
             dispatch(setUserName(currentUser.displayName))
             :
             dispatch(setUserName(''))
-        console.log('1111');
     },[currentUser?.displayName])
     
 

@@ -3,7 +3,6 @@ import{ auth } from '../../firebase'
 
 const ProtectedRoute= ({children})=>{
     const location = useLocation()
-    console.log(auth);
     return(
         auth.currentUser!==null ?
             children? children:<Outlet/>

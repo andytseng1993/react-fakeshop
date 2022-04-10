@@ -37,7 +37,7 @@ const Register=()=>{
             setError('')
             setLoading(true)
             await signup(emailRef.current.value,passwordRef.current.value)
-            await updatfile(NameRef.current.value)
+            await updatfile({displayName:NameRef.current.value})
             .then(()=>{
                 dispatch(setRegisterBox(false))
             })
