@@ -4,7 +4,9 @@ import {
     onAuthStateChanged,
     signOut,
     updateProfile,
-    updatePassword
+    updatePassword,
+    reauthenticateWithCredential,
+    EmailAuthProvider
 } from "firebase/auth";
 import { createContext, useContext, useEffect, useState } from "react";
 import { auth } from "../firebase";
@@ -28,9 +30,13 @@ export const UserAuthContextProvider=({children})=>{
     function updatfile(objectProfle){
         return updateProfile(auth.currentUser, objectProfle)
     }
-    function updateNewPassword(newPassword){
-        return updatePassword(auth.currentUser, newPassword)
+    function updateNewPassword(email,oldPassword,newPassword){
+        const credential = EmailAuthProvider.credential (email,oldPassword)
+        return reauthenticateWithCredential(auth.currentUser, credential).then(() => {
+            updatePassword(auth.currentUser, newPassword)
+          })
     }
+
     useEffect(()=>{
         const unsubscirbe = onAuthStateChanged(auth,(currentUser)=>{
             setCurrentUser(currentUser)
