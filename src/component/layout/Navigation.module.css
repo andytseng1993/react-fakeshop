@@ -1,4 +1,4 @@
-.header{
+.header {
     position: relative;
     height: 70px;
     display: flex;
@@ -11,16 +11,104 @@
     padding: 0px 10%;
     border-bottom: 2px solid #ddd;
 }
-.logo{
+
+.logo {
     font-size: 1.8rem;
     font-weight: 700;
 }
-.logo a{
+
+.logo a {
     text-decoration: none;
 }
-nav a{
+
+nav {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+nav a {
     font-size: 1.4rem;
     font-weight: 600;
     margin-right: 1rem;
     text-decoration: none;
+
+}
+
+.signIn {
+    border: none;
+    padding: 7px 15px;
+    background: none;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: .2s;
+}
+
+.signIn:hover {
+    background-color: #ddd;
+}
+
+.signIn:active {
+    transform: translate(0px, 2px);
+}
+
+.user {
+    position: relative;
+    font-size: 1.1em;
+    font-weight: 700;
+    margin-right: 30px;
+    padding: 5px 0px;
+}
+.user::after{
+    content: '';
+    position: absolute;
+    width: 0px;
+    height: 0px;
+    margin: 5px;
+    margin-top: 7px;
+    border-top: 7px solid #aaa;
+    border-right: 5px solid transparent;
+    border-left: 5px solid transparent;
+}
+.userBox{
+    display: none;
+    position: absolute;
+    border: 1px solid rgb(239, 239, 239);
+    background-color: white;
+    width: calc( 100% + 15px );
+    min-width: 130px;
+    top: 30px;
+    border-radius: 5px;
+    box-shadow: 2px 2px 4px 1px rgba(0, 0, 0, 0.15);
+    padding-top: 15px;
+}
+.userBox .signout{
+    position: relative;
+    margin: 15px 20px;
+    padding: 0px 5px 5px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: .2s;
+}
+.signout::after{
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    transition: width .4s cubic-bezier(.45,.05,.5,.1);
+    border-bottom: 2px solid #555;
+}
+.signout:hover::after{
+    width: 100%;
+}
+
+.user:hover > .userBox{
+    display: block;
+}
+.userBox:hover{
+    display: block;
 }

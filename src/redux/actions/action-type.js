@@ -4,5 +4,6 @@ export const ACTIONS={
     REMOVE_PRODUCT:'remove_product',
     SET_CATEGORY: 'set_category',
     SET_LOGINBOX:'set_loginbox',
-    SET_REGISTER:'set_register'
+    SET_REGISTER:'set_register',
+    SET_USERNAME:'set_username'
 }

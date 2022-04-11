@@ -42,3 +42,11 @@ export const openLogInBoxReducer = (state={logIn:false,register:false},action)=>
             return state
     }
 }
+export const setUserName=(state='',action)=>{
+    switch(action.type){
+        case ACTIONS.SET_USERNAME:
+            return action.payload
+        default:
+            return state
+    }
+}

@@ -37,3 +37,10 @@ export const setRegisterBox = (isActive)=>{
         payload: isActive
     }
 }
+
+export const setUserName = (name)=>{
+    return{
+        type:ACTIONS.SET_USERNAME,
+        payload: name
+    }
+}
