@@ -50,3 +50,18 @@ export const setUserName=(state='',action)=>{
             return state
     }
 }
+
+export const setCartList=(state=[],action)=>{
+    switch(action.type){
+        case ACTIONS.UPDATE_CARTLIST:
+            return [...state,...action.payload]
+        case ACTIONS.ADD_CARTLIST:
+            return state.push(action.payload)
+        case ACTIONS.DELETE_CARTPRODUCT:
+            return state.filter((item)=> item.email!==action.payload.email || item.productName!==action.payload.productName)
+        case ACTIONS.EDIT_CARTQUANTITY:
+            return 
+        default:
+            return state
+    }
+}

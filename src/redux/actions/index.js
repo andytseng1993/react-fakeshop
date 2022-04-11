@@ -44,3 +44,33 @@ export const setUserName = (name)=>{
         payload: name
     }
 }
+
+export const updateCartList = (products)=>{
+    return {
+        type:ACTIONS.UPDATE_CARTLIST,
+        payload:products
+    }
+}
+
+export const addCartList = (product)=>{
+    return {
+        type:ACTIONS.ADD_CARTLIST,
+        payload:product
+    }
+}
+export const deleteCartProduct = (product)=>{
+    return {
+        type:ACTIONS.DELETE_CARTPRODUCT,
+        payload:product
+    }
+}
+export const editCartProductQuantity = (email,productName,quantity)=>{
+    return {
+        type:ACTIONS.EDIT_CARTQUANTITY,
+        payload:{
+            email,
+            productName,
+            quantity
+        }
+    }
+}
