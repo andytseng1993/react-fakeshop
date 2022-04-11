@@ -19,6 +19,7 @@ const Profile=()=>{
     const [newConfirmPassword,setNewConfirmPassword] = useState('')
     const [error,setError] = useState('')
     const [success,setSuccess] = useState('')
+    const [userUpdateSuccess,setUserUpdateSuccess] = useState('')
     const dispatch=useDispatch()
     const {currentUser,updatfile,updateNewPassword}=useUserAuth()
     const {displayName,email,metadata} = currentUser
@@ -56,6 +57,10 @@ const Profile=()=>{
             dispatch(setUserName( NameRef.current.value))
         })
         setProfileDisabledBtn(true)
+        setUserUpdateSuccess('Success to update password')
+        setTimeout(()=>{
+            setUserUpdateSuccess('')
+        },3000)
     }
     const newPasswordSubmitHandler= async (event)=>{
         event.preventDefault()
@@ -87,6 +92,7 @@ const Profile=()=>{
     return (
         <section className={classes.profile}>
             <div className={classes.profileArea}> Profile
+            <div>{userUpdateSuccess && <div className={classes.success}>{userUpdateSuccess}</div>}</div>
                 <form onSubmit={nameSubmitHandler}>
                     <label>Name : </label>
                     <input  type='text' ref={NameRef} 
@@ -101,6 +107,7 @@ const Profile=()=>{
                 <div>Last SignIn Time : {metadata.lastSignInTime}</div>
             </div>
             <div className={classes.passwordArea}> Password
+                <div>{success && <div className={classes.success}>{success}</div>}</div>
                 <div>{error && <div className={classes.error}>{error}</div>}</div>
                 <form onSubmit={newPasswordSubmitHandler}>
                 <label>Old Password* </label>
@@ -133,7 +140,7 @@ const Profile=()=>{
                     <div>Password must have at least 6 characters. </div>
                     <button disabled={passwordDisabledBtn}>Update Password</button>
                 </form>
-                <div>{success && <div className={classes.success}>{success}</div>}</div>
+                
             </div>
         </section>
     )

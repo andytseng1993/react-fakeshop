@@ -7,6 +7,7 @@ import ProductDetail from './component/shopPage/ProductDetail';
 import { UserAuthContextProvider } from './context/UserAuthContext';
 import Profile from './component/logIn/Profile';
 import ProtectedRoute from './component/layout/ProtectedRoute';
+import Cart from './pages/Cart';
 
   
 function App() {
@@ -23,6 +24,7 @@ function App() {
             <Route element={<ProtectedRoute/>}>
               <Route path='profile' element={<Profile/>}/>
             </Route>
+            <Route path='cart' element={<Cart/>}/>
             <Route
               path="*"
               element={
