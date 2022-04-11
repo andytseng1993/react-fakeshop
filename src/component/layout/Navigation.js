@@ -4,6 +4,8 @@ import { NavLink,useNavigate } from "react-router-dom"
 import { useUserAuth } from "../../context/UserAuthContext"
 import { setLogInBox, setUserName } from "../../redux/actions"
 import classes from './Navigation.module.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 
 function Navigation() {
     const openLogIn = useSelector((state) => state.openLogInbox.logIn)
@@ -71,14 +73,15 @@ function Navigation() {
                             </div>
                         </div>
                     </div>
-
-
                     :
                     <button className={classes.signIn} onClick={openLogInHandler}>
                         Log In
                     </button>
                 }
-
+                <NavLink to='cart'>
+                    <FontAwesomeIcon icon={faCartShopping} />
+                </NavLink>
+                
             </nav>
         </header>
     )
