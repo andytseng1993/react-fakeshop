@@ -58,10 +58,10 @@ export const addCartList = (product)=>{
         payload:product
     }
 }
-export const deleteCartProduct = (product)=>{
+export const deleteCartProduct = (id)=>{
     return {
         type:ACTIONS.DELETE_CARTPRODUCT,
-        payload:product
+        payload:id
     }
 }
 export const editCartProductQuantity = (email,productName,quantity)=>{

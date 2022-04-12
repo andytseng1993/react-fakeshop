@@ -42,7 +42,7 @@ export const openLogInBoxReducer = (state={logIn:false,register:false},action)=>
             return state
     }
 }
-export const setUserName=(state='',action)=>{
+export const setUserNameReducer=(state='',action)=>{
     switch(action.type){
         case ACTIONS.SET_USERNAME:
             return action.payload
@@ -51,14 +51,20 @@ export const setUserName=(state='',action)=>{
     }
 }
 
-export const setCartList=(state=[],action)=>{
+export const setCartListReducer=(state=[],action)=>{
     switch(action.type){
         case ACTIONS.UPDATE_CARTLIST:
-            return [...state,...action.payload]
+            return [...state,action.payload]
         case ACTIONS.ADD_CARTLIST:
-            return state.push(action.payload)
+            if(state.find((item)=>item.productId===action.payload.productId)){
+                return state.map((item)=>
+                item.productId===action.payload.productId?
+                    {...item,count:item.count+action.payload.count}:item
+                )
+            }
+            return [...state,action.payload]
         case ACTIONS.DELETE_CARTPRODUCT:
-            return state.filter((item)=> item.email!==action.payload.email || item.productName!==action.payload.productName)
+            return state.filter((item)=> item.productId!==action.payload)
         case ACTIONS.EDIT_CARTQUANTITY:
             return 
         default:
