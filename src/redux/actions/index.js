@@ -64,13 +64,16 @@ export const deleteCartProduct = (id)=>{
         payload:id
     }
 }
-export const editCartProductQuantity = (email,productName,quantity)=>{
+export const increaseQuantity = (productId)=>{
     return {
-        type:ACTIONS.EDIT_CARTQUANTITY,
-        payload:{
-            email,
-            productName,
-            quantity
-        }
+        type:ACTIONS.INCREASE_QUANTITY,
+        payload: productId
     }
 }
+export const decreaseQuantity = (productId)=>{
+    return {
+        type:ACTIONS.DECREASE_QUANTITY,
+        payload: productId
+    }
+}
+

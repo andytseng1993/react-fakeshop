@@ -9,5 +9,6 @@ export const ACTIONS={
     UPDATE_CARTLIST:'update_cartlist',
     ADD_CARTLIST:'add_cartlist',
     DELETE_CARTPRODUCT:'delete_cartproduct',
-    EDIT_CARTQUANTITY:'edit_cartquantity'
+    INCREASE_QUANTITY:'increase_quantity',
+    DECREASE_QUANTITY:'decrease_quantity'
 }

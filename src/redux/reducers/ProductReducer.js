@@ -65,9 +65,22 @@ export const setCartListReducer=(state=[],action)=>{
             return [...state,action.payload]
         case ACTIONS.DELETE_CARTPRODUCT:
             return state.filter((item)=> item.productId!==action.payload)
-        case ACTIONS.EDIT_CARTQUANTITY:
-            return 
-        default:
+        case ACTIONS.INCREASE_QUANTITY:
+            return state.map((item) => 
+                item.productId===action.payload?
+                    {...item,count:item.count+1}:item
+            )
+        case ACTIONS.DECREASE_QUANTITY:
+            const changeProduct = state.find((item)=> item.productId === action.payload)
+            if(changeProduct.count>1){
+                return state.map((item) =>
+                     item.productId===action.payload?
+                    {...item,count:item.count-1}:item
+                )}else{
+                return state.filter(item => 
+                    item.productId!==action.payload
+                )}
+        default: 
             return state
     }
 }
