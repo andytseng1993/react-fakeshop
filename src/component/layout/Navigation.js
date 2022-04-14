@@ -80,7 +80,7 @@ function Navigation() {
                     </button>
                 }
                 <NavLink to='cart' className={classes.cart}>
-                    <FontAwesomeIcon icon={faCartShopping} />
+                    <FontAwesomeIcon icon={faCartShopping} style={cartCount>0? {color: 'black'} : {color: '#ccc' }} />
                     {
                         cartCount>0?
                             <div className={classes.cartCount}>{cartCount}</div>
