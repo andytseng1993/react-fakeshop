@@ -19,7 +19,6 @@ function App() {
         <Layout>
           <Routes>
             <Route path='/' element={<HomePage/>} exact/>
-            <Route path='shop' element={<ShopPage/>}/>
             <Route path='product/:productId' element={<ProductDetail/>}/>
             <Route element={<ProtectedRoute/>}>
               <Route path='profile' element={<Profile/>}/>

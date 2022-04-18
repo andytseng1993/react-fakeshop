@@ -58,9 +58,6 @@ function Navigation() {
                 <NavLink to='/'>
                     Home
                 </NavLink>
-                <NavLink to='shop'>
-                    Shop
-                </NavLink>
 
                 {userName?
                     <div className={classes.user}>

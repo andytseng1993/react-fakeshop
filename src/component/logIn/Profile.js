@@ -91,53 +91,59 @@ const Profile=()=>{
     }
     return (
         <section className={classes.profile}>
-            <div className={classes.profileArea}> Profile
+            <div className={classes.profileArea}> 
+            <span>Profile</span>
             <div>{userUpdateSuccess && <div className={classes.success}>{userUpdateSuccess}</div>}</div>
                 <form onSubmit={nameSubmitHandler}>
-                    <label>Name : </label>
-                    <input  type='text' ref={NameRef} 
-                            onChange={nameInput}
-                            placeholder={displayName}
-                    ></input>
-                    <label>E-mail Address : </label>
-                    <input defaultValue={email} disabled></input>
+                    <div className={classes.name}>
+                       <label>Name : </label>
+                        <input  type='text' ref={NameRef} 
+                                onChange={nameInput}
+                                placeholder={displayName}
+                        ></input> 
+                    </div>
+                    <div className={classes.email}>
+                        <label>E-mail : </label>
+                        <input defaultValue={email} disabled></input>
+                    </div>
                     <button disabled={profileDisabledBtn} >Update User Name</button>
                 </form>
-                <div>Joined : {metadata.creationTime}</div>
-                <div>Last SignIn Time : {metadata.lastSignInTime}</div>
+                <div className={classes.joined}>Joined : {metadata.creationTime}</div>
+                <div className={classes.joined}>Last SignIn Time : {metadata.lastSignInTime}</div>
             </div>
-            <div className={classes.passwordArea}> Password
+            <div className={classes.passwordArea}>
+                <span>Password</span> 
                 <div>{success && <div className={classes.success}>{success}</div>}</div>
                 <div>{error && <div className={classes.error}>{error}</div>}</div>
                 <form onSubmit={newPasswordSubmitHandler}>
-                <label>Old Password* </label>
-                    <div>
+                    <label>Old Password* </label>
+                    <div className={classes.password}>
                         <input type={oldPasswordHide?'password':'text'} value={oldPassword} onChange={oldPasswordInput}></input>
                         <div className={classes.hide} onClick={()=>setOldPasswordHide(!oldPasswordHide)}>
                             {
-                                oldPasswordHide? <FontAwesomeIcon icon={faEyeSlash} />:<FontAwesomeIcon icon={faEye}/> 
+                                oldPasswordHide? <FontAwesomeIcon className={classes.hide} icon={faEyeSlash} />:<FontAwesomeIcon icon={faEye}/> 
                             }
                         </div>
                     </div>
                     <label>New Password* </label>
-                    <div>
+                    <div className={classes.password}>
                         <input type={hide?'password':'text'} value={newPassword} onChange={passwordInput}></input>
                         <div className={classes.hide} onClick={()=>setHide(!hide)}>
                             {
-                                hide? <FontAwesomeIcon icon={faEyeSlash} />:<FontAwesomeIcon icon={faEye}/> 
+                                hide? <FontAwesomeIcon className={classes.hide} icon={faEyeSlash} />:<FontAwesomeIcon icon={faEye}/> 
                             }
                         </div>
                     </div>
                     <label>Confirm New Password* </label>
-                    <div>
+                    <div className={classes.password}>
                         <input type={confirmHide?'password':'text'} value={newConfirmPassword} onChange={confirmpasswordInput}></input>
                         <div className={classes.hide} onClick={()=>setConfirmHide(!confirmHide)}>
                             {
-                                confirmHide? <FontAwesomeIcon icon={faEyeSlash} />:<FontAwesomeIcon icon={faEye}/> 
+                                confirmHide? <FontAwesomeIcon className={classes.hide} icon={faEyeSlash} />:<FontAwesomeIcon icon={faEye}/> 
                             }
                         </div>    
                     </div>
-                    <div>Password must have at least 6 characters. </div>
+                    <div className={classes.passwordAlert}>Password must have at least 6 characters. </div>
                     <button disabled={passwordDisabledBtn}>Update Password</button>
                 </form>
                 
