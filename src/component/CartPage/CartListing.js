@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux"
 import classes from './CartListing.module.css'
 import { increaseQuantity,decreaseQuantity } from "../../redux/actions"
 
-const CartLsting= ()=>{
+const CartListing= ()=>{
     const dispatch= useDispatch()
     const cartLists = useSelector((state)=> state.setCartList)
     const itemPrice = cartLists.reduce((pre,cur)=> pre+cur.price*cur.count,0)
@@ -73,4 +73,4 @@ const CartLsting= ()=>{
     )
 }
 
-export default CartLsting
+export default CartListing
