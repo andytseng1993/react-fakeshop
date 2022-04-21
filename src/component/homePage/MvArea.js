@@ -17,7 +17,7 @@ function MvArea(){
     return (
         <div className={`${classes.mvArea} ${scrollClass}`}>
             <div className={classes.mvText}>
-                <h1>Fake is Life!</h1>
+                <h1>FakeStore is Life!</h1>
                 <h2>FakeStore makes your life better.</h2>
             </div>
             <ul className={classes.mvList}>
@@ -28,7 +28,7 @@ function MvArea(){
                 scroll
             </div>
             <div className={classes.mainTitle}>
-                <h1>Fake is Life!</h1>
+                <h1>FakeStore is Life!</h1>
                 <h2>Welcome to Fake store!</h2>
             </div>   
         </div>
