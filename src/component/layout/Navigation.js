@@ -10,6 +10,7 @@ import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 function Navigation() {
     const openLogIn = useSelector((state) => state.openLogInbox.logIn)
     const userName = useSelector((state)=> state.setUserName) 
+    const cartCount = useSelector((state)=> state.setCartList).length
     const { logout,currentUser } = useUserAuth()
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -57,9 +58,6 @@ function Navigation() {
                 <NavLink to='/'>
                     Home
                 </NavLink>
-                <NavLink to='shop'>
-                    Shop
-                </NavLink>
 
                 {userName?
                     <div className={classes.user}>
@@ -78,8 +76,14 @@ function Navigation() {
                         Log In
                     </button>
                 }
-                <NavLink to='cart'>
-                    <FontAwesomeIcon icon={faCartShopping} />
+                <NavLink to='cart' className={classes.cart}>
+                    <FontAwesomeIcon icon={faCartShopping} style={cartCount>0? {color: 'black'} : {color: '#ccc' }} />
+                    {
+                        cartCount>0?
+                            <div className={classes.cartCount}>{cartCount}</div>
+                            :
+                            <div></div>
+                    }
                 </NavLink>
                 
             </nav>

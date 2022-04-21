@@ -112,3 +112,40 @@ nav a {
 .userBox:hover{
     display: block;
 }
+.cart{
+    position: relative;
+    font-size: 1.5rem;
+    margin-right: 10px;
+    margin-left: 15px;
+    padding-right: 10px;
+}
+
+.cartCount{
+    position: absolute;
+    width: 18px;
+    font-weight: 800;
+    font-size: .8rem;
+    bottom: -2px;
+    right: 0px;
+    padding: 1px 0px;
+    background-color: rgb(255, 62, 62);
+    color: white;
+    border-radius: 50%;
+}
+.cart:hover > .cartCount{
+    animation: jump .5s ease;
+}
+@keyframes jump{
+    0%{
+        transform: translateY(0px);
+    }
+    35%{
+        transform: translateY(-18px);
+    }
+    70%{
+        transform: translateY(0px);
+    }
+    85%{
+        transform: translateY(-4px);
+    }
+}

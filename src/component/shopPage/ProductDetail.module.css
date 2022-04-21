@@ -44,23 +44,45 @@
 }
 .category{
     color: rgb(142, 102, 102);
-    padding: 10px 20px;
-    background-color: #eee;
+    padding: 10px 0px;
     border-radius: 5px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 .description{
     color: #333;
     line-height: 1.4rem;
 }
 .cart{
-    margin-top: 20px;
-    padding: 7px 30px;
+    padding: 7px 20px;
     background-color: rgb(233, 90, 90);
     color: rgb(255, 255, 255);
-    font-size: 1.1rem;
-    font-weight: 800;
+    font-size: 1rem;
+    font-weight: 700;
     letter-spacing: 1px;
     border-radius: 5px;
     cursor: pointer;
+}
+.cartArea{
+    width: 100%;
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+
+}
+.quantity{
+    display: flex;
+    align-items: center;
+}
+.quantity button{
+    font-size: 18px;
+    padding: 2px 7px;
+    border-radius: 5px;
+    background: none ;
+    border: solid black 1px;
+}
+.quantity .count{
+    text-align: center;
+    font-size: 16px;
+    width: 30px;
 }

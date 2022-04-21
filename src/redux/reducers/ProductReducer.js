@@ -42,11 +42,45 @@ export const openLogInBoxReducer = (state={logIn:false,register:false},action)=>
             return state
     }
 }
-export const setUserName=(state='',action)=>{
+export const setUserNameReducer=(state='',action)=>{
     switch(action.type){
         case ACTIONS.SET_USERNAME:
             return action.payload
         default:
+            return state
+    }
+}
+
+export const setCartListReducer=(state=[],action)=>{
+    switch(action.type){
+        case ACTIONS.UPDATE_CARTLIST:
+            return [...state,action.payload]
+        case ACTIONS.ADD_CARTLIST:
+            if(state.find((item)=>item.productId===action.payload.productId)){
+                return state.map((item)=>
+                item.productId===action.payload.productId?
+                    {...item,count:item.count+action.payload.count}:item
+                )
+            }
+            return [...state,action.payload]
+        case ACTIONS.DELETE_CARTPRODUCT:
+            return state.filter((item)=> item.productId!==action.payload)
+        case ACTIONS.INCREASE_QUANTITY:
+            return state.map((item) => 
+                item.productId===action.payload?
+                    {...item,count:item.count+1}:item
+            )
+        case ACTIONS.DECREASE_QUANTITY:
+            const changeProduct = state.find((item)=> item.productId === action.payload)
+            if(changeProduct.count>1){
+                return state.map((item) =>
+                     item.productId===action.payload?
+                    {...item,count:item.count-1}:item
+                )}else{
+                return state.filter(item => 
+                    item.productId!==action.payload
+                )}
+        default: 
             return state
     }
 }

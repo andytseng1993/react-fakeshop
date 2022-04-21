@@ -1,5 +1,11 @@
+import CartLsting from "../component/CartPage/CartListing"
+
 const Cart= ()=>{
-    return <h1>Cart</h1>
+    return (
+        <div style={{margin:'30px 0px'}}>
+            <CartLsting />
+        </div>
+    )
 }
 
 export default Cart

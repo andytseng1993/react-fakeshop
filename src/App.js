@@ -1,7 +1,6 @@
 import HomePage from './pages/HomePage';
 import './App.css';
 import { Route, Routes } from 'react-router-dom';
-import ShopPage from './pages/ShopPage';
 import Layout from './component/layout/Layout';
 import ProductDetail from './component/shopPage/ProductDetail';
 import { UserAuthContextProvider } from './context/UserAuthContext';
@@ -19,7 +18,6 @@ function App() {
         <Layout>
           <Routes>
             <Route path='/' element={<HomePage/>} exact/>
-            <Route path='shop' element={<ShopPage/>}/>
             <Route path='product/:productId' element={<ProductDetail/>}/>
             <Route element={<ProtectedRoute/>}>
               <Route path='profile' element={<Profile/>}/>

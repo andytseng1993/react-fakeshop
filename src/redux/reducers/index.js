@@ -1,10 +1,11 @@
 import { combineReducers } from "redux";
-import { productReducer, selectProducer ,selectCategoryReducer, openLogInBoxReducer, setUserName} from "./ProductReducer";
+import { productReducer, selectProducer ,selectCategoryReducer, openLogInBoxReducer,setUserNameReducer, setCartListReducer} from "./ProductReducer";
 
 export const reducers = combineReducers({
     allProducts: productReducer,
     productDetail: selectProducer,
     selectCategory:selectCategoryReducer,
     openLogInbox: openLogInBoxReducer,
-    setUserName:setUserName
+    setUserName:setUserNameReducer,
+    setCartList:setCartListReducer,
 })
