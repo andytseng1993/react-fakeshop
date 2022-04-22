@@ -53,11 +53,11 @@ const Profile=()=>{
     }
     const nameSubmitHandler= async (event)=>{
         event.preventDefault()
-        await updatfile({displayName: NameRef.current.value}).then(()=>{
-            dispatch(setUserName( NameRef.current.value))
+        await updatfile({displayName: NameRef.current.value.trim()}).then(()=>{
+            dispatch(setUserName( NameRef.current.value.trim()))
         })
         setProfileDisabledBtn(true)
-        setUserUpdateSuccess('Success to update password')
+        setUserUpdateSuccess('Success to update User Name')
         setTimeout(()=>{
             setUserUpdateSuccess('')
         },3000)
@@ -70,8 +70,8 @@ const Profile=()=>{
                 setError('')
             },3000)
         }
-        try {
-           await updateNewPassword(email,oldPassword,newPassword)
+        
+        await updateNewPassword(email,oldPassword,newPassword)
         .then(()=>{
             setPasswordDisabledBtn(true)
             setNewPassword('')
@@ -82,18 +82,19 @@ const Profile=()=>{
                 setSuccess('')
             },3000)
         }) 
-        } catch (error) {
+        .catch ((error)=>{
             setError(error.message)
             return setTimeout(()=>{
                 setError('')
             },3000)
-        }  
+        })
+            
+         
     }
     return (
         <section className={classes.profile}>
             <div className={classes.profileArea}> 
             <span>Profile</span>
-            <div>{userUpdateSuccess && <div className={classes.success}>{userUpdateSuccess}</div>}</div>
                 <form onSubmit={nameSubmitHandler}>
                     <div className={classes.name}>
                        <label>Name : </label>
@@ -106,15 +107,14 @@ const Profile=()=>{
                         <label>E-mail : </label>
                         <input defaultValue={email} disabled></input>
                     </div>
+                    <div className={classes.joined}>Joined : {metadata.creationTime}</div>
+                    <div className={classes.joined}>Last SignIn Time : {metadata.lastSignInTime}</div>
                     <button disabled={profileDisabledBtn} >Update User Name</button>
                 </form>
-                <div className={classes.joined}>Joined : {metadata.creationTime}</div>
-                <div className={classes.joined}>Last SignIn Time : {metadata.lastSignInTime}</div>
+                <div>{userUpdateSuccess && <div className={classes.success}>{userUpdateSuccess}</div>}</div>
             </div>
             <div className={classes.passwordArea}>
                 <span>Password</span> 
-                <div>{success && <div className={classes.success}>{success}</div>}</div>
-                <div>{error && <div className={classes.error}>{error}</div>}</div>
                 <form onSubmit={newPasswordSubmitHandler}>
                     <label>Old Password* </label>
                     <div className={classes.password}>
@@ -146,7 +146,8 @@ const Profile=()=>{
                     <div className={classes.passwordAlert}>Password must have at least 6 characters. </div>
                     <button disabled={passwordDisabledBtn}>Update Password</button>
                 </form>
-                
+                <div>{success && <div className={classes.success}>{success}</div>}</div>
+                <div>{error && <div className={classes.error}>{error}</div>}</div>
             </div>
         </section>
     )

@@ -37,9 +37,11 @@ const Register=()=>{
             setError('')
             setLoading(true)
             await signup(emailRef.current.value,passwordRef.current.value)
-            await updatfile({displayName:NameRef.current.value})
+            await updatfile({displayName:NameRef.current.value.trim()})
             .then(()=>{
+                unlockScroll()
                 dispatch(setRegisterBox(false))
+                dispatch(setUserName(NameRef.current.value.trim()))
             })
         } catch (error) {
             setError(error.message)
@@ -48,7 +50,6 @@ const Register=()=>{
             },3000)
         }
         setLoading(false)
-        dispatch(setUserName(NameRef.current.value))
     }
     const hideHandler=()=>{
         setHide(!hide)

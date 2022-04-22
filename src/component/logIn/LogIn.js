@@ -28,6 +28,7 @@ const LogIn = () => {
             setLoading(true)
             await login(emailRef.current.value, passwordRef.current.value)
                 .then(() => { 
+                    unlockScroll()
                     dispatch(setLogInBox(false))
                     dispatch(setUserName(currentUser.displayName))
                 })

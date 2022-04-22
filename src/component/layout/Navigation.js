@@ -18,7 +18,7 @@ function Navigation() {
 
     useEffect(()=>{
         currentUser?.displayName? 
-            dispatch(setUserName(currentUser.displayName))
+            dispatch(setUserName(currentUser.displayName.trim()))
             :
             dispatch(setUserName(''))
     },[currentUser?.displayName])

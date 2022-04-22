@@ -33,7 +33,7 @@ export const UserAuthContextProvider=({children})=>{
     function updateNewPassword(email,oldPassword,newPassword){
         const credential = EmailAuthProvider.credential (email,oldPassword)
         return reauthenticateWithCredential(auth.currentUser, credential).then(() => {
-            updatePassword(auth.currentUser, newPassword)
+            return updatePassword(auth.currentUser, newPassword)
           })
     }
 
