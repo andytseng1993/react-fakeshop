@@ -40,7 +40,7 @@ const CartListing= ()=>{
     })
     if(itemPrice===0){
         return (
-            <h2>There are no items in your bag.</h2>
+            <h2>There are no items in your bag!</h2>
         )
     }
     return (
