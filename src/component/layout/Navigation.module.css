@@ -82,11 +82,11 @@ nav a {
     top: 30px;
     border-radius: 5px;
     box-shadow: 2px 2px 4px 1px rgba(0, 0, 0, 0.15);
-    padding-top: 15px;
+    padding: 7px 0px;
 }
 .userBox .signout{
     position: relative;
-    margin: 15px 20px;
+    margin: 7px 20px 7px;
     padding: 0px 5px 5px;
     font-size: 1rem;
     font-weight: 600;
@@ -107,10 +107,14 @@ nav a {
 }
 
 .user:hover > .userBox{
-    display: block;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 .userBox:hover{
-    display: block;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 .cart{
     position: relative;
