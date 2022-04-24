@@ -24,8 +24,6 @@ const ProductCategory=()=>{
         if(select===category) return `${classes.isActive}`
         else return ''
     }
-    console.log(select);
-
     return(
         <>
             <div className={`${classes.category} ${categoryCheck('All Products')}`} onClick={()=> dispatch(setProductCategory('All Products'))}>
