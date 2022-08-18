@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import { useUserAuth } from '../../context/UserAuthContext'
 import { setUserName } from '../../redux/actions'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faEyeSlash,faEye} from "@fortawesome/free-solid-svg-icons";
+import {faEyeSlash,faEye,faEnvelopeCircleCheck} from "@fortawesome/free-solid-svg-icons";
 import classes from './Profile.module.css'
 
 
@@ -18,12 +18,14 @@ const Profile=()=>{
     const [newPassword,setNewPassword] = useState('')
     const [newConfirmPassword,setNewConfirmPassword] = useState('')
     const [error,setError] = useState('')
+    const [verification,setVerification] = useState('')
+    const [verificationError,setVerificationError]= useState('')
     const [success,setSuccess] = useState('')
     const [userUpdateSuccess,setUserUpdateSuccess] = useState('')
     const dispatch=useDispatch()
-    const {currentUser,updatfile,updateNewPassword}=useUserAuth()
-    const {displayName,email,metadata} = currentUser
-    
+    const {currentUser,updatfile,updateNewPassword,sendVerificationEmail}=useUserAuth()
+    const {emailVerified,displayName,email,metadata} = currentUser
+    console.log(currentUser.getIdToken());
     
     useEffect(()=>{
         NameRef.current.value=displayName
@@ -87,9 +89,21 @@ const Profile=()=>{
             return setTimeout(()=>{
                 setError('')
             },3000)
+        })   
+    }
+    const sendVerification = (event)=>{
+        event.preventDefault()
+        sendVerificationEmail().then(()=>{
+            setVerification('Email verification sent! Please check your Email inbox!')
+            setTimeout(()=>{
+                setVerification('')
+            },3000)
+        }).catch((err)=>{
+            setVerificationError(err.message)
+            setTimeout(()=>{
+                setVerificationError('')
+            },3000)
         })
-            
-         
     }
     return (
         <section className={classes.profile}>
@@ -105,13 +119,21 @@ const Profile=()=>{
                     </div>
                     <div className={classes.email}>
                         <label>E-mail : </label>
-                        <input defaultValue={email} disabled></input>
+                        <div style={{display:'flex',width:'100%'}}>
+                            <input defaultValue={email} disabled></input>
+                            {emailVerified?
+                                <FontAwesomeIcon className={classes.verified} icon={faEnvelopeCircleCheck} />:
+                                <button className={classes.verifiedBtn} onClick={sendVerification}>Verify Email</button>
+                            }
+                        </div>
                     </div>
                     <div className={classes.joined}>Joined : {metadata.creationTime}</div>
                     <div className={classes.joined}>Last SignIn Time : {metadata.lastSignInTime}</div>
                     <button disabled={profileDisabledBtn} >Update User Name</button>
                 </form>
                 <div>{userUpdateSuccess && <div className={classes.success}>{userUpdateSuccess}</div>}</div>
+                <div>{verification && <div className={classes.success}>{verification}</div>}</div>
+                <div>{verificationError && <div className={classes.error}>{verificationError}</div>}</div>
             </div>
             <div className={classes.passwordArea}>
                 <span>Password</span> 
@@ -148,6 +170,7 @@ const Profile=()=>{
                 </form>
                 <div>{success && <div className={classes.success}>{success}</div>}</div>
                 <div>{error && <div className={classes.error}>{error}</div>}</div>
+                
             </div>
         </section>
     )
