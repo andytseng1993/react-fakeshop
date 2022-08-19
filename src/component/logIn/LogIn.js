@@ -1,14 +1,15 @@
 import classes from './LogIn.module.css'
-import {  useRef, useState } from "react";
+import {  useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { setLogInBox, setRegisterBox, setUserName } from '../../redux/actions';
 import { useUserAuth } from '../../context/UserAuthContext';
 import LogInBox from './LogInBox';
 import PasswordInput from './PasswordInput';
+import EmailInput from './EmailInput';
 
 
 const LogIn = () => {
-    const emailRef = useRef('')
+    const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
@@ -25,7 +26,7 @@ const LogIn = () => {
         try {
             setError('')
             setLoading(true)
-            await login(emailRef.current.value, password)
+            await login(email, password)
                 .then(() => { 
                     unlockScroll()
                     dispatch(setLogInBox(false))
@@ -39,10 +40,12 @@ const LogIn = () => {
         }
         setLoading(false)
     }
+    const handleEmailChange =(emailInput)=>{
+        setEmail(emailInput)
+    }
     const handleChange = ({password}) => {
         setPassword(password)
     }
-    
     const createAccount = () => {
         dispatch(setRegisterBox(true))
         dispatch(setLogInBox(false))
@@ -57,10 +60,7 @@ const LogIn = () => {
             <div className={classes.detail}>Log in for faster checkout.</div>
             {error && <div className={classes.error}>{error}</div>}
             <form className={classes.form} onSubmit={submitHandler}>
-                <div className={classes.emailArea}>
-                    <div className={classes.email}>Email</div>
-                    <input type='email' required id='email' ref={emailRef} placeholder='Email Adress'></input>
-                </div>
+                <EmailInput email={email} handleChange={handleEmailChange} />
                 <PasswordInput name={'Password'} password={password} handleChange={handleChange} keyName={'password'} />
                 <button className={classes.submit}>Log In</button>
             </form>
