@@ -1,20 +1,19 @@
 import { useCallback, useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { setLogInBox, setRegisterBox, setUserName } from "../../redux/actions"
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faEyeSlash,faEye} from "@fortawesome/free-solid-svg-icons";
 import classes from './Register.module.css'
 import {useUserAuth} from '../../context/UserAuthContext'
 import LogInBox from "./LogInBox";
+import PasswordInput from "./PasswordInput";
 
 
 const Register=()=>{
     const NameRef = useRef('')
     const emailRef = useRef('')
-    const passwordRef = useRef('')
-    const passwordConfirmRef = useRef('')
-    const [hide,setHide] = useState(true)
-    const [confirmHide,setConfirmHide] = useState(true)
+    const [password,setPassword] = useState({
+        password: '',
+        confirmPassword: ''
+    })
     const [error,setError] = useState('')
     const {signup ,updatfile} = useUserAuth()
     const [loading,setLoading] =useState(false)
@@ -28,7 +27,15 @@ const Register=()=>{
       }, [])
     const submitHandler= async (event)=>{
         event.preventDefault()
-        if(passwordRef.current.value!==passwordConfirmRef.current.value){
+        if(password.password.length<6){
+            setError('Password must have at least 6 characters.')
+            return (
+                setTimeout(()=>{
+                    setError('')
+                },3000)
+            )
+        }
+        if(password.password!==password.confirmPassword){
             setError('Password do not match.')
             return setTimeout(()=>{
                 setError('')
@@ -37,7 +44,7 @@ const Register=()=>{
         try {
             setError('')
             setLoading(true)
-            await signup(emailRef.current.value,passwordRef.current.value)
+            await signup(emailRef.current.value,password.password)
             await updatfile({displayName:NameRef.current.value.trim()})
             .then(()=>{
                 unlockScroll()
@@ -52,13 +59,9 @@ const Register=()=>{
         }
         setLoading(false)
     }
-    const hideHandler=()=>{
-        setHide(!hide)
+    const handleChange=(data)=>{
+        setPassword(prevState => {return{...prevState,...data}})
     }
-    const confirmHideHandler=()=>{
-        setConfirmHide(!confirmHide)
-    }
-    
     const logIn=()=>{
         dispatch(setLogInBox(true))
         dispatch(setRegisterBox(false))
@@ -79,24 +82,8 @@ const Register=()=>{
                     <div className={classes.email}>Email</div>
                     <input type='text' required id='email' ref={emailRef} placeholder='Email Adress'></input>
                 </div>
-                <div className={classes.passwordArea}>
-                    <div className={classes.password}>Password</div>
-                    <input type={hide?'password':'text'} required id='password' ref={passwordRef} placeholder='Password'></input>
-                    <div className={classes.hide} onClick={hideHandler}>
-                        {
-                            hide? <FontAwesomeIcon icon={faEyeSlash} />:<FontAwesomeIcon icon={faEye}/> 
-                        }
-                    </div>
-                </div>
-                <div className={classes.passwordArea}>
-                    <div className={classes.password}>Password Confirmation</div>
-                    <input type={confirmHide?'password':'text'} required id='passwordconfirm' ref={passwordConfirmRef} placeholder='Password Confirmation'></input>
-                    <div className={classes.hide} onClick={confirmHideHandler}>
-                        {
-                            confirmHide? <FontAwesomeIcon icon={faEyeSlash} />:<FontAwesomeIcon icon={faEye}/> 
-                        }
-                    </div>
-                </div>
+                <PasswordInput name={'Password'} password={password.password} handleChange={handleChange} keyName={'password'} />
+                <PasswordInput name={'Password Confirmation'} password={password.confirmPassword} handleChange={handleChange} keyName={'confirmPassword'} />
                 <button className={classes.submit}>Join</button>
             </form>
             

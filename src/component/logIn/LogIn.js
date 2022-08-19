@@ -1,17 +1,15 @@
 import classes from './LogIn.module.css'
 import {  useRef, useState } from "react";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEyeSlash, faEye } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from 'react-redux';
 import { setLogInBox, setRegisterBox, setUserName } from '../../redux/actions';
 import { useUserAuth } from '../../context/UserAuthContext';
 import LogInBox from './LogInBox';
+import PasswordInput from './PasswordInput';
 
 
 const LogIn = () => {
     const emailRef = useRef('')
-    const passwordRef = useRef('')
-    const [hide, setHide] = useState(true)
+    const [password, setPassword] = useState('')
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
     const { login ,currentUser} = useUserAuth()
@@ -27,7 +25,7 @@ const LogIn = () => {
         try {
             setError('')
             setLoading(true)
-            await login(emailRef.current.value, passwordRef.current.value)
+            await login(emailRef.current.value, password)
                 .then(() => { 
                     unlockScroll()
                     dispatch(setLogInBox(false))
@@ -41,8 +39,8 @@ const LogIn = () => {
         }
         setLoading(false)
     }
-    const hideHandler = () => {
-        setHide(!hide)
+    const handleChange = ({password}) => {
+        setPassword(password)
     }
     
     const createAccount = () => {
@@ -63,15 +61,7 @@ const LogIn = () => {
                     <div className={classes.email}>Email</div>
                     <input type='email' required id='email' ref={emailRef} placeholder='Email Adress'></input>
                 </div>
-                <div className={classes.passwordArea}>
-                    <div className={classes.password}>Password</div>
-                    <input type={hide ? 'password' : 'text'} required id='password' ref={passwordRef} placeholder='Password'></input>
-                    <div className={classes.hide} onClick={hideHandler}>
-                        {
-                            hide ? <FontAwesomeIcon icon={faEyeSlash} /> : <FontAwesomeIcon icon={faEye} />
-                        }
-                    </div>
-                </div>
+                <PasswordInput name={'Password'} password={password} handleChange={handleChange} keyName={'password'} />
                 <button className={classes.submit}>Log In</button>
             </form>
             <button className={classes.reset} onClick={resetAccount}>Forgot Password?</button>          
@@ -81,5 +71,4 @@ const LogIn = () => {
         </LogInBox>
     )
 }
-
 export default LogIn

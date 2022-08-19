@@ -33,48 +33,13 @@
 .inputArea input:focus{
     border: 1px solid rgb(90, 90, 90);
 }
-.passwordArea{
-    position: relative;
-    width: 100%;
-    margin-bottom: 30px;
-    display: flex; 
-}
-.passwordArea input{
-    flex-grow: 10;
-    font-size: 1rem;
-    border: none;
-    border: 1px solid #ccc;
-    border-right: none;
-    padding: 9px 10px 5px;
-    border-radius: 5px 0px 0px 5px;
-    outline: none;
-    transition: all .2s;
-}
-.passwordArea input:hover,
-.passwordArea input:focus{
-    border: 1px solid rgb(90, 90, 90);
-    border-right: none;
-}
-.passwordArea input:hover +.hide,
-.passwordArea input:focus +.hide{
-    border: 1px solid rgb(90, 90, 90);
-    border-left: none;
-}
-.email,.password{
+.email{
     position: absolute;
     font-size: 12px;
     top: -7px;
     left: 10px;
     background-color: white;
     padding: 0px 3px;
-}
-.hide{
-    padding-top: 8px;
-    padding-right: 5px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-left: none;
-    border-radius: 0px 5px 5px 0px;
 }
 .submit{
     color: white;
