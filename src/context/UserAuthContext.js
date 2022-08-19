@@ -7,7 +7,8 @@ import {
     updatePassword,
     reauthenticateWithCredential,
     EmailAuthProvider,
-    sendEmailVerification
+    sendEmailVerification,
+    sendPasswordResetEmail
 } from "firebase/auth";
 import { createContext, useContext, useEffect, useState } from "react";
 import { auth } from "../firebase";
@@ -40,6 +41,9 @@ export const UserAuthContextProvider=({children})=>{
     function sendVerificationEmail(){
         return sendEmailVerification(currentUser)
     }
+    function sendResetEmail(email){
+        return sendPasswordResetEmail(currentUser, email)
+    }
 
     useEffect(()=>{
         const unsubscirbe = onAuthStateChanged(auth,(currentUser)=>{
@@ -56,7 +60,8 @@ export const UserAuthContextProvider=({children})=>{
         logout,
         updatfile,
         updateNewPassword,
-        sendVerificationEmail
+        sendVerificationEmail,
+        sendPasswordResetEmail
     }
     return (
     <UserAuthContext.Provider value={value}>
