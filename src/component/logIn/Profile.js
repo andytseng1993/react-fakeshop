@@ -168,8 +168,8 @@ const Profile=()=>{
                     <div className={classes.passwordAlert}>Password must have at least 6 characters. </div>
                     <button disabled={passwordDisabledBtn}>Update Password</button>
                 </form>
-                <div>{success && <div className={classes.success}>{success}</div>}</div>
-                <div>{error && <div className={classes.error}>{error}</div>}</div>
+                {success && <div className={classes.success}>{success}</div>}
+                {error && <div className={classes.error}>{error}</div>}
                 
             </div>
         </section>

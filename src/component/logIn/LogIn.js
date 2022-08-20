@@ -6,16 +6,21 @@ import { useUserAuth } from '../../context/UserAuthContext';
 import LogInBox from './LogInBox';
 import PasswordInput from './PasswordInput';
 import EmailInput from './EmailInput';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {faArrowLeftLong, faL} from "@fortawesome/free-solid-svg-icons";
 
 const LogIn = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [success,setSuccess] = useState('')
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
-    const { login ,currentUser} = useUserAuth()
+    const { login ,currentUser,sendResetEmail} = useUserAuth()
     const openLogIn = useSelector((state) => state.openLogInbox.logIn)
     const dispatch = useDispatch()
+    const [resetPasswordBox, setResetPasswordBox] = useState(false)
+    const [resetPasswordEmail, setResetPasswordEmail] = useState('')
+    const [resetPasswordBoxError,setResetPasswordBoxError]= useState('')
 
     const unlockScroll = () => {
         document.body.style.overflow = '';
@@ -50,12 +55,44 @@ const LogIn = () => {
         dispatch(setRegisterBox(true))
         dispatch(setLogInBox(false))
     }
-    const resetAccount =()=>{
-        console.log('111');
+    const handleResetEmailChange = (email)=>{
+        setResetPasswordEmail(email)
     }
-    if (!openLogIn) return (<></>)
-    return (
-        <LogInBox>
+    const validateEmail = (email) => {
+        return email.match(
+            /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        )
+    }
+    
+    const handleResetPassword= async(event)=>{
+        event.preventDefault()
+        if(!validateEmail(resetPasswordEmail)){
+            setResetPasswordBoxError('Email is not vaild, please enter again.')
+            return (
+                setTimeout(() => {
+                    setResetPasswordBoxError('')
+                }, 3000)
+            ) 
+        }
+        try{
+            await sendResetEmail(resetPasswordEmail).then(()=>{
+                setSuccess('Password reset email sent!')
+                setTimeout(() => {
+                    setSuccess('')
+                    setResetPasswordBox(false)
+                }, 3000)
+            })
+        } catch (error) {
+            setResetPasswordBoxError(error.message)
+            setTimeout(() => {
+                setResetPasswordBoxError('')
+            }, 3000)
+        }
+        
+    }
+    
+    const loginPage = (
+        <>
             <div className={classes.title}>Welcome Back!</div>
             <div className={classes.detail}>Log in for faster checkout.</div>
             {error && <div className={classes.error}>{error}</div>}
@@ -64,10 +101,32 @@ const LogIn = () => {
                 <PasswordInput name={'Password'} password={password} handleChange={handleChange} keyName={'password'} />
                 <button className={classes.submit}>Log In</button>
             </form>
-            <button className={classes.reset} onClick={resetAccount}>Forgot Password?</button>          
+            <button className={classes.reset} onClick={()=>setResetPasswordBox(true)}>Forgot Password?</button>          
             <div className={classes.account}>No account?
                 <button disabled={loading} onClick={createAccount}>Create one</button>
-            </div>  
+            </div>
+        </>
+    )
+    const frogotPasswordPage =(
+        <div className={classes.resetBox}>
+            <div className={classes.back} onClick={()=>setResetPasswordBox(false)}>
+                <FontAwesomeIcon icon={faArrowLeftLong} />
+            </div>
+            <div className={classes.resetTitle}>Password Reset</div>
+            <div className={classes.resetDetail}>Forgotten your password? Enter your e-mail address below, and we'll send you an e-mail allowing you to reset it.</div>
+            {resetPasswordBoxError && <div className={classes.error}>{resetPasswordBoxError}</div>}
+            <form className={classes.resetForm} onSubmit={handleResetPassword}>
+                <EmailInput email={resetPasswordEmail} handleChange={handleResetEmailChange} />
+                <button className={classes.submit}>Reset My Password</button>
+            </form>
+            {success && <div className={classes.success}>{success}</div>}
+        </div>
+    )
+
+    if (!openLogIn) return (<></>)
+    return (
+        <LogInBox>
+            {resetPasswordBox?frogotPasswordPage:loginPage}
         </LogInBox>
     )
 }

@@ -42,7 +42,7 @@ export const UserAuthContextProvider=({children})=>{
         return sendEmailVerification(currentUser)
     }
     function sendResetEmail(email){
-        return sendPasswordResetEmail(currentUser, email)
+        return sendPasswordResetEmail(auth, email)
     }
 
     useEffect(()=>{
@@ -61,7 +61,7 @@ export const UserAuthContextProvider=({children})=>{
         updatfile,
         updateNewPassword,
         sendVerificationEmail,
-        sendPasswordResetEmail
+        sendResetEmail
     }
     return (
     <UserAuthContext.Provider value={value}>
