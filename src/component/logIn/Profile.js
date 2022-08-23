@@ -3,20 +3,20 @@ import { useDispatch } from 'react-redux'
 import { useUserAuth } from '../../context/UserAuthContext'
 import { setUserName } from '../../redux/actions'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faEyeSlash,faEye,faEnvelopeCircleCheck} from "@fortawesome/free-solid-svg-icons";
+import {faEnvelopeCircleCheck} from "@fortawesome/free-solid-svg-icons";
 import classes from './Profile.module.css'
+import PasswordInput from './PasswordInput'
 
 
 const Profile=()=>{
     const [profileDisabledBtn,setProfileDisabledBtn] = useState(true)
     const [passwordDisabledBtn,setPasswordDisabledBtn] = useState(true)
     const NameRef = useRef('')
-    const [oldPasswordHide,setOldPasswordHide] = useState(true)
-    const [hide,setHide] = useState(true)
-    const [confirmHide,setConfirmHide] = useState(true)
-    const [oldPassword,setOldPassword] = useState('')
-    const [newPassword,setNewPassword] = useState('')
-    const [newConfirmPassword,setNewConfirmPassword] = useState('')
+    const [password,setPassword] = useState({
+        oldPassword:'',
+        passwordInput:'',
+        confirmPasswordInput:''
+    })
     const [error,setError] = useState('')
     const [verification,setVerification] = useState('')
     const [verificationError,setVerificationError]= useState('')
@@ -25,34 +25,26 @@ const Profile=()=>{
     const dispatch=useDispatch()
     const {currentUser,updatfile,updateNewPassword,sendVerificationEmail}=useUserAuth()
     const {emailVerified,displayName,email,metadata} = currentUser
-    console.log(currentUser.getIdToken());
     
     useEffect(()=>{
         NameRef.current.value=displayName
     },[])
+    useEffect(()=>{
+        if(password.passwordInput.length>0 && password.confirmPasswordInput.length>0){
+            return setPasswordDisabledBtn(false)
+        }
+        setPasswordDisabledBtn(true) 
+    },[password])
 
     const nameInput=(event)=>{
         event.target.value.length>0?
         setProfileDisabledBtn(false):setProfileDisabledBtn(true)
+    }
 
+    const handlePasswordInput = (data)=>{
+        setPassword(prevPassword=> {return {...prevPassword,...data}})
     }
-    const oldPasswordInput = (event)=>{
-        setOldPassword(event.target.value)
-    }
-    const passwordInput = (event)=>{
-        setNewPassword(event.target.value)
-        event.target.value.length>0 && newConfirmPassword.length>0?
-        setPasswordDisabledBtn(false) 
-        :
-        setPasswordDisabledBtn(true) 
-    }
-    const confirmpasswordInput = (event)=>{
-        setNewConfirmPassword(event.target.value)
-        event.target.value.length>0 && newPassword.length>0?
-        setPasswordDisabledBtn(false) 
-        :
-        setPasswordDisabledBtn(true) 
-    }
+    
     const nameSubmitHandler= async (event)=>{
         event.preventDefault()
         await updatfile({displayName: NameRef.current.value.trim()}).then(()=>{
@@ -66,19 +58,18 @@ const Profile=()=>{
     }
     const newPasswordSubmitHandler= async (event)=>{
         event.preventDefault()
-        if(newPassword!==newConfirmPassword){
-            setError('Password do not match.')
+        const {oldPassword,passwordInput,confirmPasswordInput} = password
+        if(passwordInput!==confirmPasswordInput){
+            setError('New Password do not match.')
             return setTimeout(()=>{
                 setError('')
             },3000)
         }
         
-        await updateNewPassword(email,oldPassword,newPassword)
+        await updateNewPassword(email,oldPassword,passwordInput)
         .then(()=>{
             setPasswordDisabledBtn(true)
-            setNewPassword('')
-            setNewConfirmPassword('')
-            setOldPassword('')
+            setPassword({oldPassword: '', passwordInput:'', confirmPasswordInput:''})
             setSuccess('Success to update password')
             return setTimeout(()=>{
                 setSuccess('')
@@ -136,41 +127,19 @@ const Profile=()=>{
                 <div>{verificationError && <div className={classes.error}>{verificationError}</div>}</div>
             </div>
             <div className={classes.passwordArea}>
-                <span>Password</span> 
+                <span>Reset Password</span> 
                 <form onSubmit={newPasswordSubmitHandler}>
-                    <label>Old Password* </label>
-                    <div className={classes.password}>
-                        <input type={oldPasswordHide?'password':'text'} value={oldPassword} onChange={oldPasswordInput}></input>
-                        <div className={classes.hide} onClick={()=>setOldPasswordHide(!oldPasswordHide)}>
-                            {
-                                oldPasswordHide? <FontAwesomeIcon className={classes.hide} icon={faEyeSlash} />:<FontAwesomeIcon icon={faEye}/> 
-                            }
-                        </div>
-                    </div>
-                    <label>New Password* </label>
-                    <div className={classes.password}>
-                        <input type={hide?'password':'text'} value={newPassword} onChange={passwordInput}></input>
-                        <div className={classes.hide} onClick={()=>setHide(!hide)}>
-                            {
-                                hide? <FontAwesomeIcon className={classes.hide} icon={faEyeSlash} />:<FontAwesomeIcon icon={faEye}/> 
-                            }
-                        </div>
-                    </div>
-                    <label>Confirm New Password* </label>
-                    <div className={classes.password}>
-                        <input type={confirmHide?'password':'text'} value={newConfirmPassword} onChange={confirmpasswordInput}></input>
-                        <div className={classes.hide} onClick={()=>setConfirmHide(!confirmHide)}>
-                            {
-                                confirmHide? <FontAwesomeIcon className={classes.hide} icon={faEyeSlash} />:<FontAwesomeIcon icon={faEye}/> 
-                            }
-                        </div>    
-                    </div>
+                    <label className={classes.password}>Old Password* </label>
+                        <PasswordInput password={password.oldPassword} handleChange={handlePasswordInput} keyName={'oldPassword'} />
+                    <label className={classes.password}>New Password* </label>
+                        <PasswordInput password={password.passwordInput} handleChange={handlePasswordInput} keyName={'passwordInput'} />
+                    <label className={classes.password}>Confirm New Password* </label>
+                        <PasswordInput password={password.confirmPasswordInput} handleChange={handlePasswordInput} keyName={'confirmPasswordInput'} />
                     <div className={classes.passwordAlert}>Password must have at least 6 characters. </div>
                     <button disabled={passwordDisabledBtn}>Update Password</button>
                 </form>
                 {success && <div className={classes.success}>{success}</div>}
                 {error && <div className={classes.error}>{error}</div>}
-                
             </div>
         </section>
     )
