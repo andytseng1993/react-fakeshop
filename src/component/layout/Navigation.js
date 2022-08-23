@@ -7,7 +7,7 @@ import classes from './Navigation.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 
-function Navigation() {
+function Navigation(props) {
     const openLogIn = useSelector((state) => state.openLogInbox.logIn)
     const userName = useSelector((state)=> state.setUserName) 
     const cartCount = useSelector((state)=> state.setCartList).length
@@ -58,7 +58,10 @@ function Navigation() {
                 <NavLink to='/'>
                     Home
                 </NavLink>
-
+                <NavLink to='/' onClick={()=> setTimeout(()=>{props.scroll()},750) }>
+                    Product
+                </NavLink>
+                
                 {userName?
                     <div className={classes.user}>
                         {`Hello, ${userName}`}
@@ -85,7 +88,6 @@ function Navigation() {
                             <div></div>
                     }
                 </NavLink>
-                
             </nav>
         </header>
     )

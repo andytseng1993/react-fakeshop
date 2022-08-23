@@ -1,3 +1,4 @@
+import { useState, useRef } from "react";
 import HomePage from './pages/HomePage';
 import './App.css';
 import { Route, Routes } from 'react-router-dom';
@@ -10,14 +11,16 @@ import Cart from './pages/Cart';
 
   
 function App() {
-  
-  
+  const myRef = useRef(null)
+  function scrollToProduct(){
+    myRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
   return (
     <div className="App">
       <UserAuthContextProvider>
-        <Layout>
+        <Layout scroll={scrollToProduct}>
           <Routes>
-            <Route path='/' element={<HomePage/>} exact/>
+            <Route path='/' element={<HomePage refProp={myRef}/>} exact/>
             <Route path='product/:productId' element={<ProductDetail/>}/>
             <Route element={<ProtectedRoute/>}>
               <Route path='profile' element={<Profile/>}/>

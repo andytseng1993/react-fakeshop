@@ -3,9 +3,12 @@ import Register from "../logIn/Register"
 import Navigation from "./Navigation"
 
 function Layout(props){
+    function scroll(){
+        props.scroll()
+    }
     return(
         <>
-            <Navigation/>
+            <Navigation scroll={scroll}/>
             <main>
                 {props.children}
             </main>
