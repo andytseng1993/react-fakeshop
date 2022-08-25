@@ -1,32 +1,37 @@
 import classes from './LogIn.module.css'
-import { useCallback, useRef, useState } from "react";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEyeSlash, faEye, faXmark } from "@fortawesome/free-solid-svg-icons";
+import {  useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { setLogInBox, setRegisterBox, setUserName } from '../../redux/actions';
 import { useUserAuth } from '../../context/UserAuthContext';
+import LogInBox from './LogInBox';
+import PasswordInput from './PasswordInput';
+import EmailInput from './EmailInput';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {faArrowLeftLong, faL} from "@fortawesome/free-solid-svg-icons";
 
 const LogIn = () => {
-    const emailRef = useRef('')
-    const passwordRef = useRef('')
-    const [hide, setHide] = useState(true)
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [success,setSuccess] = useState('')
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
-    const { login ,currentUser} = useUserAuth()
+    const { login ,currentUser,sendResetEmail} = useUserAuth()
     const openLogIn = useSelector((state) => state.openLogInbox.logIn)
     const dispatch = useDispatch()
+    const [resetPasswordBox, setResetPasswordBox] = useState(false)
+    const [resetPasswordEmail, setResetPasswordEmail] = useState('')
+    const [resetPasswordBoxError,setResetPasswordBoxError]= useState('')
 
-    const unlockScroll = useCallback(() => {
+    const unlockScroll = () => {
         document.body.style.overflow = '';
         document.body.style.paddingRight = ''
-    }, [])
+    }
     const submitHandler = async (event) => {
         event.preventDefault()
-
         try {
             setError('')
             setLoading(true)
-            await login(emailRef.current.value, passwordRef.current.value)
+            await login(email, password)
                 .then(() => { 
                     unlockScroll()
                     dispatch(setLogInBox(false))
@@ -40,50 +45,89 @@ const LogIn = () => {
         }
         setLoading(false)
     }
-    const hideHandler = () => {
-        setHide(!hide)
+    const handleEmailChange =(emailInput)=>{
+        setEmail(emailInput)
     }
-    const closeHandler = () => {
-        dispatch(setLogInBox(false))
-        dispatch(setRegisterBox(false))
-        unlockScroll()
+    const handleChange = ({password}) => {
+        setPassword(password)
     }
     const createAccount = () => {
         dispatch(setRegisterBox(true))
         dispatch(setLogInBox(false))
     }
+    const handleResetEmailChange = (email)=>{
+        setResetPasswordEmail(email)
+    }
+    const validateEmail = (email) => {
+        return email.match(
+            /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        )
+    }
+    
+    const handleResetPassword= async(event)=>{
+        event.preventDefault()
+        if(!validateEmail(resetPasswordEmail)){
+            setResetPasswordBoxError('Email is not vaild, please enter again.')
+            return (
+                setTimeout(() => {
+                    setResetPasswordBoxError('')
+                }, 3000)
+            ) 
+        }
+        try{
+            await sendResetEmail(resetPasswordEmail).then(()=>{
+                setSuccess('Password reset email sent!')
+                setTimeout(() => {
+                    setSuccess('')
+                    setResetPasswordBox(false)
+                }, 3000)
+            })
+        } catch (error) {
+            setResetPasswordBoxError(error.message)
+            setTimeout(() => {
+                setResetPasswordBoxError('')
+            }, 3000)
+        }
+        
+    }
+    
+    const loginPage = (
+        <>
+            <div className={classes.title}>Welcome Back!</div>
+            <div className={classes.detail}>Log in for faster checkout.</div>
+            {error && <div className={classes.error}>{error}</div>}
+            <form className={classes.form} onSubmit={submitHandler}>
+                <EmailInput email={email} handleChange={handleEmailChange} />
+                <PasswordInput name={'Password'} password={password} handleChange={handleChange} keyName={'password'} />
+                <button className={classes.submit}>Log In</button>
+            </form>
+            <button className={classes.reset} onClick={()=>setResetPasswordBox(true)}>Forgot Password?</button>          
+            <div className={classes.account}>No account?
+                <button disabled={loading} onClick={createAccount}>Create one</button>
+            </div>
+        </>
+    )
+    const frogotPasswordPage =(
+        <div className={classes.resetBox}>
+            <div className={classes.back} onClick={()=>setResetPasswordBox(false)}>
+                <FontAwesomeIcon icon={faArrowLeftLong} />
+            </div>
+            <div className={classes.resetTitle}>Password Reset</div>
+            <div className={classes.resetDetail}>Forgotten your password? Enter your e-mail address below, and we'll send you an e-mail allowing you to reset it.</div>
+            {resetPasswordBoxError && <div className={classes.error}>{resetPasswordBoxError}</div>}
+            <form className={classes.resetForm} onSubmit={handleResetPassword}>
+                <EmailInput email={resetPasswordEmail} handleChange={handleResetEmailChange} />
+                <button className={classes.submit}>Reset My Password</button>
+            </form>
+            {success && <div className={classes.success}>{success}</div>}
+        </div>
+    )
 
     if (!openLogIn) return (<></>)
     return (
-        <section className={classes.login}>
-            <div className={classes.content}>
-                <div className={classes.title}>Welcome Back!</div>
-                <div className={classes.detail}>Log in for faster checkout.</div>
-                {error && <div className={classes.error}>{error}</div>}
-                <div className={classes.closeBtn} onClick={closeHandler}><FontAwesomeIcon icon={faXmark} /></div>
-                <form className={classes.form} onSubmit={submitHandler}>
-                    <div className={classes.emailArea}>
-                        <div className={classes.email}>Email</div>
-                        <input type='email' required id='email' ref={emailRef} placeholder='Email Adress'></input>
-                    </div>
-                    <div className={classes.passwordArea}>
-                        <div className={classes.password}>Password</div>
-                        <input type={hide ? 'password' : 'text'} required id='password' ref={passwordRef} placeholder='Password'></input>
-                        <div className={classes.hide} onClick={hideHandler}>
-                            {
-                                hide ? <FontAwesomeIcon icon={faEyeSlash} /> : <FontAwesomeIcon icon={faEye} />
-                            }
-                        </div>
-                    </div>
-                    <button className={classes.submit}>Log In</button>
-                </form>
-
-                <div className={classes.account}>No account?
-                    <button disabled={loading} onClick={createAccount}>Create one</button>
-                </div>
-            </div>
-        </section>
+        <LogInBox>
+            {resetPasswordBox?frogotPasswordPage:loginPage}
+        </LogInBox>
     )
 }
-
 export default LogIn

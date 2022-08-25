@@ -1,17 +1,16 @@
-import { useRef } from "react";
+
 import MvArea from "../component/homePage/MvArea";
 import ProductListing from "../component/shopPage/ProductListing";
 
-function HomePage(){
-    const  product= useRef()
+function HomePage(props){
     return(
     <>
         <MvArea/>
         <h1 style={{textAlign:'start',
                     margin:'20px 10% 30px',
-                    paddingBottom:'10px',
+                    padding:'30px 0px 10px',
                     borderBottom:'1px solid #777'}}
-            ref={product}
+            ref={props.refProp}
         >
             Product
         </h1>
