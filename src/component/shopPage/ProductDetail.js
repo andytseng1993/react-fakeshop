@@ -15,7 +15,7 @@ const ProductDetail=()=>{
     const productDetail = useSelector((state)=> state.productDetail)
     const {image, title,price,description,category} = productDetail
     const product = {image,title,price,count,category,productId:params.productId}
-    
+    console.log(productDetail);
     useEffect(()=>{
         setIsLoading(true)
         axios.get(`https://fakestoreapi.com/products/${params.productId}`)
@@ -48,34 +48,44 @@ const ProductDetail=()=>{
         )
     }
     return (
-        <section className={classes.productDetail}>
-            <div className={classes.image}>
-                <img src={image} alt={title}></img>
+        <section className={classes.productmain}>
+            <div className={classes.product}>
+                <div className={classes.image}>
+                    <img src={image} alt={title}></img>
+                </div>
+                <div className={classes.content}>
+                    <div className={classes.category}>
+                        {category}
+                    </div>
+                    <div className={classes.title}>
+                        {title}
+                    </div>
+                    <div className={classes.price}>
+                        ${price}
+                    </div>
+                    <div className={classes.cartArea}>
+                        <div className={classes.quantity}>
+                            <button onClick={()=>{setCount(prevCount=>prevCount>1?prevCount-1:prevCount)}}>-</button>
+                            <div className={classes.count}>{count}</div>
+                            <button onClick={()=>setCount(prevCount=>prevCount+1)}>+</button>
+                        </div>
+                        <div className={classes.cart} onClick={()=>addCartHandler(product)}>
+                            Add to Cart
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div className={classes.content}>
-                <div className={classes.category}>
-                    {category}
-                </div>
-                <div className={classes.title}>
-                    {title}
-                </div>
-                <div className={classes.price}>
-                    ${price}
-                </div>
+            <div className={classes.productDetail}>
+                <h1 className={classes.productArea}>About this item</h1>
+                <hr/>
                 <div className={classes.description}>
-                    {description}
-                </div>
-                <div className={classes.cartArea}>
-                    <div className={classes.quantity}>
-                        <button onClick={()=>{setCount(prevCount=>prevCount>1?prevCount-1:prevCount)}}>-</button>
-                        <div className={classes.count}>{count}</div>
-                        <button onClick={()=>setCount(prevCount=>prevCount+1)}>+</button>
-                    </div>
-                    <div className={classes.cart} onClick={()=>addCartHandler(product)}>
-                        Add to Cart
-                    </div>
+                    <h3>Product details</h3>
+                    <p style={{margin:'20px 0px'}}>
+                        {description}
+                    </p>
                 </div>
             </div>
+            
         </section>
         
     )

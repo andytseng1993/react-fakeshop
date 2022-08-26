@@ -29,9 +29,8 @@ const Register=()=>{
     }, [])
 
     const validateEmail = (email) => {
-        return email.match(
-            /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-        )
+        let regex= /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/gm
+        return regex.test(String(email).toLowerCase())
     }
     const sendErrorMessage =(message)=>{
         return (
@@ -43,7 +42,7 @@ const Register=()=>{
     }
     const submitHandler= async (event)=>{
         event.preventDefault()
-        if(NameRef.current.value==''|| email==''||password.password==''|| password.confirmPassword=='') return
+        if(NameRef.current.value===''|| email===''||password.password===''|| password.confirmPassword==='') return
         if(!validateEmail(email)){
             sendErrorMessage('Email is not vaild, please enter again.')
             return
