@@ -78,24 +78,35 @@ const ProductReviews=()=>{
                     </div>
                 </div>
                 <hr/>
-                <label>Filter:  
-                    <select value={'All ratings'}>
-                        <option>All ratings</option>
-                        <option>5 stars</option>
-                        <option>4 stars</option>
-                        <option>3 stars</option>
-                        <option>2 stars</option>
-                        <option>1 star</option>
-                    </select>
-                </label>
-                
-                <div>We found 0 matching reviews</div>
-                <div>
-                    <div>Love it!</div>
-                    <div>5stars</div>
-                    <div>Little1kt</div>
-                    <div>5/31/2022</div>
-                    <div>Wow! I love this set. I think the magnetic block is super stylish and a fun way to display the set and you can add other knives you might have to it. The knives themselves are super high quality and cut through things like butter</div>
+                <div className={classes.reviewFilter}>
+                    <label className={classes.reviewSelect}>Filter:  
+                        <select>
+                            <option>All ratings</option>
+                            <option>5 stars</option>
+                            <option>4 stars</option>
+                            <option>3 stars</option>
+                            <option>2 stars</option>
+                            <option>1 star</option>
+                        </select>
+                    </label>
+                    <div>We found 0 matching reviews</div>
+                </div>
+                <div className={classes.reviewBox}>
+                    <div className={classes.reviewDetail}>
+                        <div className={classes.reviewSummary}>
+                            <div className={classes.reviewTitle}>Love it!</div>
+                            <div className={classes.reviewRating}>
+                                <FontAwesomeIcon icon={farFaStar} />
+                                <FontAwesomeIcon icon={farFaStar} />
+                                <FontAwesomeIcon icon={farFaStar} />
+                                <FontAwesomeIcon icon={farFaStar} />
+                                <FontAwesomeIcon icon={farFaStar} />
+                            </div>
+                            <div className={classes.reviewWriter}>Little1kt</div>
+                        </div>
+                        <div className={classes.reviewDay}>5/31/2022</div>
+                    </div>
+                    <div className={classes.reviewText}>Wow! I love this set. I think the magnetic block is super stylish and a fun way to display the set and you can add other knives you might have to it. The knives themselves are super high quality and cut through things like butter</div>
                 </div>
             </div>
     )
