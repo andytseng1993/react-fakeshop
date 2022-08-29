@@ -4,7 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faStar as fasFaStar} from "@fortawesome/free-solid-svg-icons";
 import { faStar as farFaStar } from '@fortawesome/free-regular-svg-icons'
 
-const text=[
+
+let text=[
     {
         Title: 'Love it!',
         ReviewStars : 3,
@@ -14,7 +15,7 @@ const text=[
     },
     {
         Title: 'Love it!',
-        ReviewStars : 5 ,
+        ReviewStars : 2 ,
         Writer: 'SDAqwe',
         Day: '5/31/2022',
         Text: 'Wow! I love this set. I think the magnetic block is super stylish and a fun way to display the set and you can add other knives you might have to it. The knives themselves are super high quality and cut through things like butter'
@@ -29,23 +30,27 @@ const text=[
 ]
 const ProductReviews=()=>{
     const [rating,setRating] = useState(0)
-    const [rewiewsFilterData,setRewiewsFilterData] = useState([])
     const [reviewFilter,setReviewFilter] = useState('all')
+    const [rewiewsFilterData,setRewiewsFilterData] = useState([])
+    const [starBarPercent,setStarBarPercent] = useState({})
 
     useEffect(()=>{
-        
         const AllStars = text.map((data)=>data.ReviewStars).reduce((previousValue, currentValue) => previousValue + currentValue,0)
         setRating(Math.floor(AllStars*10/text.length)/10)
     },[])
     useEffect(()=>{
-        let reviews={all:[]}
+        let reviews = {all:[]}
+        let starsPercentObj = {}
         for(let i=5;i>0;i--){
             let res = text.filter((review)=> review.ReviewStars === i)
+            let precent = Math.floor(res.length/text.length*100)
+            starsPercentObj[i]= precent
             reviews[i]=res
             reviews.all.push(...res)
         }
         setRewiewsFilterData(reviews)
-    },[text])
+        setStarBarPercent(starsPercentObj)
+    },[])
 
     const rewiewStars=(num)=>{
         const starsRow = []
@@ -60,6 +65,9 @@ const ProductReviews=()=>{
     const handleChange=(event)=>{
         console.log(event);
         setReviewFilter(event.target.value);
+    }
+    const handleStarBar = (num)=>{
+        setReviewFilter(num)
     }
 
     return(
@@ -93,41 +101,15 @@ const ProductReviews=()=>{
                         <button className={classes.writeReviewBtn}>Write a review</button>
                     </div>
                     <div className={classes.ratingHistogram}>
-                        <button className={classes.starLink}>
-                            <div className={classes.ratingText}>5 stars</div>
-                            <div className={classes.ratingBar}>
-                                <div className={classes.barPercent}></div>
-                            </div>
-                            <span className={classes.ratingPercent}>78%</span>
-                        </button>
-                        <button className={classes.starLink}>
-                            <div className={classes.ratingText}>4 stars</div>
-                            <div className={classes.ratingBar}>
-                                <div className={classes.barPercent}></div>
-                            </div>
-                            <span className={classes.ratingPercent}>11%</span>
-                        </button>
-                        <button className={classes.starLink}>
-                            <div className={classes.ratingText}>3 stars</div>
-                            <div className={classes.ratingBar}>
-                                <div className={classes.barPercent}></div>
-                            </div>
-                            <span className={classes.ratingPercent}>0%</span>
-                        </button>
-                        <button className={classes.starLink}>
-                            <div className={classes.ratingText}>2 stars</div>
-                            <div className={classes.ratingBar}>
-                                <div className={classes.barPercent}></div>
-                            </div>
-                            <span className={classes.ratingPercent}>1%</span>
-                        </button>
-                        <button className={classes.starLink}>
-                            <div className={classes.ratingText}>1 star</div>
-                            <div className={classes.ratingBar}>
-                                <div className={classes.barPercent}></div>
-                            </div>
-                            <span className={classes.ratingPercent}>10%</span>
-                        </button>
+                        {[5,4,3,2,1].map((num)=>{return(
+                            <button className={classes.starLink} onClick={()=>handleStarBar(num)} key={num}>
+                                <div className={classes.ratingText}>{num} stars</div>
+                                <div className={classes.ratingBar}>
+                                    <div className={classes.barPercent} style={{width:starBarPercent[num]+'%'}}></div>
+                                </div>
+                                <span className={classes.ratingPercent}>{starBarPercent[num]+'%'}</span>
+                            </button>
+                        )})}
                     </div>
                 </div>
                 <hr/>
@@ -142,7 +124,7 @@ const ProductReviews=()=>{
                             <option value={1}>1 star</option>
                         </select>
                     </label>
-                    <div>We found {rewiewsFilterData.length} matching reviews</div>
+                    <div>We found {rewiewsFilterData[reviewFilter]?.length} matching reviews</div>
                 </div>
                     {
                         rewiewsFilterData[reviewFilter]?.length? 
