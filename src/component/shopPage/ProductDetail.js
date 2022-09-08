@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { useParams } from "react-router-dom"
 import { addCartList, removeProduct, selectProduct } from "../../redux/actions"
 import classes from './ProductDetail.module.css'
-import ProductReviews from "./ProductReviews"
+import ProductReviews from "../reviews/ProductReviews"
 
 
 const ProductDetail=()=>{

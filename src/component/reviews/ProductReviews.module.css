@@ -1,0 +1,36 @@
+.productDetail{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ddd;
+    border-top: none;
+ }
+ .description{
+    display: flex;
+    justify-content:space-around;
+    align-items: center;
+    color: #333;
+    padding: 10px 20px;
+    margin-bottom: 20px;
+ }
+ .productArea{
+     padding: 20px 20px;
+ }
+/* review zone */
+
+.reviewFilter{
+    display: flex;
+    justify-content: space-between;
+    font-size: 17px;
+    margin: 15px 18px 0px;
+}
+.reviewSelect select option{
+    font-size: 17px;
+    padding: 5px 15px;
+}
+
+.addReviewSuccess{
+   font-size: 18px;
+   padding: 15px 20px;
+   color: rgb(0, 0, 0);
+   border-bottom: 1px solid rgb(97, 97, 97);
+}

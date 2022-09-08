@@ -66,7 +66,9 @@ const ProductAddReview=({name,cancelAddReview,productId,submitReview})=>{
             .post(`https://fakestore-2bc85-default-rtdb.firebaseio.com/${productId}.json`,reviewData)
             .then(()=>{
                 submitReview()
-            })
+            }).catch((err)=>[
+                setWarning(err)
+            ])
     }
     return(
         <div>
