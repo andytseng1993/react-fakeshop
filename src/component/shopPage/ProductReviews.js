@@ -3,6 +3,8 @@ import classes from './ProductReviews.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faStar as fasFaStar} from "@fortawesome/free-solid-svg-icons";
 import { faStar as farFaStar } from '@fortawesome/free-regular-svg-icons'
+import ProductAddReview from './ProductAddReview';
+import { useUserAuth } from '../../context/UserAuthContext';
 
 
 let text=[
@@ -33,12 +35,12 @@ const ProductReviews=()=>{
     const [reviewFilter,setReviewFilter] = useState('all')
     const [rewiewsFilterData,setRewiewsFilterData] = useState([])
     const [starBarPercent,setStarBarPercent] = useState({})
+    const {currentUser} = useUserAuth()
 
+    console.log(currentUser?'yes':'No');
     useEffect(()=>{
         const AllStars = text.map((data)=>data.ReviewStars).reduce((previousValue, currentValue) => previousValue + currentValue,0)
         setRating(Math.floor(AllStars*10/text.length)/10)
-    },[])
-    useEffect(()=>{
         let reviews = {all:[]}
         let starsPercentObj = {}
         for(let i=5;i>0;i--){
@@ -69,7 +71,7 @@ const ProductReviews=()=>{
     const handleStarBar = (num)=>{
         setReviewFilter(num)
     }
-
+    
     return(
         <div className={classes.productDetail}>
                 <h1 className={classes.productArea}>Customer reviews & ratings</h1>
@@ -113,6 +115,7 @@ const ProductReviews=()=>{
                     </div>
                 </div>
                 <hr/>
+                <ProductAddReview />
                 <div className={classes.reviewFilter}>
                     <label className={classes.reviewSelect}>Filter:  
                         <select value={reviewFilter} onChange={handleChange} >
