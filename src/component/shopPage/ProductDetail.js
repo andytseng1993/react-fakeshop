@@ -9,17 +9,17 @@ import ProductReviews from "./ProductReviews"
 
 
 const ProductDetail=()=>{
-    const params = useParams()
+    const {productId} = useParams()
     const [isLoading,setIsLoading] = useState(true)
     const [count,setCount] = useState(1)
     const dispatch= useDispatch()
     const productDetail = useSelector((state)=> state.productDetail)
     const {image, title,price,description,category} = productDetail
-    const product = {image,title,price,count,category,productId:params.productId}
-    console.log(productDetail);
+    const product = {image,title,price,count,category,productId}
+   
     useEffect(()=>{
         setIsLoading(true)
-        axios.get(`https://fakestoreapi.com/products/${params.productId}`)
+        axios.get(`https://fakestoreapi.com/products/${productId}`)
         .then(({data}) => {
             setIsLoading(false)
             dispatch(selectProduct(data))
@@ -27,7 +27,7 @@ const ProductDetail=()=>{
         return ()=>{
             dispatch(removeProduct())
         }
-    },[params.productId])
+    },[productId])
 
     const addCartHandler =  (product)=>{
         product.id =  nanoid()
@@ -86,7 +86,7 @@ const ProductDetail=()=>{
                     </p>
                 </div>
             </div>
-            <ProductReviews />
+            <ProductReviews productId={productId} />
         </section>
         
     )

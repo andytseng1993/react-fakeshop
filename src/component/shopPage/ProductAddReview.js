@@ -1,11 +1,17 @@
 import { useState } from 'react';
+import axios from 'axios';
 import classes from './ProductAddReview.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faStar as fasFaStar} from "@fortawesome/free-solid-svg-icons";
 import { faStar as farFaStar } from '@fortawesome/free-regular-svg-icons'
 
-const ProductAddReview=()=>{
+const ProductAddReview=({name,cancelAddReview,productId,submitReview})=>{
     const [ratingInput,setRatingInput] = useState(0)
+    const [nameInput,setNameInput] = useState(name)
+    const [titleInput,setTitleInput] = useState('')
+    const [descriptionInput,setDescriptionInput] = useState('')
+    const [warning,setWarning] = useState('')
+
     const writeRating=()=>{
         let star=[]
         for(let i=0;i<ratingInput;i++){
@@ -16,32 +22,83 @@ const ProductAddReview=()=>{
         }
         return star
     }
+    const handleNameChange=(event)=>{
+        setNameInput(event.target.value)
+    }
+    const handleTitleChange =(event)=>{
+        setTitleInput(event.target.value)
+    }
+    const handleDescriptionChange =(event)=>{
+        setDescriptionInput(event.target.value)
+    }
+    const handleCancel =(event)=>{
+        event.preventDefault()
+        cancelAddReview()
+    }
+    const handleSubmit = (event)=>{
+        event.preventDefault()
+        if(!nameInput){
+            setWarning('Please enter a nickname to submit a review.')
+            return
+        }
+        if(!ratingInput){
+            setWarning('Please select a rating from one to five stars to submit a review.')
+            return
+        }
+        if(!descriptionInput){
+            setWarning('Please enter a title to submit a review.')
+            return
+        }
+        if(!titleInput){
+            setWarning('Please enter a title to submit a review.')
+            return
+        }
+        const date = new Date()
+        setWarning('')
+        const reviewData ={
+            Title: titleInput,
+            ReviewStars : ratingInput,
+            Writer: nameInput,
+            Day: date.toLocaleDateString(),
+            Text: descriptionInput 
+        }
+        axios
+            .post(`https://fakestore-2bc85-default-rtdb.firebaseio.com/${productId}.json`,reviewData)
+            .then(()=>{
+                submitReview()
+            })
+    }
     return(
         <div>
             <div className={classes.addReviewArea}>
                 <h1>Review this item</h1>
                 <form>
-                    <label className={classes.addReviewNickname}>Nickname:
-                        <input type='text' maxLength="25"></input>
+                    <label className={classes.addReviewNickname}>
+                        <p>Nickname:</p>
+                        <input type='text' value={nameInput} onChange={handleNameChange} maxLength="25" required></input>
+                        <div className={classes.wordCount}>{nameInput.length}/25</div>
                     </label>
                     <div className={classes.addReviewRating}>
                             <div> Select a Rating : </div>
-                            <div>
+                            <div className={classes.rating}>
                                 {writeRating()}
                             </div>
                     </div>
                     <label className={classes.addReviewTitle}>Add a title:
-                        <input type='text' maxLength="50"></input>
+                        <input type='text' maxLength="50" value={titleInput} onChange={handleTitleChange} required></input>
+                        <div className={classes.wordCount}>{titleInput.length}/50</div>
                     </label>
                     <label className={classes.addReviewDescription}>
                         <p>
                             Please provide description! Your reviews help other shoppers:
                         </p>
-                        <textarea rows="8" cols="80" maxLength="3000"></textarea>
+                        <textarea rows="8" cols="75" maxLength="3000" value={descriptionInput} onChange={handleDescriptionChange} required></textarea>
+                        <div className={classes.wordCount}>{descriptionInput.length}/3000</div>
                     </label>
+                    {warning && <div className={classes.warning}>{warning}</div>}
                     <div className={classes.addReviewBtn}>
-                        <button>Cancel</button>
-                        <button>Submit review</button>
+                        <button onClick={handleCancel}>Cancel</button>
+                        <button onClick={handleSubmit}>Submit review</button>
                     </div>
                 </form>
             </div>

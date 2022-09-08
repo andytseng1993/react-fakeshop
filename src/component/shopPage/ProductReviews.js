@@ -1,58 +1,53 @@
-import {useEffect, useState} from 'react'
+import {useEffect, useState, useCallback} from 'react'
 import classes from './ProductReviews.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faStar as fasFaStar} from "@fortawesome/free-solid-svg-icons";
 import { faStar as farFaStar } from '@fortawesome/free-regular-svg-icons'
 import ProductAddReview from './ProductAddReview';
-import { useUserAuth } from '../../context/UserAuthContext';
+import { useDispatch, useSelector } from "react-redux"
+import { setLogInBox } from "../../redux/actions"
+import axios from 'axios';
 
-
-let text=[
-    {
-        Title: 'Love it!',
-        ReviewStars : 3,
-        Writer: 'Little1kt',
-        Day: '5/31/2022',
-        Text: 'Wow! I love this set. I think the magnetic block is super stylish and a fun way to display the set and you can add other knives you might have to it. The knives themselves are super high quality and cut through things like butter'
-    },
-    {
-        Title: 'Love it!',
-        ReviewStars : 2 ,
-        Writer: 'SDAqwe',
-        Day: '5/31/2022',
-        Text: 'Wow! I love this set. I think the magnetic block is super stylish and a fun way to display the set and you can add other knives you might have to it. The knives themselves are super high quality and cut through things like butter'
-    },
-    {
-        Title: 'Love it!',
-        ReviewStars : 2 ,
-        Writer: 'SDAqwe',
-        Day: '5/31/2022',
-        Text: 'Wow! I love this set. I think the magnetic block is super stylish and a fun way to display the set and you can add other knives you might have to it. The knives themselves are super high quality and cut through things like butter'
-    }
-]
-const ProductReviews=()=>{
+const ProductReviews=({productId})=>{
     const [rating,setRating] = useState(0)
     const [reviewFilter,setReviewFilter] = useState('all')
     const [rewiewsFilterData,setRewiewsFilterData] = useState([])
     const [starBarPercent,setStarBarPercent] = useState({})
-    const {currentUser} = useUserAuth()
+    const [addReview,setAddReview] = useState(false)
+    const dispatch = useDispatch()
+    const openLogIn = useSelector((state) => state.openLogInbox.logIn)
+    const userName = useSelector((state)=> state.setUserName) 
+    const [addReviewSuccess,setAddReviewSuccess] = useState('')
 
-    console.log(currentUser?'yes':'No');
     useEffect(()=>{
-        const AllStars = text.map((data)=>data.ReviewStars).reduce((previousValue, currentValue) => previousValue + currentValue,0)
-        setRating(Math.floor(AllStars*10/text.length)/10)
-        let reviews = {all:[]}
-        let starsPercentObj = {}
-        for(let i=5;i>0;i--){
-            let res = text.filter((review)=> review.ReviewStars === i)
-            let precent = Math.floor(res.length/text.length*100)
-            starsPercentObj[i]= precent
-            reviews[i]=res
-            reviews.all.push(...res)
-        }
-        setRewiewsFilterData(reviews)
-        setStarBarPercent(starsPercentObj)
-    },[])
+        let allReviewData= []
+        axios
+            .get(`https://fakestore-2bc85-default-rtdb.firebaseio.com/${productId}.json`)
+            .then(({data})=>{
+               for(let key in data){
+                const review={...data[key]}
+                allReviewData.push(review)
+               }
+               if(allReviewData.length>0){
+                   const AllStars = allReviewData.map((data)=>data.ReviewStars).reduce((previousValue, currentValue) => previousValue + currentValue,0)
+                   setRating(Math.floor(AllStars*10/allReviewData.length)/10)
+               }else{
+                    setRating(0)
+               }
+               let reviews = {all:[]}
+               let starsPercentObj = {}
+               for(let i=5;i>0;i--){
+                   let res = allReviewData.filter((review)=> review.ReviewStars === i)
+                   let precent = Math.floor(res.length/allReviewData.length*100)
+                   starsPercentObj[i]= precent
+                   reviews[i]=res
+                   reviews.all.push(...res)
+               }
+               setRewiewsFilterData(reviews)
+               setStarBarPercent(starsPercentObj)
+            })
+            .catch((err)=> console.log(err))
+    },[addReviewSuccess,productId])
 
     const rewiewStars=(num)=>{
         const starsRow = []
@@ -65,13 +60,37 @@ const ProductReviews=()=>{
         return starsRow
     }
     const handleChange=(event)=>{
-        console.log(event);
         setReviewFilter(event.target.value);
     }
     const handleStarBar = (num)=>{
         setReviewFilter(num)
     }
-    
+    const lockScroll = useCallback(
+        () => {
+            const scrollBarCompensation = window.innerWidth - document.body.offsetWidth;
+            document.body.style.overflow = 'hidden';
+            document.body.style.paddingRight = `${scrollBarCompensation}px`;
+        }, []) 
+  
+    const handleAddReview = ()=>{
+        if(userName){
+            setAddReview(true)
+            return
+        }
+        dispatch(setLogInBox(!openLogIn))
+        lockScroll()
+    }
+    const handleCancelReview=()=>{
+        setAddReview(false)
+    }
+    const handleSubmitReview=()=>{
+        setAddReview(false)
+        setAddReviewSuccess('Thank you for adding review!')
+        setTimeout(() => {
+            setAddReviewSuccess('')
+        }, 3000)
+    }
+
     return(
         <div className={classes.productDetail}>
                 <h1 className={classes.productArea}>Customer reviews & ratings</h1>
@@ -100,9 +119,9 @@ const ProductReviews=()=>{
                             </div>
                             <span> ({rewiewsFilterData.all?.length} reviews)</span>
                         </div>
-                        <button className={classes.writeReviewBtn}>Write a review</button>
+                        <button className={classes.writeReviewBtn} onClick={handleAddReview}>Write a review</button>
                     </div>
-                    <div className={classes.ratingHistogram}>
+                    {rating>0 && <div className={classes.ratingHistogram}>
                         {[5,4,3,2,1].map((num)=>{return(
                             <button className={classes.starLink} onClick={()=>handleStarBar(num)} key={num}>
                                 <div className={classes.ratingText}>{num} stars</div>
@@ -112,10 +131,11 @@ const ProductReviews=()=>{
                                 <span className={classes.ratingPercent}>{starBarPercent[num]+'%'}</span>
                             </button>
                         )})}
-                    </div>
+                    </div>}
                 </div>
                 <hr/>
-                <ProductAddReview />
+                {addReview && <ProductAddReview  name={userName} cancelAddReview={handleCancelReview} productId={productId} submitReview={handleSubmitReview}/>}
+                {addReviewSuccess && <div className={classes.addReviewSuccess}>{addReviewSuccess}</div> }
                 <div className={classes.reviewFilter}>
                     <label className={classes.reviewSelect}>Filter:  
                         <select value={reviewFilter} onChange={handleChange} >
