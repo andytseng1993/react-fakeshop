@@ -6,6 +6,7 @@ import ReviewList from './ReviewList';
 import axios from 'axios';
 import { useDispatch, useSelector } from "react-redux"
 import { setLogInBox } from "../../redux/actions"
+import { useUserAuth } from '../../context/UserAuthContext';
 
 const ProductReviews=({productId})=>{
     const [rating,setRating] = useState(0)
@@ -13,10 +14,12 @@ const ProductReviews=({productId})=>{
     const [rewiewsFilterData,setRewiewsFilterData] = useState([])
     const [starBarPercent,setStarBarPercent] = useState({})
     const [addReview,setAddReview] = useState(false)
+    const [refresh,setRefresh] = useState(false)
     const dispatch = useDispatch()
     const openLogIn = useSelector((state) => state.openLogInbox.logIn)
     const userName = useSelector((state)=> state.setUserName) 
     const [addReviewSuccess,setAddReviewSuccess] = useState('')
+    const {currentUser} = useUserAuth()
     
     useEffect(()=>{
         let allReviewData= []
@@ -46,7 +49,7 @@ const ProductReviews=({productId})=>{
                setStarBarPercent(starsPercentObj)
             })
             .catch((err)=> console.log(err))
-    },[addReviewSuccess,productId])
+    },[refresh,productId])
 
     const handleChange=(event)=>{
         setReviewFilter(event.target.value);
@@ -75,6 +78,7 @@ const ProductReviews=({productId})=>{
     const handleSubmitReview=()=>{
         setAddReview(false)
         setAddReviewSuccess('Thank you for adding review!')
+        setRefresh(!refresh)
         setTimeout(() => {
             setAddReviewSuccess('')
         }, 3000)
@@ -93,7 +97,7 @@ const ProductReviews=({productId})=>{
                     />
                 </div>
                 <hr/>
-                {addReview && <ProductAddReview  name={userName} cancelAddReview={handleCancelReview} productId={productId} submitReview={handleSubmitReview}/>}
+                {addReview && <ProductAddReview  currentUser={currentUser} cancelAddReview={handleCancelReview} productId={productId} submitReview={handleSubmitReview}/>}
                 {addReviewSuccess && <div className={classes.addReviewSuccess}>{addReviewSuccess}</div> }
                 <div className={classes.reviewFilter}>
                     <label className={classes.reviewSelect}>Filter:  

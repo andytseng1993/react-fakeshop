@@ -15,7 +15,10 @@ const ReviewList =({rewiewsFilterData,reviewFilter})=>{
         }
         return starsRow
     }
-
+    const Time = (time)=>{
+        const event = new Date(time)
+        return event.toLocaleString().split(',')[0]
+    }
     return(
         <>
             {
@@ -29,9 +32,9 @@ const ReviewList =({rewiewsFilterData,reviewFilter})=>{
                                     <div className={classes.reviewRating}>
                                         {rewiewStars(review.ReviewStars)}
                                     </div>
-                                    <div className={classes.reviewWriter}>{review.Writer}</div>
+                                    <div className={classes.reviewWriter}>{review.Author.nickname}</div>
                                 </div>
-                                <div className={classes.reviewDay}>{review.Day}</div>
+                                <div className={classes.reviewDay}>{Time(review.Time)}</div>
                             </div>
                             <div className={classes.reviewText}>{review.Text}</div>
                         </div>

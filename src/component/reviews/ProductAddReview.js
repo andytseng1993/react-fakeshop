@@ -4,14 +4,15 @@ import classes from './ProductAddReview.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faStar as fasFaStar} from "@fortawesome/free-solid-svg-icons";
 import { faStar as farFaStar } from '@fortawesome/free-regular-svg-icons'
+import { nanoid } from 'nanoid';
 
-const ProductAddReview=({name,cancelAddReview,productId,submitReview})=>{
+const ProductAddReview=({currentUser,cancelAddReview,productId,submitReview})=>{
     const [ratingInput,setRatingInput] = useState(0)
-    const [nameInput,setNameInput] = useState(name)
+    const [nameInput,setNameInput] = useState(currentUser.displayName)
     const [titleInput,setTitleInput] = useState('')
     const [descriptionInput,setDescriptionInput] = useState('')
     const [warning,setWarning] = useState('')
-
+    
     const writeRating=()=>{
         let star=[]
         for(let i=0;i<ratingInput;i++){
@@ -53,13 +54,16 @@ const ProductAddReview=({name,cancelAddReview,productId,submitReview})=>{
             setWarning('Please enter a title to submit a review.')
             return
         }
-        const date = new Date()
         setWarning('')
         const reviewData ={
+            id: nanoid(),
             Title: titleInput,
             ReviewStars : ratingInput,
-            Writer: nameInput,
-            Day: date.toLocaleDateString(),
+            Author: {
+                nickname:nameInput,
+                uid: currentUser.uid
+            },
+            Time: Date(),
             Text: descriptionInput 
         }
         axios
