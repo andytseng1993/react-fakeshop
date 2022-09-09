@@ -1,0 +1,81 @@
+.addReviewArea{
+    padding: 20px;
+    border-bottom: 1px solid rgb(156, 156, 156);
+}
+input{
+    font-size: 17px;
+    padding: 2px 3px;
+    margin-left: 10px;
+    flex-grow: 1;
+}
+textarea{
+    padding: 5px 10px;
+    font-size: 16px;
+}
+.addReviewArea form{
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 10px 70px;
+    font-size: 18px;
+}
+.addReviewNickname{
+    display: flex;
+    margin: 10px 0px;
+    align-items: center;
+    justify-content: flex-start;
+}
+.wordCount{
+    width: 50px;
+    font-size: 14px;
+    color: rgb(117, 117, 117);
+    align-self: flex-end;
+    margin-left: 40px;
+}
+.addReviewRating{
+    display: flex;
+    flex-direction: row;
+    margin: 10px 0px;
+}
+.addReviewRating div{
+    margin-right: 10px;
+}
+.rating{
+    font-size: 20px;
+}
+.addReviewTitle{
+    display: flex;
+    align-items: center;
+    margin: 10px 0px;
+}
+.addReviewDescription{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 10px 0px;
+}
+.addReviewDescription p{
+    margin: 0px 0px 10px;
+}
+.addReviewBtn{
+    display: flex;
+    flex-direction: row;
+    margin: 20px 0px 10px;
+}
+.addReviewBtn button{
+    font-size: 16px;
+    margin-right: 100px;
+    padding: 5px 10px;
+}
+.warning{
+    display: flex;
+    align-self: flex-start;
+    flex-grow:inherit;
+    font-size: 16px;
+    background-color: rgb(255, 206, 206);
+    padding: 3px 10px;
+    border-radius: 5px;
+    border-left: 7px solid rgb(255, 48, 48);
+    color: rgb(130, 0, 0);
+    margin: -12px 0px;
+}

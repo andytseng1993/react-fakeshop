@@ -1,0 +1,38 @@
+.reviewBox{
+    padding: 25px 20px;
+    border: 1px solid rgb(183, 183, 183);
+    margin: 15px;
+    border-radius: 7px;
+}
+.reviewSummary{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-bottom: 15px;
+}
+.reviewTitle{
+    font-size: 20px;
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+.reviewRating{
+    margin-left: -2px;
+    margin-bottom: 7px;
+}
+.reviewWriter{
+    font-size: 12px;
+    color: rgb(97, 97, 97);
+}
+.reviewDetail{
+    display: flex;
+    justify-content: space-between;
+}
+.reviewDay{
+    font-size: 14px;
+    color: rgb(97, 97, 97);
+}
+.reviewText{
+    text-align: left;
+    font-size: 16px;
+}

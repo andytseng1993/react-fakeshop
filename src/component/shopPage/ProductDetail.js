@@ -5,20 +5,21 @@ import { useDispatch, useSelector } from "react-redux"
 import { useParams } from "react-router-dom"
 import { addCartList, removeProduct, selectProduct } from "../../redux/actions"
 import classes from './ProductDetail.module.css'
+import ProductReviews from "../reviews/ProductReviews"
 
 
 const ProductDetail=()=>{
-    const params = useParams()
+    const {productId} = useParams()
     const [isLoading,setIsLoading] = useState(true)
     const [count,setCount] = useState(1)
     const dispatch= useDispatch()
     const productDetail = useSelector((state)=> state.productDetail)
     const {image, title,price,description,category} = productDetail
-    const product = {image,title,price,count,category,productId:params.productId}
-    
+    const product = {image,title,price,count,category,productId}
+   
     useEffect(()=>{
         setIsLoading(true)
-        axios.get(`https://fakestoreapi.com/products/${params.productId}`)
+        axios.get(`https://fakestoreapi.com/products/${productId}`)
         .then(({data}) => {
             setIsLoading(false)
             dispatch(selectProduct(data))
@@ -26,7 +27,7 @@ const ProductDetail=()=>{
         return ()=>{
             dispatch(removeProduct())
         }
-    },[params.productId])
+    },[productId])
 
     const addCartHandler =  (product)=>{
         product.id =  nanoid()
@@ -48,34 +49,44 @@ const ProductDetail=()=>{
         )
     }
     return (
-        <section className={classes.productDetail}>
-            <div className={classes.image}>
-                <img src={image} alt={title}></img>
+        <section className={classes.productmain}>
+            <div className={classes.product}>
+                <div className={classes.image}>
+                    <img src={image} alt={title}></img>
+                </div>
+                <div className={classes.content}>
+                    <div className={classes.category}>
+                        {category}
+                    </div>
+                    <div className={classes.title}>
+                        {title}
+                    </div>
+                    <div className={classes.price}>
+                        ${price}
+                    </div>
+                    <div className={classes.cartArea}>
+                        <div className={classes.quantity}>
+                            <button onClick={()=>{setCount(prevCount=>prevCount>1?prevCount-1:prevCount)}}>-</button>
+                            <div className={classes.count}>{count}</div>
+                            <button onClick={()=>setCount(prevCount=>prevCount+1)}>+</button>
+                        </div>
+                        <div className={classes.cart} onClick={()=>addCartHandler(product)}>
+                            Add to Cart
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div className={classes.content}>
-                <div className={classes.category}>
-                    {category}
-                </div>
-                <div className={classes.title}>
-                    {title}
-                </div>
-                <div className={classes.price}>
-                    ${price}
-                </div>
+            <div className={classes.productDetail}>
+                <h1 className={classes.productArea}>About this item</h1>
+                <hr/>
                 <div className={classes.description}>
-                    {description}
-                </div>
-                <div className={classes.cartArea}>
-                    <div className={classes.quantity}>
-                        <button onClick={()=>{setCount(prevCount=>prevCount>1?prevCount-1:prevCount)}}>-</button>
-                        <div className={classes.count}>{count}</div>
-                        <button onClick={()=>setCount(prevCount=>prevCount+1)}>+</button>
-                    </div>
-                    <div className={classes.cart} onClick={()=>addCartHandler(product)}>
-                        Add to Cart
-                    </div>
+                    <h3>Product details</h3>
+                    <p style={{margin:'20px 0px'}}>
+                        {description}
+                    </p>
                 </div>
             </div>
+            <ProductReviews productId={productId} />
         </section>
         
     )

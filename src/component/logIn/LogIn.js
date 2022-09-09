@@ -7,7 +7,7 @@ import LogInBox from './LogInBox';
 import PasswordInput from './PasswordInput';
 import EmailInput from './EmailInput';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faArrowLeftLong, faL} from "@fortawesome/free-solid-svg-icons";
+import {faArrowLeftLong} from "@fortawesome/free-solid-svg-icons";
 
 const LogIn = () => {
     const [email, setEmail] = useState('')
@@ -59,9 +59,8 @@ const LogIn = () => {
         setResetPasswordEmail(email)
     }
     const validateEmail = (email) => {
-        return email.match(
-            /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-        )
+        let regex= /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/gm
+        return regex.test(String(email).toLowerCase())
     }
     
     const handleResetPassword= async(event)=>{

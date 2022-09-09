@@ -27,8 +27,8 @@ const Profile=()=>{
     const {emailVerified,displayName,email,metadata} = currentUser
     
     useEffect(()=>{
-        NameRef.current.value=displayName
-    },[])
+        NameRef.current.value = displayName
+    },[displayName])
     useEffect(()=>{
         if(password.passwordInput.length>0 && password.confirmPasswordInput.length>0){
             return setPasswordDisabledBtn(false)
