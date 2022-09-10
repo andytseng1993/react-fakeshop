@@ -1,21 +1,33 @@
 import {useState} from 'react'
-import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import classes from './ProductComponent.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart as farFaHeart } from '@fortawesome/free-regular-svg-icons'
 import { faHeart as fasFaHeart} from "@fortawesome/free-solid-svg-icons";
 
-const ProductComponent=()=>{
-    const [favorite,setFavorite] = useState(false)
-    const productCategory = useSelector((state)=>state.selectCategory)
-    const allProducts = useSelector((state)=>state.allProducts.products)
+const test =[{id:1,time:'12315'},{id:10,time:'8657643'}]
+
+const ProductComponent=({productCategory,allProducts})=>{
+    const [favorite,setFavorite] = useState(test)
     let products
     if(productCategory!== ''){
         products= allProducts.filter(({category})=> category===productCategory)
     }
     if(productCategory=== 'All Products'){
         products= allProducts
+    }
+    const favorites= (productId) =>{
+        const favoriteProduct=favorite.map(product=>product.id)
+        return favoriteProduct.includes(productId)
+    }
+    
+    const handleAddFavorite = (product)=>{
+        setFavorite(pre=>[...pre,{id:product.id,time:Date.now()}])
+        console.log(product.id);
+    }
+    console.log(favorite);
+    const handleRemoveFavorite = (product)=>{
+        setFavorite(favorite.filter(item=>item.id !== product.id))
     }
     const renderList = products.map((product)=>{
         const {id,title,image,price,category} = product
@@ -39,10 +51,10 @@ const ProductComponent=()=>{
                                     <div className={classes.category}>{category}</div>  
                                 </div>
 
-                                {favorite?
-                                    <FontAwesomeIcon className={classes.favoriteActived} icon={fasFaHeart} onClick={()=> setFavorite(!favorite)} />
+                                {favorites(id)?
+                                    <FontAwesomeIcon className={classes.favoriteActived} icon={fasFaHeart} onClick={()=>handleRemoveFavorite(product)} />
                                     :
-                                    <FontAwesomeIcon className={classes.favorite} icon={farFaHeart} onClick={()=> setFavorite(!favorite)} />
+                                    <FontAwesomeIcon className={classes.favorite} icon={farFaHeart} onClick={()=>handleAddFavorite(product)} />
                                 }
                             </div>
                         </div>

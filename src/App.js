@@ -8,6 +8,7 @@ import { UserAuthContextProvider } from './context/UserAuthContext';
 import Profile from './component/logIn/Profile';
 import ProtectedRoute from './component/layout/ProtectedRoute';
 import Cart from './pages/Cart';
+import FavoritePage from "./pages/FavoritePage";
 
   
 function App() {
@@ -24,6 +25,7 @@ function App() {
             <Route path='product/:productId' element={<ProductDetail/>}/>
             <Route element={<ProtectedRoute/>}>
               <Route path='profile' element={<Profile/>}/>
+              <Route path='favorite' element={<FavoritePage/>}/>
             </Route>
             <Route path='cart' element={<Cart/>}/>
             <Route

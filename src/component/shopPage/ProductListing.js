@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux"
+import { useDispatch,useSelector } from "react-redux"
 import { setProducts } from "../../redux/actions";
 import ProductCategory from "./ProductCategory";
 import ProductComponent from "./ProductComponent";
@@ -8,7 +8,8 @@ import ProductComponent from "./ProductComponent";
 const ProductListing=()=>{
     const dispatch = useDispatch()
     const [isLoading,setIsLoading] = useState(true)
-    
+    const productCategory = useSelector((state)=>state.selectCategory)
+    const allProducts = useSelector((state)=>state.allProducts.products)
     
     useEffect(()=>{
         setIsLoading(true)
@@ -32,7 +33,7 @@ const ProductListing=()=>{
                 <ProductCategory/>
             </nav>
             <div className='productList'>
-                <ProductComponent/>
+                <ProductComponent productCategory={productCategory} allProducts={allProducts} />
                 <span className="wrap" />
                 <span className="wrap" />
                 <span className="wrap" />

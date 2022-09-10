@@ -15,7 +15,10 @@
 
 }
 span.wrap{
-  width: 284px;
+  margin: 0px 10px;
+  width: 30vw;
+  max-width: 350px;
+  min-width: 250px;
   height: 0px;
 }
 .category{
