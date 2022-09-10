@@ -57,3 +57,16 @@ create ```signup (email,password),login(email,password),logout()``` function in 
 ### Protected Routes
 create a ProtectedRoute, when there is a logged in user, the Home component does not run into the if-else condition's block and renders the actual content of the Home component instead.```return <Navigate to={redirectPath} replace />;```
  If there is no logged in user, the user will experience a redirect from the protected page. ```return children ? children : <Outlet />;```
+
+ ### line-clamp
+ ```line-clamp: [none | <integer>];```
+  1. <integer>: sets the maximum number of lines before truncating the content and then displays an ellipsis (…) at the end of the last line.
+  
+  ```
+      .line-clamp {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;  
+        overflow: hidden;
+      }
+  ```

@@ -1,9 +1,13 @@
-import { useState } from 'react'
+import {useState} from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import classes from './ProductComponent.module.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faHeart as farFaHeart } from '@fortawesome/free-regular-svg-icons'
+import { faHeart as fasFaHeart} from "@fortawesome/free-solid-svg-icons";
 
 const ProductComponent=()=>{
+    const [favorite,setFavorite] = useState(false)
     const productCategory = useSelector((state)=>state.selectCategory)
     const allProducts = useSelector((state)=>state.allProducts.products)
     let products
@@ -17,18 +21,32 @@ const ProductComponent=()=>{
         const {id,title,image,price,category} = product
         return(
             <div className={classes.container} key={id}>
-                <Link to={`/product/${id}`}>
                     <div className={classes.cards}>
-                        <div className={classes.image}>
-                            <img src={image} alt={title}></img>
-                        </div>
+                        <Link to={`/product/${id}`}>
+                            <div className={classes.image}>
+                                <img src={image} alt={title}></img>
+                            </div>
+                        </Link>    
                         <div className={classes.content}>
-                            <div className={classes.header}>{title}</div>
-                            <div className={classes.price}>$ {price}</div>
-                            <div className={classes.category}>{category}</div>
+                            <div className={classes.header}>
+                                <Link to={`/product/${id}`}>
+                                    {title}
+                                </Link> 
+                            </div>
+                            <div className={classes.productInfo}>
+                                <div className={classes.priceAndCategory}>
+                                    <div className={classes.price}>$ {price}</div>
+                                    <div className={classes.category}>{category}</div>  
+                                </div>
+
+                                {favorite?
+                                    <FontAwesomeIcon className={classes.favoriteActived} icon={fasFaHeart} onClick={()=> setFavorite(!favorite)} />
+                                    :
+                                    <FontAwesomeIcon className={classes.favorite} icon={farFaHeart} onClick={()=> setFavorite(!favorite)} />
+                                }
+                            </div>
                         </div>
                     </div>
-                </Link>
             </div>
         )
     })

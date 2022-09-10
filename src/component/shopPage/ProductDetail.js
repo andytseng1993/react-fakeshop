@@ -6,12 +6,16 @@ import { useParams } from "react-router-dom"
 import { addCartList, removeProduct, selectProduct } from "../../redux/actions"
 import classes from './ProductDetail.module.css'
 import ProductReviews from "../reviews/ProductReviews"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faHeart as farFaHeart } from '@fortawesome/free-regular-svg-icons'
+import { faHeart as fasFaHeart} from "@fortawesome/free-solid-svg-icons";
 
 
 const ProductDetail=()=>{
     const {productId} = useParams()
     const [isLoading,setIsLoading] = useState(true)
     const [count,setCount] = useState(1)
+    const [favorite,setFavorite] = useState(false)
     const dispatch= useDispatch()
     const productDetail = useSelector((state)=> state.productDetail)
     const {image, title,price,description,category} = productDetail
@@ -56,7 +60,13 @@ const ProductDetail=()=>{
                 </div>
                 <div className={classes.content}>
                     <div className={classes.category}>
-                        {category}
+                        <div>
+                            {category}
+                        </div>
+                        {favorite?
+                            <FontAwesomeIcon className={classes.favoriteActived} icon={fasFaHeart} onClick={()=> setFavorite(!favorite)} />
+                            :
+                            <FontAwesomeIcon className={classes.favorite} icon={farFaHeart} onClick={()=> setFavorite(!favorite)} />}
                     </div>
                     <div className={classes.title}>
                         {title}
