@@ -10,5 +10,8 @@ export const ACTIONS={
     ADD_CARTLIST:'add_cartlist',
     DELETE_CARTPRODUCT:'delete_cartproduct',
     INCREASE_QUANTITY:'increase_quantity',
-    DECREASE_QUANTITY:'decrease_quantity'
+    DECREASE_QUANTITY:'decrease_quantity',
+    SET_FAVORITE:'set_favorite',
+    ADD_FAVORITE: 'add-favorite',
+    DELETE_FAVORITE: 'delete_favorite'
 }

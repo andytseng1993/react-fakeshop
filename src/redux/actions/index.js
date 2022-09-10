@@ -77,3 +77,21 @@ export const decreaseQuantity = (productId)=>{
     }
 }
 
+export const setFavoriteList =(favorites)=>{
+    return{
+        type: ACTIONS.SET_FAVORITE,
+        payload: favorites
+    }
+}
+export const addFavoriteList =(product)=>{
+    return{
+        type: ACTIONS.ADD_FAVORITE,
+        payload: product
+    }
+}
+export const deleteFavoriteList =(productId)=>{
+    return{
+        type: ACTIONS.DELETE_FAVORITE,
+        payload: productId
+    }
+}

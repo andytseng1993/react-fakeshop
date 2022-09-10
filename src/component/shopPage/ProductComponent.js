@@ -21,13 +21,12 @@ const ProductComponent=({productCategory,allProducts})=>{
         return favoriteProduct.includes(productId)
     }
     
-    const handleAddFavorite = (product)=>{
-        setFavorite(pre=>[...pre,{id:product.id,time:Date.now()}])
-        console.log(product.id);
+    const handleAddFavorite = (productId)=>{
+        setFavorite(pre=>[...pre,{id:productId,time:Date.now()}])
     }
     console.log(favorite);
-    const handleRemoveFavorite = (product)=>{
-        setFavorite(favorite.filter(item=>item.id !== product.id))
+    const handleRemoveFavorite = (productId)=>{
+        setFavorite(favorite.filter(item=>item.id !== productId))
     }
     const renderList = products.map((product)=>{
         const {id,title,image,price,category} = product
@@ -52,9 +51,9 @@ const ProductComponent=({productCategory,allProducts})=>{
                                 </div>
 
                                 {favorites(id)?
-                                    <FontAwesomeIcon className={classes.favoriteActived} icon={fasFaHeart} onClick={()=>handleRemoveFavorite(product)} />
+                                    <FontAwesomeIcon className={classes.favoriteActived} icon={fasFaHeart} onClick={()=>handleRemoveFavorite(product.id)} />
                                     :
-                                    <FontAwesomeIcon className={classes.favorite} icon={farFaHeart} onClick={()=>handleAddFavorite(product)} />
+                                    <FontAwesomeIcon className={classes.favorite} icon={farFaHeart} onClick={()=>handleAddFavorite(product.id)} />
                                 }
                             </div>
                         </div>

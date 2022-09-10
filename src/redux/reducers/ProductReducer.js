@@ -84,3 +84,16 @@ export const setCartListReducer=(state=[],action)=>{
             return state
     }
 }
+
+export const setFavoriteReducer =(state=[],action)=>{
+    switch(action.type){
+        case ACTIONS.SET_FAVORITE:
+            return [...state,action.payload]
+        case ACTIONS.ADD_FAVORITE:
+            return [...state,...action.payload]
+        case ACTIONS.DELETE_FAVORITE:
+            return state.filter(product=>product.id !== action.payload)
+        default: 
+            return state
+    }
+}
