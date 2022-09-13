@@ -8,6 +8,7 @@ import { useUserAuth } from '../../context/UserAuthContext';
 import { useUserData } from '../../context/UserDataContext'
 import { useDispatch } from 'react-redux'
 import { addFavoriteList, deleteFavoriteList } from "../../redux/actions";
+import ReminderBox from './ReminderBox'
 
 
 const ProductComponent=({productCategory,allProducts,favoriteList})=>{
@@ -15,6 +16,7 @@ const ProductComponent=({productCategory,allProducts,favoriteList})=>{
     const { currentUser } = useUserAuth()
     const { writeUserData } = useUserData()
     const [products,setProducts] = useState([])
+    
    
     useEffect(()=>{
         if(productCategory!== ''){
@@ -23,23 +25,26 @@ const ProductComponent=({productCategory,allProducts,favoriteList})=>{
         if(productCategory=== 'All Products'){
             setProducts(allProducts)
         }
-    },[productCategory])
+    },[productCategory,allProducts])
 
     const favorites= (productId) =>{
         if(!favoriteList) return
         return favoriteList.includes(productId)
     }
-    
-    const handleAddFavorite = (productId)=>{
+    const handleRemoveFavorite = (event,productId)=>{
+        dispatch(deleteFavoriteList(productId))
+        writeUserData(`users/${currentUser.uid}/favorites/${productId}`,{})
+    }
+    const handleAddFavorite = (event,productId)=>{
+        if(!currentUser) return 
         dispatch(addFavoriteList(productId))
         writeUserData(`users/${currentUser.uid}/favorites/${productId}`,true) 
     }
-    
-    const handleRemoveFavorite = (productId)=>{
-        dispatch(deleteFavoriteList(productId))
-        writeUserData(`users/${currentUser.uid}/favorites/${productId}`,{})
-
+    const handleFavoriteMouse =(event)=>{
+        
+        // if(!currentUser) return (render({x:event.clientX,y:event.clientY}))
     }
+    
     const renderList = products.map((product)=>{
         const {id,title,image,price,category} = product
         return(
@@ -63,10 +68,14 @@ const ProductComponent=({productCategory,allProducts,favoriteList})=>{
                                 </div>
 
                                 {favorites(id)?
-                                    <FontAwesomeIcon className={classes.favoriteActived} icon={fasFaHeart} onClick={()=>handleRemoveFavorite(product.id)} />
+                                    <FontAwesomeIcon className={classes.favoriteActived} icon={fasFaHeart} onClick={(event)=>handleRemoveFavorite(event,product.id)} onMouseOver={(event)=>handleFavoriteMouse(event)} />
                                     :
-                                    <FontAwesomeIcon className={classes.favorite} icon={farFaHeart} onClick={()=>handleAddFavorite(product.id)} />
+                                    <div style={{position: 'relative'}}>
+                                        <FontAwesomeIcon className={classes.favorite} icon={farFaHeart} onClick={(event)=>handleAddFavorite(event,product.id)} onMouseOver={(event)=>handleFavoriteMouse(event)} />
+                                        {!currentUser && <ReminderBox/>}
+                                    </div>
                                 }
+                               
                             </div>
                         </div>
                     </div>

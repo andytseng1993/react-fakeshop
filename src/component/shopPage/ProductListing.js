@@ -8,6 +8,7 @@ import ProductCategory from "./ProductCategory";
 import ProductComponent from "./ProductComponent";
 
 
+
 const ProductListing=()=>{
     const dispatch = useDispatch()
     const [isLoading,setIsLoading] = useState(true)
@@ -15,9 +16,9 @@ const ProductListing=()=>{
     const allProducts = useSelector((state)=>state.allProducts.products)
     const favoriteList = useSelector((state)=>state.favorites)
     const {currentUser}  = useUserAuth()
-    const {readUserData,writeUserData} = useUserData()
+    const {readUserData} = useUserData()
 
-    console.log(favoriteList);
+    
     useEffect(()=>{
         setIsLoading(true)
         axios.get('https://fakestoreapi.com/products')
@@ -35,7 +36,6 @@ const ProductListing=()=>{
                 .then(res=> {
                     const favorites =[]
                     res.forEach(element => {
-                        console.log(element.key)
                         favorites.push(parseInt(element.key))
                     })
                     favorites.length ===0?

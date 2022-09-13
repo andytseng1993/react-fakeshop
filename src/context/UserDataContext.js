@@ -7,7 +7,6 @@ export const UserDataContextProvider =({children})=>{
     const db = getDatabase()
    
     const writeUserData =(url,data)=>{
-        console.log(url,data);
         return set(ref(db, url),data)
     }
     async function readUserData(url){
