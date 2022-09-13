@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth"
+import { getDatabase } from "firebase/database";
 
 const app = initializeApp({
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -8,7 +9,8 @@ const app = initializeApp({
     projectId: process.env.REACT_APP_FIREBASE_PROJECTID,
     storageBucket: process.env.REACT_APP_FIREBASE_STORAGINGBUCKET,
     messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGINGSENDERID,
-    appId: process.env.REACT_APP_FIREBASE_APPID
+    appId: process.env.REACT_APP_FIREBASE_APPID,
 });
 export const auth = getAuth(app)
+export const database = getDatabase(app);
 export default app

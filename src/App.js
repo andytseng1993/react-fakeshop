@@ -9,6 +9,7 @@ import Profile from './component/logIn/Profile';
 import ProtectedRoute from './component/layout/ProtectedRoute';
 import Cart from './pages/Cart';
 import FavoritePage from "./pages/FavoritePage";
+import { UserDataContextProvider } from "./context/UserDataContext";
 
   
 function App() {
@@ -19,6 +20,7 @@ function App() {
   return (
     <div className="App">
       <UserAuthContextProvider>
+        <UserDataContextProvider>
         <Layout scroll={scrollToProduct}>
           <Routes>
             <Route path='/' element={<HomePage refProp={myRef}/>} exact/>
@@ -38,6 +40,7 @@ function App() {
             />
           </Routes>
         </Layout>
+        </UserDataContextProvider>
       </UserAuthContextProvider>
     </div>
   );
