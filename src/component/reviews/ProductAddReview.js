@@ -67,7 +67,7 @@ const ProductAddReview=({currentUser,cancelAddReview,productId,submitReview})=>{
             Text: descriptionInput 
         }
         axios
-            .post(`https://fakestore-2bc85-default-rtdb.firebaseio.com/${productId}.json`,reviewData)
+            .post(`https://fakestore-2bc85-default-rtdb.firebaseio.com/productReviews/${productId}.json`,reviewData)
             .then(()=>{
                 submitReview()
             }).catch((err)=>[

@@ -83,10 +83,10 @@ export const setFavoriteList =(favorites)=>{
         payload: favorites
     }
 }
-export const addFavoriteList =(product)=>{
+export const addFavoriteList =(productId)=>{
     return{
         type: ACTIONS.ADD_FAVORITE,
-        payload: product
+        payload: productId
     }
 }
 export const deleteFavoriteList =(productId)=>{

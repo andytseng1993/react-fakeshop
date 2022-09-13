@@ -1,32 +1,44 @@
-import {useState} from 'react'
+import { useState, useEffect} from 'react'
 import { Link } from 'react-router-dom'
 import classes from './ProductComponent.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart as farFaHeart } from '@fortawesome/free-regular-svg-icons'
 import { faHeart as fasFaHeart} from "@fortawesome/free-solid-svg-icons";
+import { useUserAuth } from '../../context/UserAuthContext';
+import { useUserData } from '../../context/UserDataContext'
+import { useDispatch } from 'react-redux'
+import { addFavoriteList, deleteFavoriteList } from "../../redux/actions";
 
-const test =[{id:1,time:'12315'},{id:10,time:'8657643'}]
 
-const ProductComponent=({productCategory,allProducts})=>{
-    const [favorite,setFavorite] = useState(test)
-    let products
-    if(productCategory!== ''){
-        products= allProducts.filter(({category})=> category===productCategory)
-    }
-    if(productCategory=== 'All Products'){
-        products= allProducts
-    }
+const ProductComponent=({productCategory,allProducts,favoriteList})=>{
+    const dispatch = useDispatch()
+    const { currentUser } = useUserAuth()
+    const { writeUserData } = useUserData()
+    const [products,setProducts] = useState([])
+   
+    useEffect(()=>{
+        if(productCategory!== ''){
+            setProducts(allProducts.filter(({category})=> category===productCategory))
+        }
+        if(productCategory=== 'All Products'){
+            setProducts(allProducts)
+        }
+    },[productCategory])
+
     const favorites= (productId) =>{
-        const favoriteProduct=favorite.map(product=>product.id)
-        return favoriteProduct.includes(productId)
+        if(!favoriteList) return
+        return favoriteList.includes(productId)
     }
     
     const handleAddFavorite = (productId)=>{
-        setFavorite(pre=>[...pre,{id:productId,time:Date.now()}])
+        dispatch(addFavoriteList(productId))
+        writeUserData(`users/${currentUser.uid}/favorites/${productId}`,true) 
     }
-    console.log(favorite);
+    
     const handleRemoveFavorite = (productId)=>{
-        setFavorite(favorite.filter(item=>item.id !== productId))
+        dispatch(deleteFavoriteList(productId))
+        writeUserData(`users/${currentUser.uid}/favorites/${productId}`,{})
+
     }
     const renderList = products.map((product)=>{
         const {id,title,image,price,category} = product

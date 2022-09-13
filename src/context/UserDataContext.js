@@ -13,7 +13,7 @@ export const UserDataContextProvider =({children})=>{
     async function readUserData(url){
         return new Promise(resolve =>
             onValue(ref(db, url), (snapshot) => {
-                resolve(snapshot.val())
+                resolve(snapshot)
             }));
     }
     

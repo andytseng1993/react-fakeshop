@@ -24,7 +24,7 @@ const ProductReviews=({productId})=>{
     useEffect(()=>{
         let allReviewData= []
         axios
-            .get(`https://fakestore-2bc85-default-rtdb.firebaseio.com/${productId}.json`)
+            .get(`https://fakestore-2bc85-default-rtdb.firebaseio.com/productReviews/${productId}.json`)
             .then(({data})=>{
                for(let key in data){
                 const review={...data[key]}

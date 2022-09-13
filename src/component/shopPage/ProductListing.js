@@ -1,16 +1,23 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useDispatch,useSelector } from "react-redux"
-import { setProducts } from "../../redux/actions";
+import { setProducts,setFavoriteList } from "../../redux/actions";
+import { useUserAuth } from "../../context/UserAuthContext";
+import { useUserData } from "../../context/UserDataContext";
 import ProductCategory from "./ProductCategory";
 import ProductComponent from "./ProductComponent";
+
 
 const ProductListing=()=>{
     const dispatch = useDispatch()
     const [isLoading,setIsLoading] = useState(true)
     const productCategory = useSelector((state)=>state.selectCategory)
     const allProducts = useSelector((state)=>state.allProducts.products)
-    
+    const favoriteList = useSelector((state)=>state.favorites)
+    const {currentUser}  = useUserAuth()
+    const {readUserData,writeUserData} = useUserData()
+
+    console.log(favoriteList);
     useEffect(()=>{
         setIsLoading(true)
         axios.get('https://fakestoreapi.com/products')
@@ -18,9 +25,28 @@ const ProductListing=()=>{
             dispatch(setProducts(data))
             setIsLoading(false)
         })
-      },[])
+    },[dispatch])
 
-     if(isLoading){
+    useEffect(()=>{
+        if(!currentUser){
+            dispatch(setFavoriteList([]))
+        }else{
+            readUserData('users/'+currentUser.uid+'/favorites')
+                .then(res=> {
+                    const favorites =[]
+                    res.forEach(element => {
+                        console.log(element.key)
+                        favorites.push(parseInt(element.key))
+                    })
+                    favorites.length ===0?
+                    dispatch(setFavoriteList([]))
+                    :
+                    dispatch(setFavoriteList(favorites))
+                })
+        }
+    },[currentUser,dispatch,readUserData])
+
+    if(isLoading){
         return (
             <div className='productList'>
                  <h3>Loading...</h3>
@@ -33,7 +59,10 @@ const ProductListing=()=>{
                 <ProductCategory/>
             </nav>
             <div className='productList'>
-                <ProductComponent productCategory={productCategory} allProducts={allProducts} />
+                <ProductComponent 
+                    productCategory={productCategory} 
+                    allProducts={allProducts} 
+                    favoriteList={favoriteList}/>
                 <span className="wrap" />
                 <span className="wrap" />
                 <span className="wrap" />
