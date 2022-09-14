@@ -1,12 +1,14 @@
 .box{
     position: absolute;
-    width: 220px;
+    white-space: nowrap;
     top: -25px;
     left: 50%;
+    text-align: center;
     background-color: white;
     border: 1px solid black;
     border-radius: 5px;
-    padding: 5px 15px;
+    transform: translateX(-50%);
+    padding: 5px 12px;
     opacity: 0;
 }
 .box::after{
