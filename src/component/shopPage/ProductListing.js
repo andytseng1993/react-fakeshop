@@ -7,11 +7,9 @@ import { useUserData } from "../../context/UserDataContext";
 import ProductCategory from "./ProductCategory";
 import ProductComponent from "./ProductComponent";
 
-
-
 const ProductListing=()=>{
     const dispatch = useDispatch()
-    const [isLoading,setIsLoading] = useState(true)
+    const [isLoading,setIsLoading] = useState(false)
     const productCategory = useSelector((state)=>state.selectCategory)
     const allProducts = useSelector((state)=>state.allProducts.products)
     const favoriteList = useSelector((state)=>state.favorites)
@@ -20,13 +18,14 @@ const ProductListing=()=>{
 
     
     useEffect(()=>{
+        if(allProducts.length===0){
         setIsLoading(true)
         axios.get('https://fakestoreapi.com/products')
         .then(({data})=>{
             dispatch(setProducts(data))
             setIsLoading(false)
-        })
-    },[dispatch])
+        })}
+    },[dispatch,allProducts])
 
     useEffect(()=>{
         if(!currentUser){

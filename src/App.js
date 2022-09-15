@@ -15,7 +15,10 @@ import { UserDataContextProvider } from "./context/UserDataContext";
 function App() {
   const myRef = useRef(null)
   function scrollToProduct(){
-    myRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        window.scrollTo({ 
+        top:myRef.current.offsetTop-50,
+        behavior: 'smooth'
+      })
   }
   return (
     <div className="App">
