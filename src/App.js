@@ -8,22 +8,29 @@ import { UserAuthContextProvider } from './context/UserAuthContext';
 import Profile from './component/logIn/Profile';
 import ProtectedRoute from './component/layout/ProtectedRoute';
 import Cart from './pages/Cart';
+import FavoritePage from "./pages/FavoritePage";
+import { UserDataContextProvider } from "./context/UserDataContext";
 
   
 function App() {
   const myRef = useRef(null)
   function scrollToProduct(){
-    myRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        window.scrollTo({ 
+        top:myRef.current.offsetTop-50,
+        behavior: 'smooth'
+      })
   }
   return (
     <div className="App">
       <UserAuthContextProvider>
+        <UserDataContextProvider>
         <Layout scroll={scrollToProduct}>
           <Routes>
             <Route path='/' element={<HomePage refProp={myRef}/>} exact/>
             <Route path='product/:productId' element={<ProductDetail/>}/>
             <Route element={<ProtectedRoute/>}>
               <Route path='profile' element={<Profile/>}/>
+              <Route path='favorite' element={<FavoritePage/>}/>
             </Route>
             <Route path='cart' element={<Cart/>}/>
             <Route
@@ -36,6 +43,7 @@ function App() {
             />
           </Routes>
         </Layout>
+        </UserDataContextProvider>
       </UserAuthContextProvider>
     </div>
   );

@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import { productReducer, selectProducer ,selectCategoryReducer, openLogInBoxReducer,setUserNameReducer, setCartListReducer} from "./ProductReducer";
+import { productReducer, selectProducer ,selectCategoryReducer, openLogInBoxReducer,setUserNameReducer, setCartListReducer, setFavoriteReducer} from "./ProductReducer";
 
 export const reducers = combineReducers({
     allProducts: productReducer,
@@ -8,4 +8,5 @@ export const reducers = combineReducers({
     openLogInbox: openLogInBoxReducer,
     setUserName:setUserNameReducer,
     setCartList:setCartListReducer,
+    favorites: setFavoriteReducer
 })

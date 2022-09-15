@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom"
 import { addCartList, removeProduct, selectProduct } from "../../redux/actions"
 import classes from './ProductDetail.module.css'
 import ProductReviews from "../reviews/ProductReviews"
-
+import FavoriteBtn from '../favorite/FavoriteBtn'
 
 const ProductDetail=()=>{
     const {productId} = useParams()
@@ -14,9 +14,10 @@ const ProductDetail=()=>{
     const [count,setCount] = useState(1)
     const dispatch= useDispatch()
     const productDetail = useSelector((state)=> state.productDetail)
+    const favoriteList = useSelector((state)=>state.favorites)
     const {image, title,price,description,category} = productDetail
     const product = {image,title,price,count,category,productId}
-   
+
     useEffect(()=>{
         setIsLoading(true)
         axios.get(`https://fakestoreapi.com/products/${productId}`)
@@ -27,7 +28,7 @@ const ProductDetail=()=>{
         return ()=>{
             dispatch(removeProduct())
         }
-    },[productId])
+    },[productId,dispatch])
 
     const addCartHandler =  (product)=>{
         product.id =  nanoid()
@@ -37,14 +38,14 @@ const ProductDetail=()=>{
     if(isLoading){
         return (
             <>
-                <h2 style={{marginTop:'30px'}}>Loading....</h2>
+                <h2 style={{marginTop:'120px'}}>Loading....</h2>
             </>
         )
     }
     if(Object.keys(productDetail).length===0){
         return (
             <>
-                <h2 style={{marginTop:'30px'}}>Sorry! No any product here....</h2>
+                <h2 style={{marginTop:'120px'}}>Sorry! No any product here....</h2>
             </>
         )
     }
@@ -56,7 +57,10 @@ const ProductDetail=()=>{
                 </div>
                 <div className={classes.content}>
                     <div className={classes.category}>
-                        {category}
+                        <div>
+                            {category}
+                        </div>
+                        <FavoriteBtn productId={parseInt(productId)} favoriteList={favoriteList} />
                     </div>
                     <div className={classes.title}>
                         {title}

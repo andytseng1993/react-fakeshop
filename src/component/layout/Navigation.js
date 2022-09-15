@@ -21,7 +21,7 @@ function Navigation(props) {
             dispatch(setUserName(currentUser.displayName.trim()))
             :
             dispatch(setUserName(''))
-    },[currentUser?.displayName])
+    },[currentUser?.displayName,dispatch])
     
 
     const lockScroll = useCallback(
@@ -45,17 +45,22 @@ function Navigation(props) {
             console.log(error);
         }
     }
-
+    const scrollToHome = ()=>{
+        window.scrollTo({ 
+        top: 0,
+        behavior: 'smooth'
+      })
+  }
 
     return (
         <header className={classes.header}>
             <div className={classes.logo}>
-                <NavLink to='/'>
+                <NavLink to='/' onClick={()=> scrollToHome()}>
                     FakeStore
                 </NavLink>
             </div>
             <nav>
-                <NavLink to='/'>
+                <NavLink to='/' onClick={()=> scrollToHome()} >
                     Home
                 </NavLink>
                 <NavLink to='/' onClick={()=> setTimeout(()=>{props.scroll()},750) }>
@@ -68,6 +73,9 @@ function Navigation(props) {
                         <div className={classes.userBox}>
                             <NavLink to='profile' className={classes.signout}>
                                 Profile
+                            </NavLink>
+                            <NavLink to='favorite' className={classes.signout}>
+                                Favorite    
                             </NavLink>    
                             <div className={classes.signout} onClick={logOutHandler}>
                                 Log Out

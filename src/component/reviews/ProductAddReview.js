@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faStar as fasFaStar} from "@fortawesome/free-solid-svg-icons";
 import { faStar as farFaStar } from '@fortawesome/free-regular-svg-icons'
 import { nanoid } from 'nanoid';
+import { useUserData } from '../../context/UserDataContext';
 
 const ProductAddReview=({currentUser,cancelAddReview,productId,submitReview})=>{
     const [ratingInput,setRatingInput] = useState(0)
@@ -12,6 +13,7 @@ const ProductAddReview=({currentUser,cancelAddReview,productId,submitReview})=>{
     const [titleInput,setTitleInput] = useState('')
     const [descriptionInput,setDescriptionInput] = useState('')
     const [warning,setWarning] = useState('')
+    const { writeUserData } = useUserData()
     
     const writeRating=()=>{
         let star=[]
@@ -55,24 +57,31 @@ const ProductAddReview=({currentUser,cancelAddReview,productId,submitReview})=>{
             return
         }
         setWarning('')
+        const id = nanoid()
         const reviewData ={
-            id: nanoid(),
+            id: id,
             Title: titleInput,
             ReviewStars : ratingInput,
             Author: {
                 nickname:nameInput,
                 uid: currentUser.uid
             },
-            Time: Date(),
+            Time: Date.now(),
             Text: descriptionInput 
         }
-        axios
-            .post(`https://fakestore-2bc85-default-rtdb.firebaseio.com/${productId}.json`,reviewData)
-            .then(()=>{
-                submitReview()
-            }).catch((err)=>[
-                setWarning(err)
-            ])
+        writeUserData(`productReviews/${productId}/${id}`,reviewData)
+        .then(()=>{
+            submitReview()
+        }).catch((err)=>{
+            setWarning(err)
+        })    
+        // axios
+        //     .post(`https://fakestore-2bc85-default-rtdb.firebaseio.com/productReviews/${productId}.json`,reviewData)
+        //     .then(()=>{
+        //         submitReview()
+        //     }).catch((err)=>{
+        //         setWarning(err)
+        //     })
     }
     return(
         <div>
@@ -98,7 +107,7 @@ const ProductAddReview=({currentUser,cancelAddReview,productId,submitReview})=>{
                         <p>
                             Please provide description! Your reviews help other shoppers:
                         </p>
-                        <textarea rows="8" cols="75" maxLength="3000" value={descriptionInput} onChange={handleDescriptionChange} required></textarea>
+                        <textarea rows="8" maxLength="3000" value={descriptionInput} onChange={handleDescriptionChange} required></textarea>
                         <div className={classes.wordCount}>{descriptionInput.length}/3000</div>
                     </label>
                     {warning && <div className={classes.warning}>{warning}</div>}
