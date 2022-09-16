@@ -21,20 +21,15 @@ const ProductReviews=({productId})=>{
     const [addReviewSuccess,setAddReviewSuccess] = useState('')
     const {currentUser} = useUserAuth()
     
+   
     useEffect(()=>{
         let allReviewData= []
         axios
             .get(`https://fakestore-2bc85-default-rtdb.firebaseio.com/productReviews/${productId}.json`)
             .then(({data})=>{
                for(let key in data){
-                const review={...data[key]}
-                allReviewData.push(review)
-               }
-               if(allReviewData.length>0){
-                   const AllStars = allReviewData.map((data)=>data.ReviewStars).reduce((previousValue, currentValue) => previousValue + currentValue,0)
-                   setRating(Math.floor(AllStars*10/allReviewData.length)/10)
-               }else{
-                    setRating(0)
+                    const review={...data[key]}
+                    allReviewData.push(review)
                }
                let reviews = {all:[]}
                let starsPercentObj = {}
@@ -47,6 +42,14 @@ const ProductReviews=({productId})=>{
                }
                setRewiewsFilterData(reviews)
                setStarBarPercent(starsPercentObj)
+               if(allReviewData.length>0){
+                    const totalStars = allReviewData.map((data)=>data.ReviewStars).reduce((previousValue, currentValue) => previousValue + currentValue,0)
+                    const ratingStars = Math.floor(totalStars*10/allReviewData.length)/10
+                    setRating(ratingStars)
+                    axios.put(`https://fakestore-2bc85-default-rtdb.firebaseio.com/productRating/${productId}.json`,{rating:ratingStars,review_count:allReviewData.length})
+                }else{
+                    setRating(0)
+                }
             })
             .catch((err)=> console.log(err))
     },[refresh,productId])
@@ -97,7 +100,7 @@ const ProductReviews=({productId})=>{
                     />
                 </div>
                 <hr/>
-                {addReview && <ProductAddReview  currentUser={currentUser} cancelAddReview={handleCancelReview} productId={productId} submitReview={handleSubmitReview}/>}
+                {addReview && <ProductAddReview  currentUser={currentUser} cancelAddReview={handleCancelReview} productId={productId} submitReview={handleSubmitReview} allReviewData={rewiewsFilterData['all']}/>}
                 {addReviewSuccess && <div className={classes.addReviewSuccess}>{addReviewSuccess}</div> }
                 <div className={classes.reviewFilter}>
                     <label className={classes.reviewSelect}>Filter:  
