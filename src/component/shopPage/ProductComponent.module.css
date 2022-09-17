@@ -1,12 +1,15 @@
 .container{
+    position: relative;
     transition: .2s;
 }
 .container:hover{
     transform: translate(-1px,-1px);
+    z-index: 10;
 }
 .container:hover .cards{
     transform: translate(-1px,-1px);
     box-shadow: 2px 2px 8px 0px #ddd;
+    z-index: 10;
 }
 a{
     cursor: pointer;
@@ -14,6 +17,7 @@ a{
     color: #111;
 }
 .cards{
+    position: relative;
     transition: .2s;
     display: flex;
     flex-direction: column;

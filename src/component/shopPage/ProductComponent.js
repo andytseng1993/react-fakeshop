@@ -5,6 +5,7 @@ import FavoriteBtn from '../favorite/FavoriteBtn';
 import Rating from '../reviews/Rating';
 import { useUserData } from '../../context/UserDataContext';
 
+
 const ProductComponent=({product,favoriteList})=>{
     const {id,title,image,price,category} = product
     const {readUserData}= useUserData()
@@ -21,8 +22,9 @@ const ProductComponent=({product,favoriteList})=>{
         }
         getData()
     },[id])
+
     return(
-        <div className={classes.container} key={id}>
+        <div className={classes.container}>
                 <div className={classes.cards}>
                     <Link to={`/product/${id}`}>
                         <div className={classes.image}>
