@@ -3,7 +3,7 @@ import { nanoid } from "nanoid"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useParams } from "react-router-dom"
-import { addCartList, removeProduct, selectProduct } from "../../redux/actions"
+import { addCartList} from "../../redux/actions"
 import classes from './ProductDetail.module.css'
 import ProductReviews from "../reviews/ProductReviews"
 import FavoriteBtn from '../favorite/FavoriteBtn'
@@ -11,23 +11,20 @@ import FavoriteBtn from '../favorite/FavoriteBtn'
 const ProductDetail=()=>{
     const {productId} = useParams()
     const [isLoading,setIsLoading] = useState(true)
+    const [productDetail,setProductDetail] = useState({})
     const [count,setCount] = useState(1)
     const dispatch= useDispatch()
-    const productDetail = useSelector((state)=> state.productDetail)
     const favoriteList = useSelector((state)=>state.favorites)
     const {image, title,price,description,category} = productDetail
-    const product = {image,title,price,count,category,productId}
-
+    const product = {...productDetail,count}
+   
     useEffect(()=>{
         setIsLoading(true)
         axios.get(`https://fakestoreapi.com/products/${productId}`)
         .then(({data}) => {
             setIsLoading(false)
-            dispatch(selectProduct(data))
+            setProductDetail(data)
         })
-        return ()=>{
-            dispatch(removeProduct())
-        }
     },[productId,dispatch])
 
     const addCartHandler =  (product)=>{

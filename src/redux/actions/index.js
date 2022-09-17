@@ -6,17 +6,6 @@ export const setProducts=(products)=>{
         payload: products
     }
 }
-export const selectProduct=(product)=>{
-    return {
-        type: ACTIONS.SELECTED_PRODUCT,
-        payload: product
-    }
-}
-export const removeProduct=()=>{
-    return {
-        type: ACTIONS.REMOVE_PRODUCT,
-    }
-}
 
 export const setProductCategory=(product)=>{
     return {

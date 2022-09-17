@@ -13,16 +13,6 @@ export const productReducer=(state=intialState,action)=>{
     }
 }
 
-export const selectProducer =(state={},action)=>{
-    switch(action.type){
-        case ACTIONS.SELECTED_PRODUCT:
-            return {...state,...action.payload}
-        case ACTIONS.REMOVE_PRODUCT:
-            return {}
-        default:
-            return state
-    }
-}
 export const selectCategoryReducer=(state='All Products',action)=>{
     switch(action.type){
         case ACTIONS.SET_CATEGORY:
