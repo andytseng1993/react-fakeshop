@@ -1,4 +1,5 @@
 .box{
+    display: none;
     color: black;
     position: absolute;
     white-space: nowrap;
@@ -11,6 +12,7 @@
     transform: translateX(-50%);
     padding: 5px 12px;
     opacity: 0;
+    cursor: default;
 }
 .box::after{
     content: '';

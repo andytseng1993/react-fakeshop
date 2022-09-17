@@ -9,6 +9,7 @@ const ProductComponent=({product,favoriteList})=>{
     const {id,title,image,price,category} = product
     const {readUserData}= useUserData()
     const [ratingObj,setRatingObj] = useState({rating:0,reviewCount:0})
+    
     useEffect(()=>{
         const getData =async()=>{
             readUserData('productRating/'+ product.id)
@@ -35,7 +36,9 @@ const ProductComponent=({product,favoriteList})=>{
                             </Link> 
                         </div>
                         <div className={classes.rating}>
-                            {ratingObj.rating>0 && <Rating rating={ratingObj.rating} reviewsNum={ratingObj.reviewCount} fontSize={15}/>}
+                            <Link to={`/product/${id}`}>
+                                {ratingObj.rating>0 && <Rating rating={ratingObj.rating} reviewsNum={ratingObj.reviewCount} fontSize={15}/>}
+                            </Link> 
                         </div>
                         <div className={classes.productInfo}>
                             <div className={classes.priceAndCategory}>

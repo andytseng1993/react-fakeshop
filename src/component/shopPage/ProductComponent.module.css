@@ -54,9 +54,29 @@ a{
     overflow: hidden;
 }
 .rating{
-    height: 25px;
+    height: 21px;
     display: flex;
-    margin-bottom: -5px;
+    margin-bottom: 2px;
+    justify-content: flex-start;
+    flex-direction: row;
+    align-content: center;
+    width: fit-content;
+    cursor: pointer;
+}
+.rating a{
+    display: flex;
+    flex-direction: row;
+}
+.rating:hover{
+    animation: fade 0.4s ease both;
+}
+@keyframes fade {
+    0%{
+        border-bottom: 1px solid transparent;
+    }
+    100%{
+        border-bottom: 1px solid black;
+    }
 }
 .price{
     margin: 5px 0px;
