@@ -44,6 +44,7 @@ a{
     font-weight: 600;   
     margin: 5px 0px;
     height: 40px;
+    margin-bottom: 10px;
 }
 .header a {
     display: -webkit-box;
@@ -51,6 +52,11 @@ a{
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
+}
+.rating{
+    height: 25px;
+    display: flex;
+    margin-bottom: -5px;
 }
 .price{
     margin: 5px 0px;

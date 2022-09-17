@@ -13,26 +13,6 @@
     align-items: baseline;
     margin-bottom: 10px;
  }
- .ratingStars{
-    position: relative;
-    font-size: 20px;
- }
- .emptyStars{
-    display: flex;
-    justify-items: center;
-    align-items: baseline;
- }
- .fullStars{
-    display: flex;
-    justify-items: center;
-    align-items: baseline;
-    flex-wrap: nowrap;
-    position: absolute;
-    top: 0px;
-    height: 100%;
-    width: 100%;
-    overflow: hidden;
- }
  .writeReviewBtn{
     margin-top: 20px;
     padding: 5px 0px;

@@ -20,6 +20,7 @@ const ProductReviews=({productId})=>{
     const userName = useSelector((state)=> state.setUserName) 
     const [addReviewSuccess,setAddReviewSuccess] = useState('')
     const {currentUser} = useUserAuth()
+    const [reviewsNum,setReviewsNum] = useState(0)
     
    
     useEffect(()=>{
@@ -30,7 +31,7 @@ const ProductReviews=({productId})=>{
                for(let key in data){
                     const review={...data[key]}
                     allReviewData.push(review)
-               }
+                }
                let reviews = {all:[]}
                let starsPercentObj = {}
                for(let i=5;i>0;i--){
@@ -40,13 +41,14 @@ const ProductReviews=({productId})=>{
                    reviews[i]=res
                    reviews.all.push(...res)
                }
+               setReviewsNum(allReviewData.length)
                setRewiewsFilterData(reviews)
                setStarBarPercent(starsPercentObj)
                if(allReviewData.length>0){
                     const totalStars = allReviewData.map((data)=>data.ReviewStars).reduce((previousValue, currentValue) => previousValue + currentValue,0)
                     const ratingStars = Math.floor(totalStars*10/allReviewData.length)/10
                     setRating(ratingStars)
-                    axios.put(`https://fakestore-2bc85-default-rtdb.firebaseio.com/productRating/${productId}.json`,{rating:ratingStars,review_count:allReviewData.length})
+                    axios.put(`https://fakestore-2bc85-default-rtdb.firebaseio.com/productRating/${productId}.json`,{rating:ratingStars,reviewCount:allReviewData.length})
                 }else{
                     setRating(0)
                 }
@@ -93,7 +95,7 @@ const ProductReviews=({productId})=>{
                 <div className={classes.description}>
                     <RatingSummary 
                         rating={rating} 
-                        rewiewsFilterData={rewiewsFilterData} 
+                        reviewsNum={reviewsNum} 
                         handleAddReview={handleAddReview} 
                         handleStarBar={handleStarBar} 
                         starBarPercent={starBarPercent}
