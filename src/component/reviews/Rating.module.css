@@ -1,0 +1,20 @@
+.ratingStars{
+    position: relative;
+ }
+ .emptyStars{
+    display: flex;
+    justify-items: center;
+    align-items: baseline;
+    margin-right: 5px;
+ }
+ .fullStars{
+    display: flex;
+    justify-items: center;
+    align-items: baseline;
+    flex-wrap: nowrap;
+    position: absolute;
+    top: 0px;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+ }

@@ -20,22 +20,18 @@ const ProductReviews=({productId})=>{
     const userName = useSelector((state)=> state.setUserName) 
     const [addReviewSuccess,setAddReviewSuccess] = useState('')
     const {currentUser} = useUserAuth()
+    const [reviewsNum,setReviewsNum] = useState(0)
     
+   
     useEffect(()=>{
         let allReviewData= []
         axios
             .get(`https://fakestore-2bc85-default-rtdb.firebaseio.com/productReviews/${productId}.json`)
             .then(({data})=>{
                for(let key in data){
-                const review={...data[key]}
-                allReviewData.push(review)
-               }
-               if(allReviewData.length>0){
-                   const AllStars = allReviewData.map((data)=>data.ReviewStars).reduce((previousValue, currentValue) => previousValue + currentValue,0)
-                   setRating(Math.floor(AllStars*10/allReviewData.length)/10)
-               }else{
-                    setRating(0)
-               }
+                    const review={...data[key]}
+                    allReviewData.push(review)
+                }
                let reviews = {all:[]}
                let starsPercentObj = {}
                for(let i=5;i>0;i--){
@@ -45,8 +41,17 @@ const ProductReviews=({productId})=>{
                    reviews[i]=res
                    reviews.all.push(...res)
                }
+               setReviewsNum(allReviewData.length)
                setRewiewsFilterData(reviews)
                setStarBarPercent(starsPercentObj)
+               if(allReviewData.length>0){
+                    const totalStars = allReviewData.map((data)=>data.ReviewStars).reduce((previousValue, currentValue) => previousValue + currentValue,0)
+                    const ratingStars = Math.floor(totalStars*10/allReviewData.length)/10
+                    setRating(ratingStars)
+                    axios.put(`https://fakestore-2bc85-default-rtdb.firebaseio.com/productRating/${productId}.json`,{rating:ratingStars,reviewCount:allReviewData.length})
+                }else{
+                    setRating(0)
+                }
             })
             .catch((err)=> console.log(err))
     },[refresh,productId])
@@ -90,14 +95,14 @@ const ProductReviews=({productId})=>{
                 <div className={classes.description}>
                     <RatingSummary 
                         rating={rating} 
-                        rewiewsFilterData={rewiewsFilterData} 
+                        reviewsNum={reviewsNum} 
                         handleAddReview={handleAddReview} 
                         handleStarBar={handleStarBar} 
                         starBarPercent={starBarPercent}
                     />
                 </div>
                 <hr/>
-                {addReview && <ProductAddReview  currentUser={currentUser} cancelAddReview={handleCancelReview} productId={productId} submitReview={handleSubmitReview}/>}
+                {addReview && <ProductAddReview  currentUser={currentUser} cancelAddReview={handleCancelReview} productId={productId} submitReview={handleSubmitReview} allReviewData={rewiewsFilterData['all']}/>}
                 {addReviewSuccess && <div className={classes.addReviewSuccess}>{addReviewSuccess}</div> }
                 <div className={classes.reviewFilter}>
                     <label className={classes.reviewSelect}>Filter:  

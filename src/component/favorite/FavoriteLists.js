@@ -16,7 +16,7 @@ const FavoritLists = ()=>{
         }
         filterItems(allProducts, favoriteList)
     },[allProducts,favoriteList])
-
+    console.log(favoriteData);
     const emptyFavorite = (
         <div className={classes.emptyFavorite} >
             <FontAwesomeIcon icon={fasFaHeart} className={classes.emptyLove}/>
@@ -36,7 +36,9 @@ const FavoritLists = ()=>{
                 emptyFavorite
                 :
                 (<div className='productList'>
-                    <ProductComponent productCategory={'All Products'} allProducts={favoriteData} favoriteList={favoriteList} />
+                {favoriteData.map((product)=>(
+                    <ProductComponent key={product.id} product={product} favoriteList={favoriteList} />
+                ))}
                 </div>)
             }
         </>

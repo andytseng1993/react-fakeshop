@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import axios from 'axios';
+import { useEffect, useState } from 'react';
 import classes from './ProductAddReview.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faStar as fasFaStar} from "@fortawesome/free-solid-svg-icons";
@@ -7,14 +6,30 @@ import { faStar as farFaStar } from '@fortawesome/free-regular-svg-icons'
 import { nanoid } from 'nanoid';
 import { useUserData } from '../../context/UserDataContext';
 
-const ProductAddReview=({currentUser,cancelAddReview,productId,submitReview})=>{
+const ProductAddReview=({currentUser,cancelAddReview,productId,submitReview,allReviewData})=>{
     const [ratingInput,setRatingInput] = useState(0)
     const [nameInput,setNameInput] = useState(currentUser.displayName)
     const [titleInput,setTitleInput] = useState('')
     const [descriptionInput,setDescriptionInput] = useState('')
     const [warning,setWarning] = useState('')
     const { writeUserData } = useUserData()
+    const [repeatReviw,setRepeatReviw]=useState(false)
+    const [repeatId,setRepeatId]=useState('')
     
+    useEffect(()=>{
+        if(allReviewData.length===0) return
+        allReviewData.forEach(element => {
+            if(element.Author.uid === currentUser.uid){
+                setNameInput(element.Author.nickname)
+                setRatingInput(element.ReviewStars)
+                setTitleInput(element.Title)
+                setDescriptionInput(element.Text)
+                setRepeatId(element.id)
+                setRepeatReviw(true)
+                return
+            }
+        });
+    },[])
     const writeRating=()=>{
         let star=[]
         for(let i=0;i<ratingInput;i++){
@@ -57,7 +72,12 @@ const ProductAddReview=({currentUser,cancelAddReview,productId,submitReview})=>{
             return
         }
         setWarning('')
-        const id = nanoid()
+        let id
+        if(repeatReviw){
+            id = repeatId
+        }else{
+            id = nanoid()
+        }
         const reviewData ={
             id: id,
             Title: titleInput,
@@ -70,18 +90,13 @@ const ProductAddReview=({currentUser,cancelAddReview,productId,submitReview})=>{
             Text: descriptionInput 
         }
         writeUserData(`productReviews/${productId}/${id}`,reviewData)
-        .then(()=>{
-            submitReview()
-        }).catch((err)=>{
-            setWarning(err)
-        })    
-        // axios
-        //     .post(`https://fakestore-2bc85-default-rtdb.firebaseio.com/productReviews/${productId}.json`,reviewData)
-        //     .then(()=>{
-        //         submitReview()
-        //     }).catch((err)=>{
-        //         setWarning(err)
-        //     })
+            .then(()=>{
+                submitReview()
+                setRepeatId('')
+                setRepeatReviw(false)
+            }).catch((err)=>{
+                setWarning(err)
+            })    
     }
     return(
         <div>

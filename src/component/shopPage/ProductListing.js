@@ -15,7 +15,7 @@ const ProductListing=()=>{
     const favoriteList = useSelector((state)=>state.favorites)
     const {currentUser}  = useUserAuth()
     const {readUserData} = useUserData()
-
+    const [filterProducts,setFilterProducts] = useState([])
     
     useEffect(()=>{
         if(allProducts.length===0){
@@ -27,6 +27,15 @@ const ProductListing=()=>{
         })}
     },[dispatch,allProducts])
 
+    useEffect(()=>{
+        if(productCategory!== ''){
+            setFilterProducts(allProducts.filter(({category})=> category===productCategory))
+        }
+        if(productCategory=== 'All Products'){
+            setFilterProducts(allProducts)
+        }
+    },[productCategory,allProducts])
+    
     useEffect(()=>{
         if(!currentUser){
             dispatch(setFavoriteList([]))
@@ -58,10 +67,9 @@ const ProductListing=()=>{
                 <ProductCategory/>
             </nav>
             <div className='productList'>
-                <ProductComponent 
-                    productCategory={productCategory} 
-                    allProducts={allProducts} 
-                    favoriteList={favoriteList}/>
+                {filterProducts.map((product)=>(
+                    <ProductComponent key={product.id} product={product} favoriteList={favoriteList}/>
+                ))}
                 <span className="wrap" />
                 <span className="wrap" />
                 <span className="wrap" />

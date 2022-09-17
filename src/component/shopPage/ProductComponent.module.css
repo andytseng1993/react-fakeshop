@@ -1,12 +1,15 @@
 .container{
+    position: relative;
     transition: .2s;
 }
 .container:hover{
     transform: translate(-1px,-1px);
+    z-index: 10;
 }
 .container:hover .cards{
     transform: translate(-1px,-1px);
     box-shadow: 2px 2px 8px 0px #ddd;
+    z-index: 10;
 }
 a{
     cursor: pointer;
@@ -14,6 +17,7 @@ a{
     color: #111;
 }
 .cards{
+    position: relative;
     transition: .2s;
     display: flex;
     flex-direction: column;
@@ -44,6 +48,7 @@ a{
     font-weight: 600;   
     margin: 5px 0px;
     height: 40px;
+    margin-bottom: 10px;
 }
 .header a {
     display: -webkit-box;
@@ -51,6 +56,31 @@ a{
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
+}
+.rating{
+    height: 21px;
+    display: flex;
+    margin-bottom: 2px;
+    justify-content: flex-start;
+    flex-direction: row;
+    align-content: center;
+    width: fit-content;
+    cursor: pointer;
+}
+.rating a{
+    display: flex;
+    flex-direction: row;
+}
+.rating:hover{
+    animation: fade 0.4s ease both;
+}
+@keyframes fade {
+    0%{
+        border-bottom: 1px solid transparent;
+    }
+    100%{
+        border-bottom: 1px solid black;
+    }
 }
 .price{
     margin: 5px 0px;

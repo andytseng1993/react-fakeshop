@@ -1,10 +1,7 @@
 import classes from './RatingSummary.module.css'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faStar as fasFaStar} from "@fortawesome/free-solid-svg-icons";
-import { faStar as farFaStar } from '@fortawesome/free-regular-svg-icons'
+import Rating from './Rating';
 
-const RatingSummary=({rating,rewiewsFilterData,handleAddReview,handleStarBar,starBarPercent})=>{
-
+const RatingSummary=({rating,reviewsNum,handleAddReview,handleStarBar,starBarPercent})=>{
     return(
         <>
             <div className={classes.ratingSummary}>
@@ -13,23 +10,7 @@ const RatingSummary=({rating,rewiewsFilterData,handleAddReview,handleStarBar,sta
                     <div style={{fontSize:'18px'}}>out of 5</div>
                 </div>
                 <div style={{display:'flex'}}>
-                    <div className={classes.ratingStars}>
-                        <div className={classes.emptyStars}>
-                            <FontAwesomeIcon icon={farFaStar} />
-                            <FontAwesomeIcon icon={farFaStar} />
-                            <FontAwesomeIcon icon={farFaStar} />
-                            <FontAwesomeIcon icon={farFaStar} />
-                            <FontAwesomeIcon icon={farFaStar} />
-                        </div>
-                        <div className={classes.fullStars} style={{width:rating*20+'%'}}>
-                            <FontAwesomeIcon icon={fasFaStar} />
-                            <FontAwesomeIcon icon={fasFaStar} />
-                            <FontAwesomeIcon icon={fasFaStar} />
-                            <FontAwesomeIcon icon={fasFaStar} />
-                            <FontAwesomeIcon icon={fasFaStar} />
-                        </div>
-                    </div>
-                    <span> ({rewiewsFilterData.all?.length} reviews)</span>
+                    <Rating rating={rating} reviewsNum={reviewsNum} fontSize={18}/>
                 </div>
                 <button className={classes.writeReviewBtn} onClick={()=>handleAddReview()}>Write a review</button>
             </div>
