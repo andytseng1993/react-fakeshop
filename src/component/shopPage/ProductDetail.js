@@ -19,12 +19,21 @@ const ProductDetail=()=>{
     const product = {...productDetail,count}
    
     useEffect(()=>{
+        const cancelToken = axios.CancelToken.source()
         setIsLoading(true)
-        axios.get(`https://fakestoreapi.com/products/${productId}`)
+        axios.get(`https://fakestoreapi.com/products/${productId}`,{
+            cancelToken:cancelToken.token
+        })
         .then(({data}) => {
             setIsLoading(false)
             setProductDetail(data)
         })
+        .catch((err)=>{
+            axios.isCancel(err)? console.log('cancelled'): console.log(err)
+        })
+        return ()=>{
+            cancelToken.cancel()
+        }
     },[productId,dispatch])
 
     const addCartHandler =  (product)=>{

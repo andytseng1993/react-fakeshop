@@ -70,3 +70,7 @@ create a ProtectedRoute, when there is a logged in user, the Home component does
         overflow: hidden;
       }
   ```
+
+  ### axios cancel
+  `const cancelToken= axios.CancelToken.source()`
+  we can use in useEffect with cleanup function to stop fetch the data.

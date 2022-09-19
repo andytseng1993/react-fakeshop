@@ -16,32 +16,15 @@ const ProductListing=()=>{
     const {currentUser}  = useUserAuth()
     const {readUserData} = useUserData()
     const [filterProducts,setFilterProducts] = useState([])
-    
-    useEffect(()=>{
-        if(allProducts.length===0){
-        setIsLoading(true)
-        axios.get('https://fakestoreapi.com/products')
-        .then(({data})=>{
-            dispatch(setProducts(data))
-            setIsLoading(false)
-        })}
-    },[dispatch,allProducts])
 
     useEffect(()=>{
-        if(productCategory!== ''){
-            setFilterProducts(allProducts.filter(({category})=> category===productCategory))
-        }
-        if(productCategory=== 'All Products'){
-            setFilterProducts(allProducts)
-        }
-    },[productCategory,allProducts])
-    
-    useEffect(()=>{
+        let isCancel = false 
         if(!currentUser){
             dispatch(setFavoriteList([]))
         }else{
             readUserData('users/'+currentUser.uid+'/favorites')
-                .then(res=> {
+            .then(res=> {
+                if(!isCancel){
                     const favorites =[]
                     res.forEach(element => {
                         favorites.push(parseInt(element.key))
@@ -50,9 +33,42 @@ const ProductListing=()=>{
                     dispatch(setFavoriteList([]))
                     :
                     dispatch(setFavoriteList(favorites))
-                })
+                }
+            }).catch((err)=> console.log(err))
+        }
+        return ()=>{
+            isCancel = true 
         }
     },[currentUser,dispatch,readUserData])
+
+    useEffect(()=>{
+        const cancelToken= axios.CancelToken.source()
+        if(allProducts.length===0){
+            setIsLoading(true)
+            axios.get('https://fakestoreapi.com/products',
+                {cancelToken: cancelToken.token
+            })
+            .then(({data})=>{
+                dispatch(setProducts(data))
+                setIsLoading(false)
+            }).catch((err)=> axios.isCancel(err)? console.log('cancelled'): console.log(err))
+        }
+        return ()=>{
+            cancelToken.cancel()
+        }
+    },[dispatch,allProducts])
+
+    useEffect(()=>{
+        if(productCategory=== 'All Products'){
+            setFilterProducts(allProducts)
+            return
+        }
+        if(productCategory!== ''){
+            setFilterProducts(allProducts.filter(({category})=> category===productCategory))
+        }
+    },[productCategory,allProducts])
+    
+    
 
     if(isLoading){
         return (

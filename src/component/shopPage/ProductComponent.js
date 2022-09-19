@@ -12,16 +12,22 @@ const ProductComponent=({product,favoriteList})=>{
     const [ratingObj,setRatingObj] = useState({rating:0,reviewCount:0})
     
     useEffect(()=>{
+        let isCancel = false
         const getData =async()=>{
-            readUserData('productRating/'+ product.id)
+            readUserData('productRating/'+ id)
             .then((res)=>{
-                const value = res.val()
-                if(!value) return setRatingObj({rating:0,reviewCount:0})
-                setRatingObj(value)
+                if(!isCancel){
+                    const value = res.val()
+                    if(!value) return setRatingObj({rating:0,reviewCount:0})
+                    setRatingObj(value)
+                }
             })
         }
         getData()
-    },[id])
+        return ()=>{
+            isCancel = true
+        }
+    },[id , readUserData])
 
     return(
         <div className={classes.container}>

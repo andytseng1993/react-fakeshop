@@ -24,9 +24,11 @@ const ProductReviews=({productId})=>{
     
    
     useEffect(()=>{
+        const cancelToken = axios.CancelToken.source()
         let allReviewData= []
         axios
-            .get(`https://fakestore-2bc85-default-rtdb.firebaseio.com/productReviews/${productId}.json`)
+            .get(`https://fakestore-2bc85-default-rtdb.firebaseio.com/productReviews/${productId}.json`,
+            {cancelToken:cancelToken.token})
             .then(({data})=>{
                for(let key in data){
                     const review={...data[key]}
@@ -53,7 +55,16 @@ const ProductReviews=({productId})=>{
                     setRating(0)
                 }
             })
-            .catch((err)=> console.log(err))
+            .catch((err)=> {
+                if(axios.isCancel(err)){
+                    console.log('cancelled');
+                }else{
+                    console.log(err)
+                }
+            })
+        return ()=>{
+            cancelToken.cancel()
+        }
     },[refresh,productId])
 
     const handleChange=(event)=>{

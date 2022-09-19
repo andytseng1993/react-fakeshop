@@ -16,7 +16,7 @@ const FavoritLists = ()=>{
         }
         filterItems(allProducts, favoriteList)
     },[allProducts,favoriteList])
-    console.log(favoriteData);
+    
     const emptyFavorite = (
         <div className={classes.emptyFavorite} >
             <FontAwesomeIcon icon={fasFaHeart} className={classes.emptyLove}/>
