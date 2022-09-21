@@ -1,0 +1,17 @@
+.menu{
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-grow: 1;
+    border-right: 2px solid rgb(203, 203, 203);
+    height: calc(100vh - 120px);
+}
+.image{
+    width: 180px;
+    border-radius: 50%;
+    padding: 5px;
+    border: 2px solid black;
+    opacity: 0.5;
+    margin: 10px 0 20px;
+}

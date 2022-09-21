@@ -1,12 +1,12 @@
 import { Outlet } from "react-router-dom"
-import Profile from "../component/account/Profile"
+import AccountMenu from "../component/account/AccountMenu"
 
 const AccountPage = ()=>{
     return(
-        <>
-            <h1 style={{marginTop: 100}}>Account</h1>
+        <div style={{margin:'80px auto 0px auto',display:'flex', maxWidth: 1000, justifyContent:'center'}}>
+            <AccountMenu/>
             <Outlet/>
-        </>
+        </div>
     )
 }
 

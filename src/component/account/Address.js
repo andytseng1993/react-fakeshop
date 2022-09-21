@@ -1,6 +1,6 @@
-const Address= ()=>{
+const Address= ({style})=>{
     return(
-        <h2>Address</h2>
+        <h2 style={{flexGrow:4}}>Address</h2>
     )
 }
 

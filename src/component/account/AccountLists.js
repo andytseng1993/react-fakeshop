@@ -1,6 +1,6 @@
 const AcountLists=()=>{
     return(
-        <h1>AccountLists</h1>
+        <h1 style={{flexGrow:5}} >AccountLists</h1>
     )
 }
 
