@@ -5,7 +5,7 @@ import { setUserName } from '../../redux/actions'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faEnvelopeCircleCheck} from "@fortawesome/free-solid-svg-icons";
 import classes from './Profile.module.css'
-import PasswordInput from './PasswordInput'
+import PasswordInput from '../logIn/PasswordInput'
 
 
 const Profile=()=>{
