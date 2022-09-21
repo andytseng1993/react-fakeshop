@@ -1,10 +1,17 @@
 .favoriteTiltle{
     font-size: 1.8rem;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: flex-start;
     align-items: center;
-    margin: 15px;
-    margin-top: 90px;
+    margin-top: 20px;
+    width: 70%;
+}
+.title{
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    margin-bottom: 10px;
 }
 .love{
     font-size: 1.5rem;
@@ -27,6 +34,6 @@
 }
 .emptyLovePar{
     margin: 15px 0px 100px;
-    font-size:1.3rem;
+    font-size:1.2rem;
     font-weight: 500;
 }

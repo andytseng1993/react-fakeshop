@@ -35,8 +35,8 @@ function App() {
                 <Route index element={<AccountLists />} />
                 <Route path='profile' element={<Profile />} />
                 <Route path='address' element={<Address />} />
+                <Route path='favorites' element={<FavoritePage/>}/>
               </Route>
-              <Route path='favorite' element={<FavoritePage/>}/>
             </Route>
             <Route path='cart' element={<Cart/>}/>
             <Route
