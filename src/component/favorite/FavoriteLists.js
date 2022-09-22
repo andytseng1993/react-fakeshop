@@ -39,6 +39,7 @@ const FavoritLists = ()=>{
                     {favoriteData.map((product)=>(
                         <ProductComponent key={product.id} product={product} favoriteList={favoriteList} />
                     ))}
+                        <span className="wrap" />
                     </div>)
                 }
             </div>
