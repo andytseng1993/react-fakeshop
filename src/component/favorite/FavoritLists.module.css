@@ -1,13 +1,14 @@
 .favoriteTiltle{
-    font-size: 1.8rem;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
     margin-top: 20px;
     width: 70%;
+    border-left: 2px solid rgb(203, 203, 203);
 }
 .title{
+    font-size: 1.8rem;
     display: flex;
     justify-items: center;
     align-items: center;

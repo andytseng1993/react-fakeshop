@@ -4,7 +4,6 @@
     flex-direction: column;
     align-items: center;
     flex-grow: 1;
-    border-right: 2px solid rgb(203, 203, 203);
     height: calc(100vh - 120px);
 }
 .imageBox{

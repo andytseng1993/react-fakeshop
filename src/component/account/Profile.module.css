@@ -1,9 +1,9 @@
 section.profile{
-    height: calc(100vh - 100px);
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 70%;
+    border-left: 2px solid rgb(203, 203, 203);
 }
 
 .profileArea,.passwordArea{
