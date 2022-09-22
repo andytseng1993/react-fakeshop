@@ -25,7 +25,7 @@ function App() {
       })
   }
   const GoogleMapsUrl = `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_MAP_API}&libraries=places`
-  const AdressAutocomplete = useWrapper(GoogleMapsUrl,Address)
+  const [scriptLoaded,AdressAutocomplete] = useWrapper(GoogleMapsUrl,Address)
   return (
     <div className="App">
       <UserAuthContextProvider>
