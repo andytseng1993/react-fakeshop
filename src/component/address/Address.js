@@ -32,7 +32,7 @@ const Address= ()=>{
                     </label>
                     <input/>
                 </div>
-                <AddressAutoComplete address={address} handleChange={handleChange} handleSelect={handleSelect} />
+                <AddressAutoComplete {...{address,handleChange,handleSelect}} />
                 <div className={classes.searchBox}>
                     <label className={classes.searchLabel}>
                         <span>Apt, suite,etc. (optional)</span>

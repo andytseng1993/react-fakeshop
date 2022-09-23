@@ -1,34 +1,58 @@
 import PlacesAutocomplete from 'react-places-autocomplete';
 import classes from './AddressAutoComplete.module.css'
-const AddressAutoComplete = ({address,handleChange,handleSelect})=>{
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faLocationCrosshairs } from "@fortawesome/free-solid-svg-icons";
+import { useState } from 'react';
 
+const AddressAutoComplete = ({address,handleChange,handleSelect})=>{
+    const [isFocus,setIsFocus] = useState(false)
+    const onFocusChange = ()=>{
+        setIsFocus(true)
+    }
+    const onBlurChange = ()=>{
+        setIsFocus(false)
+    }
+    const isFocusStyle ={
+        top: '4px',
+        left: '0px',
+        fontSize: '13px',
+        padding: '1px 5px',
+        backgroundColor: 'white',
+        zIndex: 15,
+        color: 'black', 
+    }
     return(
         <PlacesAutocomplete value={address} onChange={handleChange} onSelect={handleSelect}>
             {({getInputProps, suggestions, getSuggestionItemProps, loading})=>(
-                <div>
-                    <div className={classes.searchBox}>
-                        <label className={classes.searchLabel}>
+                <div className={classes.addressAuto}>
+                    <div className={classes.searchBox} onFocus={onFocusChange} onBlur={onBlurChange}>
+                        <label className={classes.searchLabel} style={(isFocus||address)?isFocusStyle:{}}>
                             <span>Street Adress*</span>
                         </label>
-                        <input 
+                        <input
                             {...getInputProps({
                                 className: classes.searchInput,
                             })}
                         />
                     </div>
-                    <div>
+                    <div className={classes.suggestionZone}>
                         {loading && <div>Loading...</div>}
                         {suggestions.map((suggestion)=>{
+                            console.log(suggestion);
                             const className = suggestion.active?
                             classes.suggestionItemActive
                             : classes.suggestionItem
                             const style = suggestion.active?
                                 { backgroundColor: '#74d2e7', cursor: 'pointer' }
-                                : { backgroundColor: '#ffffff', cursor: 'pointer' }
+                                : { cursor: 'pointer' }
 
                             return (
-                                <div key={suggestion.placeId} {...getSuggestionItemProps(suggestion, {className,style,})}>
-                                    <span>{suggestion.description}</span>
+                                <div key={suggestion.placeId} {...getSuggestionItemProps(suggestion, {className,style,})} className={classes.suggestion}>
+                                    <FontAwesomeIcon icon={faLocationCrosshairs}  className={classes.addressCrosshairs}/>
+                                    <div>
+                                        <div className={classes.mainText}>{suggestion.formattedSuggestion.mainText}</div>
+                                        <div className={classes.secondaryText}>{suggestion.formattedSuggestion.secondaryText}</div>
+                                    </div>
                                 </div>
                             )
                             
