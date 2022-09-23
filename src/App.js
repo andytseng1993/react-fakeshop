@@ -11,9 +11,9 @@ import AccountPage from './pages/AccountPage';
 import FavoritePage from "./pages/FavoritePage";
 import Cart from './pages/Cart';
 import Profile from './component/account/Profile';
-import Address from './component/account/Address';
+import Address from './component/address/Address';
 import AccountLists from './component/account/AccountLists';
-import useWrapper from './component/account/AddressWrapper';
+import useWrapper from './component/address/AddressWrapper';
 
   
 function App() {
@@ -25,7 +25,7 @@ function App() {
       })
   }
   const GoogleMapsUrl = `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_MAP_API}&libraries=places`
-  const [scriptLoaded,AdressAutocomplete] = useWrapper(GoogleMapsUrl,Address)
+  const [scriptLoaded,AdressAuto] = useWrapper(GoogleMapsUrl,Address)
   return (
     <div className="App">
       <UserAuthContextProvider>
@@ -38,7 +38,7 @@ function App() {
               <Route path='account' element={<AccountPage/>} >
                 <Route index element={<AccountLists />} />
                 <Route path='profile' element={<Profile />} />
-                <Route path='address' element={<AdressAutocomplete />} />
+                <Route path='address' element={<AdressAuto/>} />
                 <Route path='favorites' element={<FavoritePage/>}/>
               </Route>
             </Route>

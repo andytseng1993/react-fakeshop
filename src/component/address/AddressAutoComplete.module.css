@@ -1,0 +1,11 @@
+.searchBox{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.inputBoxes{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
