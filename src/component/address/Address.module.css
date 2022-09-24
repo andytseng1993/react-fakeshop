@@ -1,12 +1,11 @@
 .address{
+    margin-top: 40px;
     width: 70%;
-}
-.searchBox{
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+    padding-left: 10px;
+    border-left: 2px solid rgb(203, 203, 203);
 }
 .inputBoxes{
+    margin-top: 30px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -30,14 +29,10 @@
     z-index: 70;
     color: black;
 }
-.stateSelect{
+.stateSelectContainer{
     width: 95%;
-    
     font-size: 1.1rem;
     cursor: pointer;
     line-height: 1.1;
     z-index: 50;
-}
-.stateSelect>div{
-    height: 50px;
 }

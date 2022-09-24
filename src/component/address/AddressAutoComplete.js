@@ -38,7 +38,6 @@ const AddressAutoComplete = ({street,handleChangeAuto,handleSelectAuto})=>{
                     <div className={classes.suggestionZone}>
                         {loading && <div>Loading...</div>}
                         {suggestions.map((suggestion)=>{
-                            console.log(suggestion);
                             const className = suggestion.active?
                             classes.suggestionItemActive
                             : classes.suggestionItem

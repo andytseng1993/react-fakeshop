@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { geocodeByAddress } from 'react-places-autocomplete';
 import classes from './Address.module.css'
 import AddressAutoComplete from "./AddressAutoComplete";
@@ -11,50 +11,68 @@ const initialAddress ={firstName:'',lastName:'', street:'',apt:'',city:'',state:
 const Address= ()=>{
     const [address,setAddress] = useState(initialAddress)
     const [street,setStreet] = useState('')
-    const [selectedOption, setSelectedOption] = useState({ value: "State", label: "State" });
-    console.log(selectedOption);
+    const aptRef = useRef(null)
+    
     const handleChangeAuto = (value)=>{
-        setStreet(value)
+        setAddress(pre=>{return{...pre,street :value}})
     }
-    const handleSelectAuto = async (address, placeId, suggestion) => {
-        const results = await geocodeByAddress(address)
-        console.log(results);
-        // setAddress(address)
+    const handleSelectAuto = async (value,placeId,suggestion) => {
+        setAddress((pre)=>{return{...pre,street:suggestion.formattedSuggestion.mainText}})
+        await geocodeByAddress(value)
+            .then(results=>{
+                results[0].address_components?.forEach(entry => {
+                    if(entry.types[0] === "administrative_area_level_1"){setAddress((pre)=>{return{...pre,state:entry.short_name}})}
+                    if(entry.types[0] === "locality"){setAddress(pre=>{return{...pre,city:entry.short_name}})}
+                    if (entry.types?.[0] === "postal_code"){setAddress(pre=>{return{...pre,zipCode:entry.long_name}})}
+                })
+                aptRef.current.focus()
+            })
     }
     const handleChangeAddress= (e,changeName)=>{
-        setAddress({...address,[changeName]:e.target.value})
+        setAddress(pre=>{return{...pre,[changeName]:e.target.value}})
     }
     const handleChangeSelected = (e)=>{
-        setAddress({...address,state:e.value})
+        setAddress(pre=>{return{...pre,state:e.value}})
     }
-    console.log(address);
+    const customStyles = {
+        control: base => ({
+          ...base,
+          height: 50,
+          minHeight: 50
+        })
+    }
     return(
         <div className={classes.address}>
-            <h2>Shipping Addresses</h2>
-            <h3>Edit delivery address</h3>
-            <div className={classes.inputBoxes}>
-                <AddressInput title={'First name*'} id={uuidv4()} value={address.firstName} handleChange={(e)=>handleChangeAddress(e,'firstName')} />       
-                <AddressInput title={'Last name*'} id={uuidv4()} value={address.lastName} handleChange={(e)=>handleChangeAddress(e,'lastName')} />
-                <AddressAutoComplete {...{street,handleChangeAuto,handleSelectAuto}} />
-                <AddressInput title={'Apt, suite,etc.(optional)'} id={uuidv4()} value={address.apt} handleChange={(e)=>handleChangeAddress(e,'apt')} />
-                <AddressInput title={'City*'} id={uuidv4()} value={address.city} handleChange={(e)=>handleChangeAddress(e,'city')} />
+            <h1>Shipping Address</h1>
+            <h3 style={{marginTop:10}}>Edit delivery address</h3>
+            <form className={classes.inputBoxes}>
+                <AddressInput title={'First name*'} id={uuidv4()} value={address.firstName} handleChange={(e)=>handleChangeAddress(e,'firstName')} required='required'/>       
+                <AddressInput title={'Last name*'} id={uuidv4()} value={address.lastName} handleChange={(e)=>handleChangeAddress(e,'lastName')} required='required'/>
+                <AddressAutoComplete street={address.street} handleChangeAuto={handleChangeAuto} handleSelectAuto={handleSelectAuto} />
+                <AddressInput title={'Apt, suite,etc.(optional)'} id={uuidv4()} value={address.apt} handleChange={(e)=>handleChangeAddress(e,'apt')} refProp={aptRef} />
+                <AddressInput title={'City*'} id={uuidv4()} value={address.city} handleChange={(e)=>handleChangeAddress(e,'city')} required='required'/>
                 <div style={{display:'flex', width:'70%', justifyContent:'space-between'}}>
                     <div className={classes.stateBox}>
                         <label className={classes.stateLabel} htmlFor='stateid'>
                             <span>State*</span>
                         </label>
                         <Select
-                            className={classes.stateSelect}
-                            defaultValue={{ value: "State", label: "State" }}
+                            className={classes.stateSelectContainer}
+                            value={{label:address.state}}
                             onChange={handleChangeSelected}
                             options={stateList}
                             isSearchable={true}
+                            styles={customStyles}
                         />
                     </div>
-                    <AddressInput title={'Zip code*'} id={uuidv4()} value={address.zipCode} handleChange={(e)=>handleChangeAddress(e,'zipCode')} />
+                    <AddressInput title={'Zip code*'} id={uuidv4()} value={address.zipCode} handleChange={(e)=>handleChangeAddress(e,'zipCode')} required='required' />
                 </div>
-                <AddressInput title={'Phone number*'} id={uuidv4()} value={address.phone} handleChange={(e)=>handleChangeAddress(e,'phone')} />
-            </div>
+                <AddressInput title={'Phone number*'} id={uuidv4()} value={address.phone} handleChange={(e)=>handleChangeAddress(e,'phone')} required='required' />
+                <div>
+                    <button>Cancel</button>
+                    <button>Save</button>
+                </div>
+            </form>
         </div>
     )
 }
@@ -64,59 +82,59 @@ export default Address
 
 let stateList = [
     
-    { value: "AK", label: "Alaska" },
-    { value: "AL", label: "Alabama" },
-    { value: "AR", label: "Arkansas" },
-    { value: "AS", label: "American Samoa" },
-    { value: "AZ", label: "Arizona" },
-    { value: "CA", label: "California" },
-    { value: "CO", label: "Colorado" },
-    { value: "CT", label: "Connecticut" },
-    { value: "DC", label: "District of Columbia" },
-    { value: "DE", label: "Delaware" },
-    { value: "FL", label: "Florida" },
-    { value: "GA", label: "Georgia" },
-    { value: "GU", label: "Guam" },
-    { value: "HI", label: "Hawaii" },
-    { value: "IA", label: "Iowa" },
-    { value: "ID", label: "Idaho" },
-    { value: "IL", label: "Illinois" },
-    { value: "IN", label: "Indiana" },
-    { value: "KS", label: "Kansas" },
-    { value: "KY", label: "Kentucky" },
-    { value: "LA", label: "Louisiana" },
-    { value: "MA", label: "Massachusetts" },
-    { value: "MD", label: "Maryland" },
-    { value: "ME", label: "Maine" },
-    { value: "MI", label: "Michigan" },
-    { value: "MN", label: "Minnesota" },
-    { value: "MO", label: "Missouri" },
-    { value: "MS", label: "Mississippi" },
-    { value: "MT", label: "Montana" },
-    { value: "NC", label: "North Carolina" },
-    { value: "ND", label: "North Dakota" },
-    { value: "NE", label: "Nebraska" },
-    { value: "NH", label: "New Hampshire" },
-    { value: "NJ", label: "New Jersey" },
-    { value: "NM", label: "New Mexico" },
-    { value: "NV", label: "Nevada" },
-    { value: "NY", label: "New York" },
-    { value: "OH", label: "Ohio" },
-    { value: "OK", label: "Oklahoma" },
-    { value: "OR", label: "Oregon" },
-    { value: "PA", label: "Pennsylvania" },
-    { value: "PR", label: "Puerto Rico" },
-    { value: "RI", label: "Rhode Island" },
-    { value: "SC", label: "South Carolina" },
-    { value: "SD", label: "South Dakota" },
-    { value: "TN", label: "Tennessee" },
-    { value: "TX", label: "Texas" },
-    { value: "UT", label: "Utah" },
-    { value: "VA", label: "Virginia" },
-    { value: "VI", label: "Virgin Islands" },
-    { value: "VT", label: "Vermont" },
-    { value: "WA", label: "Washington" },
-    { value: "WI", label: "Wisconsin" },
-    { value: "WV", label: "West Virginia" },
-    { value: "WY", label: "Wyoming" }
+    { value: "AK", label: "AK" },
+    { value: "AL", label: "AL" },
+    { value: "AR", label: "AR" },
+    { value: "AS", label: "AS" },
+    { value: "AZ", label: "AZ" },
+    { value: "CA", label: "CA" },
+    { value: "CO", label: "CO" },
+    { value: "CT", label: "CT" },
+    { value: "DC", label: "DC" },
+    { value: "DE", label: "DE" },
+    { value: "FL", label: "FL" },
+    { value: "GA", label: "GA" },
+    { value: "GU", label: "GU" },
+    { value: "HI", label: "HI" },
+    { value: "IA", label: "IA" },
+    { value: "ID", label: "ID" },
+    { value: "IL", label: "IL" },
+    { value: "IN", label: "IN" },
+    { value: "KS", label: "KS" },
+    { value: "KY", label: "KY" },
+    { value: "LA", label: "LA" },
+    { value: "MA", label: "MA" },
+    { value: "MD", label: "MD" },
+    { value: "ME", label: "ME" },
+    { value: "MI", label: "MI" },
+    { value: "MN", label: "MN" },
+    { value: "MO", label: "MO" },
+    { value: "MS", label: "MS" },
+    { value: "MT", label: "MT" },
+    { value: "NC", label: "NC" },
+    { value: "ND", label: "ND" },
+    { value: "NE", label: "NE" },
+    { value: "NH", label: "NH" },
+    { value: "NJ", label: "NJ" },
+    { value: "NM", label: "NM" },
+    { value: "NV", label: "NV" },
+    { value: "NY", label: "NY" },
+    { value: "OH", label: "OH" },
+    { value: "OK", label: "OK" },
+    { value: "OR", label: "OR" },
+    { value: "PA", label: "PA" },
+    { value: "PR", label: "PR" },
+    { value: "RI", label: "RI" },
+    { value: "SC", label: "SC" },
+    { value: "SD", label: "SD" },
+    { value: "TN", label: "TN" },
+    { value: "TX", label: "TX" },
+    { value: "UT", label: "UT" },
+    { value: "VA", label: "VA" },
+    { value: "VI", label: "VI" },
+    { value: "VT", label: "VT" },
+    { value: "WA", label: "WA" },
+    { value: "WI", label: "WI" },
+    { value: "WV", label: "WV" },
+    { value: "WY", label: "WY" }
     ]
