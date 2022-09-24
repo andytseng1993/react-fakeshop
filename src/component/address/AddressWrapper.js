@@ -17,6 +17,6 @@ const useWrapper =(url,Component)=>{
             />
         )
     }
-    return [scriptLoaded,Wrap]
+    return Wrap
 }
 export default useWrapper

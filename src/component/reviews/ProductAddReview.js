@@ -29,6 +29,7 @@ const ProductAddReview=({currentUser,cancelAddReview,productId,submitReview,allR
                 return
             }
         });
+        // eslint-disable-next-line
     },[])
     const writeRating=()=>{
         let star=[]
