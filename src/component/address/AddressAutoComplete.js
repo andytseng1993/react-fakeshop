@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLocationCrosshairs } from "@fortawesome/free-solid-svg-icons";
 import { useState } from 'react';
 
-const AddressAutoComplete = ({address,handleChange,handleSelect})=>{
+const AddressAutoComplete = ({street,handleChangeAuto,handleSelectAuto})=>{
     const [isFocus,setIsFocus] = useState(false)
     const onFocusChange = ()=>{
         setIsFocus(true)
@@ -22,14 +22,14 @@ const AddressAutoComplete = ({address,handleChange,handleSelect})=>{
         color: 'black', 
     }
     return(
-        <PlacesAutocomplete value={address} onChange={handleChange} onSelect={handleSelect}>
+        <PlacesAutocomplete value={street} onChange={handleChangeAuto} onSelect={handleSelectAuto}>
             {({getInputProps, suggestions, getSuggestionItemProps, loading})=>(
                 <div className={classes.addressAuto}>
                     <div className={classes.searchBox} onFocus={onFocusChange} onBlur={onBlurChange}>
-                        <label className={classes.searchLabel} style={(isFocus||address)?isFocusStyle:{}}>
+                        <label className={classes.searchLabel} style={(isFocus||street)?isFocusStyle:{}} htmlFor='AddressAutoComplete'>
                             <span>Street Adress*</span>
                         </label>
-                        <input
+                        <input required id='AddressAutoComplete'
                             {...getInputProps({
                                 className: classes.searchInput,
                             })}

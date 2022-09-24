@@ -7,12 +7,7 @@
     flex-direction: column;
     align-items: flex-start;
 }
-.inputBoxes{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
+
 .searchLabel{
     position: relative;
     transition: 0.1s;
@@ -43,6 +38,9 @@
     background-color: transparent;
     z-index: 10;
 }
+.searchInput:focus{
+    border: 2px solid black;
+}
 .suggestionZone{
     width: 100%;
     position: absolute;
@@ -53,6 +51,7 @@
     background-color: white;
     border-radius: 0px 0px 5px 5px;
     box-shadow: .5px .5px 4px rgb(199, 199, 199);
+    z-index: 100;
 }
 .suggestion{
     width: 100%;
