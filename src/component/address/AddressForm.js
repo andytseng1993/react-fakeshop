@@ -60,39 +60,40 @@ const AddressForm=({address,setAddress,checked,setChecked,handleCancel,handleSav
     }
     return(
         <form className={classes.inputBoxes} onSubmit={handleSave}>
-                <AddressInput title={'First name*'} id={uuidv4()} value={address.firstName} handleChange={(e)=>handleChangeAddress(e,'firstName')} required='required'/>       
-                <AddressInput title={'Last name*'} id={uuidv4()} value={address.lastName} handleChange={(e)=>handleChangeAddress(e,'lastName')} required='required'/>
-                <AddressAutoComplete street={address.street} handleChangeAuto={handleChangeAuto} handleSelectAuto={handleSelectAuto} />
-                <AddressInput title={'Apt, suite,etc.(optional)'} id={uuidv4()} value={address.apt} handleChange={(e)=>handleChangeAddress(e,'apt')} refProp={aptRef} />
-                <AddressInput title={'City*'} id={uuidv4()} value={address.city} handleChange={(e)=>handleChangeAddress(e,'city')} required='required'/>
-                <div style={{display:'flex', width:'70%', justifyContent:'space-between'}}>
-                    <div className={classes.stateBox}>
-                        <label className={classes.stateLabel} htmlFor='stateid'>
-                            <span>State*</span>
-                        </label>
-                        <Select className={classes.stateSelectContainer} value={{label:address.state}} onChange={handleChangeSelected}
-                            options={stateList} isSearchable={true} styles={customStyles} id='stateid'
-                        />
-                    </div>
-                    <AddressInput title={'Zip code*'} id={uuidv4()} value={address.zipCode} handleChange={(e)=>handleChangeAddress(e,'zipCode')} required='required' inputMode='numeric' pattern="[0-9]*" />
-                </div>
-                <div className={classes.searchBox} onFocus={onFocusChange} onBlur={onBlurChange} >
-                    <label className={classes.searchLabel} htmlFor={'phone'} style={(isFocus||address.phone)?isFocusStyle:{}} >
-                        <span>Phone number*</span>
+            <p>*Required fields</p>
+            <AddressInput title={'First name*'} id={uuidv4()} value={address.firstName} handleChange={(e)=>handleChangeAddress(e,'firstName')} required='required'/>       
+            <AddressInput title={'Last name*'} id={uuidv4()} value={address.lastName} handleChange={(e)=>handleChangeAddress(e,'lastName')} required='required'/>
+            <AddressAutoComplete street={address.street} handleChangeAuto={handleChangeAuto} handleSelectAuto={handleSelectAuto} />
+            <AddressInput title={'Apt, suite,etc.(optional)'} id={uuidv4()} value={address.apt} handleChange={(e)=>handleChangeAddress(e,'apt')} refProp={aptRef} />
+            <AddressInput title={'City*'} id={uuidv4()} value={address.city} handleChange={(e)=>handleChangeAddress(e,'city')} required='required'/>
+            <div style={{display:'flex', width:'70%', justifyContent:'space-between'}}>
+                <div className={classes.stateBox}>
+                    <label className={classes.stateLabel} htmlFor='stateid'>
+                        <span>State*</span>
                     </label>
-                    <Input className={classes.inputBox} country="US" value={address.phone} onChange={handleChangePhone} id='phone' 
-                        required inputMode="decimal" style={error?{borderColor:'red'}:{}}/>
-                    {error && <div className={classes.errorMessage}>{error}</div> }
+                    <Select className={classes.stateSelectContainer} value={{label:address.state}} onChange={handleChangeSelected}
+                        options={stateList} isSearchable={true} styles={customStyles} id='stateid'
+                    />
                 </div>
-                <label className={classes.checkboxlabel}>
-                    <input type='checkbox' className={classes.checkbox} value={checked} onChange={()=>setChecked(!checked)}/>
-                    <span>Set as my preferred delivery address</span> 
+                <AddressInput title={'Zip code*'} id={uuidv4()} value={address.zipCode} handleChange={(e)=>handleChangeAddress(e,'zipCode')} required='required' inputMode='numeric' pattern="[0-9]*" />
+            </div>
+            <div className={classes.searchBox} onFocus={onFocusChange} onBlur={onBlurChange} >
+                <label className={classes.searchLabel} htmlFor={'phone'} style={(isFocus||address.phone)?isFocusStyle:{}} >
+                    <span>Phone number*</span>
                 </label>
-                <div className={classes.buttons} >
-                    <button className={classes.buttonCancel} onClick={handleCancel}>Cancel</button>
-                    <button type="submit" className={classes.buttonSave} >Save</button>
-                </div>
-            </form>
+                <Input className={classes.inputBox} country="US" value={address.phone} onChange={handleChangePhone} id='phone' 
+                    required inputMode="decimal" style={error?{borderColor:'red'}:{}}/>
+                {error && <div className={classes.errorMessage}>{error}</div> }
+            </div>
+            <label className={classes.checkboxlabel}>
+                <input type='checkbox' className={classes.checkbox} value={checked} onChange={()=>setChecked(!checked)}/>
+                <span>Set as my preferred delivery address</span> 
+            </label>
+            <div className={classes.buttons} >
+                <button className={classes.buttonCancel} onClick={handleCancel}>Cancel</button>
+                <button type="submit" className={classes.buttonSave} >Save</button>
+            </div>
+        </form>
     )
 }
 export default AddressForm
