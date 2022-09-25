@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import classes from './AddressInput.module.css'
 
-const AddressInput=({title,id,value,handleChange,refProp,required})=>{
+const AddressInput=({title,id,value,handleChange,refProp,required,inputMode,pattern})=>{
     const [isFocus,setIsFocus] = useState(false)
     const onFocusChange = ()=>{
         setIsFocus(true)
@@ -23,7 +23,7 @@ const AddressInput=({title,id,value,handleChange,refProp,required})=>{
             <label className={classes.searchLabel} htmlFor={id} style={(isFocus||value)?isFocusStyle:{}} ref={refProp}>
                 <span>{title}</span>
             </label>
-            <input className={classes.inputBox} id={id} type='text' value={value} onChange={handleChange} required={required}/>
+            <input className={classes.inputBox} id={id} type='text' value={value} onChange={handleChange} required={required} inputMode={inputMode} pattern={pattern}/>
         </div>
     )
 }

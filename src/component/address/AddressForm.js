@@ -1,19 +1,54 @@
+import classes from './AddressForm.module.css'
+import { useRef, useState } from "react";
+import { v4 as uuidv4 } from 'uuid';
 import AddressAutoComplete from "./AddressAutoComplete";
 import AddressInput from "./AddressInput";
-import { v4 as uuidv4 } from 'uuid';
-import classes from './AddressForm.module.css'
+import Input from 'react-phone-number-input/input'
 import Select from 'react-select';
+import { geocodeByAddress } from 'react-places-autocomplete';
 
-const AddressForm=({address,aptRef,handleChangeAuto,handleSelectAuto,handleChangeAddress,handleChangeSelected})=>{
-    const customStyles = {
-        control: base => ({
-          ...base,
-          height: 50,
-          minHeight: 50
-        })
+const AddressForm=({address,setAddress,checked,setChecked,handleCancel,handleSave,handleChangePhone})=>{
+    const [isFocus,setIsFocus] = useState(false)
+    const aptRef = useRef(null)
+
+    const onFocusChange = ()=>{
+        setIsFocus(true)
+    }
+    const onBlurChange = ()=>{
+        setIsFocus(false)
+    }
+    const handleChangeAddress= (e,changeName)=>{
+        if(e.target.value.length===0) return setAddress(pre=>{return{...pre,[changeName]:e.target.value}})
+        if(changeName==='zipCode'){
+            const zip = e.target.value.replace(/[^0-9]/g,'')
+            return setAddress(pre=>{return{...pre,zipCode:zip}})
+        }
+        if(e.target.value[0].toUpperCase()!==e.target.value[0]){
+            const name = e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1)
+            return setAddress(pre=>{return{...pre,[changeName]:name}})
+        }
+        setAddress(pre=>{return{...pre,[changeName]:e.target.value}})
+    }
+    const handleChangeAuto = (value)=>{
+        setAddress(pre=>{return{...pre,street :value}})
+    }
+    const handleSelectAuto = async (value,placeId,suggestion) => {
+        setAddress((pre)=>{return{...pre,street:suggestion.formattedSuggestion.mainText}})
+        await geocodeByAddress(value)
+            .then(results=>{
+                results[0].address_components?.forEach(entry => {
+                    if(entry.types[0] === "administrative_area_level_1"){setAddress((pre)=>{return{...pre,state:entry.short_name}})}
+                    if(entry.types[0] === "locality"){setAddress(pre=>{return{...pre,city:entry.short_name}})}
+                    if (entry.types?.[0] === "postal_code"){setAddress(pre=>{return{...pre,zipCode:entry.long_name}})}
+                })
+                aptRef.current.focus()
+            })
+    }
+    const handleChangeSelected = (e)=>{
+        setAddress(pre=>{return{...pre,state:e.value}})
     }
     return(
-        <form className={classes.inputBoxes}>
+        <form className={classes.inputBoxes} onSubmit={handleSave}>
                 <AddressInput title={'First name*'} id={uuidv4()} value={address.firstName} handleChange={(e)=>handleChangeAddress(e,'firstName')} required='required'/>       
                 <AddressInput title={'Last name*'} id={uuidv4()} value={address.lastName} handleChange={(e)=>handleChangeAddress(e,'lastName')} required='required'/>
                 <AddressAutoComplete street={address.street} handleChangeAuto={handleChangeAuto} handleSelectAuto={handleSelectAuto} />
@@ -24,18 +59,26 @@ const AddressForm=({address,aptRef,handleChangeAuto,handleSelectAuto,handleChang
                         <label className={classes.stateLabel} htmlFor='stateid'>
                             <span>State*</span>
                         </label>
-                        <Select
-                            className={classes.stateSelectContainer}
-                            value={{label:address.state}}
-                            onChange={handleChangeSelected}
-                            options={stateList}
-                            isSearchable={true}
-                            styles={customStyles}
+                        <Select className={classes.stateSelectContainer} value={{label:address.state}} onChange={handleChangeSelected}
+                            options={stateList} isSearchable={true} styles={customStyles} id='stateid'
                         />
                     </div>
-                    <AddressInput title={'Zip code*'} id={uuidv4()} value={address.zipCode} handleChange={(e)=>handleChangeAddress(e,'zipCode')} required='required' />
+                    <AddressInput title={'Zip code*'} id={uuidv4()} value={address.zipCode} handleChange={(e)=>handleChangeAddress(e,'zipCode')} required='required' inputMode='numeric' pattern="[0-9]*" />
                 </div>
-                <AddressInput title={'Phone number*'} id={uuidv4()} value={address.phone} handleChange={(e)=>handleChangeAddress(e,'phone')} required='required' />
+                <div className={classes.searchBox} onFocus={onFocusChange} onBlur={onBlurChange} >
+                    <label className={classes.searchLabel} htmlFor={'phone'} style={(isFocus||address.phone)?isFocusStyle:{}} >
+                        <span>Phone</span>
+                    </label>
+                    <Input className={classes.inputBox} country="US" value={address.phone} onChange={handleChangePhone} id='phone' required inputMode="decimal"/>
+                </div>
+                <label className={classes.checkboxlabel}>
+                    <input type='checkbox' className={classes.checkbox} value={checked} onChange={()=>setChecked(!checked)}/>
+                    <span>Set as my preferred delivery address</span> 
+                </label>
+                <div className={classes.buttons} >
+                    <button className={classes.buttonCancel} onClick={handleCancel}>Cancel</button>
+                    <button type="submit" className={classes.buttonSave} >Save</button>
+                </div>
             </form>
     )
 }
@@ -98,3 +141,20 @@ let stateList = [
     { value: "WV", label: "WV" },
     { value: "WY", label: "WY" }
     ]
+
+const isFocusStyle ={
+    top: '4px',
+    left: '0px',
+    fontSize: '13px',
+    padding: '1px 5px',
+    backgroundColor: 'white',
+    zIndex: 15,
+    color: 'black', 
+}
+const customStyles = {
+    control: base => ({
+        ...base,
+        height: 50,
+        minHeight: 50
+    })
+}

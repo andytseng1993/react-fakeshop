@@ -4,6 +4,7 @@
     align-items: flex-start;
     width: 70%;
     position: relative;
+    margin-top: 7px;
 }
 
 .searchLabel{
