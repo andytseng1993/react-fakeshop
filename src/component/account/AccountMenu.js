@@ -14,10 +14,9 @@ const AccountMenu = ()=>{
             <h4>Account since 09/09/2022 </h4>
             <div className={classes.links}>
                 <Link to='/account/profile'>Profile</Link>
-                <Link to='/account/address'>Address</Link>
+                <Link to='/account/addresses'>Address</Link>
                 <Link to='/account/favorites'>Favorites</Link>
-                <Link to='/account/ordered'>Purchase History</Link>
-                
+                <Link to='/account/ordered'>Purchase History</Link>   
             </div>
         </div>
     )

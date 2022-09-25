@@ -14,6 +14,7 @@ import Profile from './component/account/Profile';
 import Address from './component/address/Address';
 import AccountLists from './component/account/AccountLists';
 import useWrapper from './component/address/AddressWrapper';
+import AddressList from './component/address/AddressLists';
 
   
 function App() {
@@ -38,7 +39,8 @@ function App() {
               <Route path='account' element={<AccountPage/>} >
                 <Route index element={<AccountLists />} />
                 <Route path='profile' element={<Profile />} />
-                <Route path='address' element={<AdressAuto/>} />
+                <Route path='addresses' element={<AddressList/>}/> 
+                <Route path='addresses/newaddress' element={<AdressAuto/>} />
                 <Route path='favorites' element={<FavoritePage/>}/>
               </Route>
             </Route>
