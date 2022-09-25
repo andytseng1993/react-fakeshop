@@ -1,7 +1,6 @@
 import { useState } from "react";
 import classes from './Address.module.css'
 import AddressForm from "./AddressForm";
-import { geocodeByAddress } from 'react-places-autocomplete';
 import { useUserData } from "../../context/UserDataContext";
 import { useUserAuth } from "../../context/UserAuthContext";
 import { v4 as uuidv4 } from 'uuid';
@@ -29,15 +28,14 @@ const Address= ()=>{
         const addressData = {...address,key,default:checked}
         // writeUserData('users/'+currentUser.uid+'/addresses/'+key,addressData)
     }
-    const handleChangePhone =(value)=>{
-        setAddress(pre=>{return{...pre,phone:value}})
-    }
-    console.log(address);
+    
+    
     return(
         <div className={classes.address}>
             <h1>Shipping Address</h1>
             <h3 style={{marginTop:20}}>Edit delivery address</h3>
-            <AddressForm {...{address,setAddress,checked,setChecked,handleCancel,handleSave,handleChangePhone}} />
+            *Required fields
+            <AddressForm {...{address,setAddress,checked,setChecked,handleCancel,handleSave}} />
         </div>
     )
 }

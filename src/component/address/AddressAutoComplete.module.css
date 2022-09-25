@@ -1,6 +1,7 @@
 .addressAuto{
     width: 70%;
     position: relative;
+    margin-top: 10px;
 }
 .searchBox{
     display: flex;
@@ -79,4 +80,12 @@
 .suggestion:hover > div >.secondaryText{
     font-weight: 600;
     color: black;
+}
+.errorMessage{
+    padding-left: 2px;
+    position: relative;
+    top: 7px;
+    color: red;
+    font-size: 0.8rem;
+    margin: -8px 0px;
 }

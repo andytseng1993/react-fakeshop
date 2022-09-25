@@ -6,11 +6,16 @@ import { useState } from 'react';
 
 const AddressAutoComplete = ({street,handleChangeAuto,handleSelectAuto})=>{
     const [isFocus,setIsFocus] = useState(false)
+    const [error,setError] = useState('')
     const onFocusChange = ()=>{
         setIsFocus(true)
     }
     const onBlurChange = ()=>{
         setIsFocus(false)
+        if(street.length ===0){
+            return setError('Please enter a valid Street Adress*.')
+        }
+        setError('')
     }
     const isFocusStyle ={
         top: '4px',
@@ -29,11 +34,13 @@ const AddressAutoComplete = ({street,handleChangeAuto,handleSelectAuto})=>{
                         <label className={classes.searchLabel} style={(isFocus||street)?isFocusStyle:{}} htmlFor='AddressAutoComplete'>
                             <span>Street Adress*</span>
                         </label>
-                        <input required id='AddressAutoComplete'
+                        <input required id='AddressAutoComplete' style={error?{borderColor:'red'}:{}}
                             {...getInputProps({
                                 className: classes.searchInput,
                             })}
                         />
+                        {error && <div className={classes.errorMessage}>{error}</div> }
+                        
                     </div>
                     <div className={classes.suggestionZone}>
                         {loading && <div>Loading...</div>}
