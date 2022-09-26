@@ -32,7 +32,8 @@ const Address= ()=>{
         }
         setError('')
         const key = uuidv4()
-        const addressData = {...address,key,default:checked}
+        const createTime = Date.now()
+        const addressData = {...address,key,default:checked,createTime}
         if(checked){
             return editAddressData(key,addressData)
         }

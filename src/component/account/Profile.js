@@ -122,8 +122,6 @@ const Profile=()=>{
                             }
                         </div>
                     </div>
-                    <div className={classes.joined}>Joined : {metadata.creationTime}</div>
-                    <div className={classes.joined}>Last SignIn Time : {metadata.lastSignInTime}</div>
                     <button disabled={profileDisabledBtn} >Update User Name</button>
                 </form>
                 <div>{userUpdateSuccess && <div className={classes.success}>{userUpdateSuccess}</div>}</div>

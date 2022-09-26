@@ -21,8 +21,8 @@ const AddressInput=({title,id,value,handleChange,refProp,required,inputMode,patt
                 <span>{title}</span>
             </label>
             <input className={classes.inputBox} id={id} type='text' value={value} 
-                   onChange={handleChange} required={required} inputMode={inputMode} pattern={pattern} style={error?{borderColor:'red'}:{}}/>
-            {error && <div className={classes.errorMessage}>{error}</div> }
+                   onChange={handleChange} required={required} inputMode={inputMode} pattern={pattern} style={(error&&required)?{borderColor:'red'}:{}}/>
+            {(error&&required) && <div className={classes.errorMessage}>{error}</div> }
         </div>
     )
 }

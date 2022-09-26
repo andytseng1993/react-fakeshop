@@ -34,6 +34,7 @@ const AddressEdit= ()=>{
         return () => {
             isCancel = true 
         }
+        // eslint-disable-next-line
     }, [])
 
     const handleCancel =(e)=>{
@@ -48,7 +49,8 @@ const AddressEdit= ()=>{
             return setError('Please verify all fields below.')
         }
         setError('')
-        const addressData = {...address,default:checked}
+        const createTime = Date.now()
+        const addressData = {...address,default:checked,createTime}
         if(checked){
             return editAddressData(address.key,addressData)
         }
