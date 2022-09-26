@@ -1,0 +1,58 @@
+.menu{
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-grow: 1;
+    height: calc(100vh - 120px);
+}
+.imageBox{
+    position: relative;
+    width: 90%;
+    margin-bottom: 10px;
+}
+.image{
+    width: 180px;
+    border-radius: 50%;
+    padding: 5px;
+    border: 2px solid black;
+    opacity: 0.5;
+    margin: 10px 0 20px;
+}
+.edit{
+    position: absolute;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 5px 10px;
+    right: 10px;
+    bottom: 10px;
+
+}
+.links{
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    font-size: 1.4rem;
+    margin-top: 20px;
+    font-weight: 600;
+}
+.links a{
+    position: relative;
+    margin: 5px;
+}
+.links a::after{
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    transition: width .3s cubic-bezier(.45,.05,.5,.1);
+    border-bottom: 2px solid #555;
+}
+.links a:hover::after{
+    width: 100%;
+}
+.links a:hover{
+    font-weight: 800;
+}

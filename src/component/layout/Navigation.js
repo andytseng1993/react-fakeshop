@@ -71,11 +71,11 @@ function Navigation(props) {
                     <div className={classes.user}>
                         {`Hello, ${userName}`}
                         <div className={classes.userBox}>
-                            <NavLink to='profile' className={classes.signout}>
-                                Profile
+                            <NavLink to='account/' className={classes.signout}>
+                                Account
                             </NavLink>
-                            <NavLink to='favorite' className={classes.signout}>
-                                Favorite    
+                            <NavLink to='account/favorites' className={classes.signout}>
+                                Favorites    
                             </NavLink>    
                             <div className={classes.signout} onClick={logOutHandler}>
                                 Log Out

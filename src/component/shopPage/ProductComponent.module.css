@@ -22,7 +22,7 @@ a{
     display: flex;
     flex-direction: column;
     width: 30vw;
-    max-width: 350px;
+    max-width: 300px;
     min-width: 250px;
     border-radius: 7px;
     border: solid #ddd 1px;

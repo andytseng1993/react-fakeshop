@@ -1,0 +1,91 @@
+.addressAuto{
+    width: 70%;
+    position: relative;
+    margin-top: 13px;
+}
+.searchBox{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.searchLabel{
+    position: relative;
+    transition: 0.1s;
+    height: 15px;
+    top: 31px;
+    left: 10px;
+    color: rgb(156, 156, 156);
+    font-size: 16px;
+    margin-left: 10px;
+    /* top: 4px;
+    left: 0px;
+    font-size: 13px;
+    margin-left: 10px;
+    padding: 1px 5px;
+    background-color: white;
+    z-index: 15;
+    color: black; */
+}
+.searchInput{
+    height: 50px;
+    width: 100%;
+    margin: 0;
+    font-size: 18px;
+    letter-spacing: 0.6px;
+    padding:  10px 20px;
+    border-radius: 5px;
+    border: 1px solid rgb(205, 205, 205);
+    background-color: transparent;
+    z-index: 10;
+}
+.searchInput:focus{
+    border: 2px solid black;
+}
+.suggestionZone{
+    width: 100%;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    background-color: white;
+    border-radius: 0px 0px 5px 5px;
+    box-shadow: .5px .5px 4px rgb(199, 199, 199);
+    z-index: 100;
+}
+.suggestion{
+    width: 100%;
+    border-top: 1px solid rgb(205, 205, 205);
+    display: flex;
+    align-items: center;
+    color: rgb(34, 32, 32)
+}
+.addressCrosshairs{
+    font-size: 17px;
+    margin-left: 25px;
+}
+.mainText{
+    letter-spacing: 0.6px;
+    font-size: 16px;
+    text-align: left;
+    margin: 15px 25px 7px;
+}
+.secondaryText{
+    font-size: 13px;
+    text-align: left;
+    margin: 0px 25px 15px;
+}
+.suggestion:hover > div >.mainText,
+.suggestion:hover > div >.secondaryText{
+    font-weight: 600;
+    color: black;
+}
+.errorMessage{
+    padding-left: 2px;
+    position: relative;
+    top: 7px;
+    color: red;
+    font-size: 0.8rem;
+    margin: -8px 0px;
+}

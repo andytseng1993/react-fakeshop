@@ -1,0 +1,42 @@
+.searchBox{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 70%;
+    position: relative;
+    margin-top: 13px;
+}
+
+.searchLabel{
+    position: relative;
+    transition: 0.1s;
+    height: 15px;
+    top: 31px;
+    left: 10px;
+    color: rgb(156, 156, 156);
+    font-size: 16px;
+    margin-left: 10px;
+}
+.inputBox{
+    height: 50px;
+    width: 100%;
+    margin: 0;
+    font-size: 18px;
+    letter-spacing: 0.6px;
+    padding:  10px 20px;
+    border-radius: 5px;
+    border: 1px solid rgb(205, 205, 205);
+    background-color: transparent;
+    z-index: 10;
+}
+.inputBox:focus{
+    border: 2px solid black;
+}
+.errorMessage{
+    padding-left: 2px;
+    position: relative;
+    top: 7px;
+    color: red;
+    font-size: 0.8rem;
+    margin: -8px 0px;
+}

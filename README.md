@@ -74,3 +74,11 @@ create a ProtectedRoute, when there is a logged in user, the Home component does
   ### axios cancel
   `const cancelToken= axios.CancelToken.source()`
   we can use in useEffect with cleanup function to stop fetch the data.
+
+  ### Address autocomplete
+  https://www.npmjs.com/package/react-places-autocomplete#onSelect
+  
+  ### react-async-script
+  https://www.npmjs.com/package/react-async-script
+  ### react-phone-number-input
+  https://catamphetamine.gitlab.io/react-phone-number-input/

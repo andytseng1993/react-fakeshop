@@ -1,0 +1,28 @@
+.address{
+    margin-top: 0px;
+    width: 70%;
+    padding-left: 10px;
+    border-left: 2px solid rgb(203, 203, 203);
+}
+.routes{
+    text-align: left;
+    margin: 15px 0px 15px 5px;
+    font-size: 15px;
+}
+.errorMessage{
+    width: 50%;
+    padding-left: 2px;
+    position: relative;
+    top: 7px;
+    color: rgb(201, 18, 18);
+    font-size: 1.1rem;
+    margin: -10.5px auto;
+    background-color: rgb(251, 234, 235);
+    padding: 3px 10px;
+    border-radius: 5px;
+    border: 1px solid red ;
+}
+.exclamation{
+    color: rgb(234, 7, 7);
+    margin-right: 5px;
+}
