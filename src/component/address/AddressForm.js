@@ -86,7 +86,7 @@ const AddressForm=({address,setAddress,checked,setChecked,handleCancel,handleSav
                 {error && <div className={classes.errorMessage}>{error}</div> }
             </div>
             <label className={classes.checkboxlabel}>
-                <input type='checkbox' className={classes.checkbox} value={checked} onChange={()=>setChecked(!checked)}/>
+                <input type='checkbox' className={classes.checkbox} value={checked} onChange={()=>setChecked(!checked)} checked={checked}/>
                 <span>Set as my preferred delivery address</span> 
             </label>
             <div className={classes.buttons} >

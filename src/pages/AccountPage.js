@@ -3,7 +3,7 @@ import AccountMenu from "../component/account/AccountMenu"
 
 const AccountPage = ()=>{
     return(
-        <div style={{margin:'80px auto 0px auto',display:'flex', maxWidth: 1000,height: 'auto', justifyContent:'center'}}>
+        <div style={{margin:'80px auto 0px auto',display:'flex', maxWidth: 1200,height: 'auto', justifyContent:'center'}}>
             <AccountMenu/>
             <Outlet/>
         </div>

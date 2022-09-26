@@ -125,8 +125,8 @@
     font-size: 0.8rem;
     margin: -8px 0px;
 }
-p{  
-    margin: 18px auto -25px;
+.inputBoxes>p{  
+    margin: 18px auto -15px;
     text-align: left;
     width: 70%;
     font-size: 0.8rem;

@@ -4,6 +4,7 @@ import { useSelector } from "react-redux"
 import ProductComponent from "../shopPage/ProductComponent"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart as fasFaHeart} from "@fortawesome/free-solid-svg-icons";
+import { NavLink } from 'react-router-dom'
 
 const FavoritLists = ()=>{
     const favoriteList = useSelector((state)=>state.favorites)
@@ -28,6 +29,9 @@ const FavoritLists = ()=>{
     return(
         <>
             <div className={classes.favoriteTiltle}>
+                <div className={classes.routes}>
+                    <NavLink to='/account'>Account </NavLink>/<span style={{fontWeight:700}}> Favorites</span>
+                </div>
                 <div className={classes.title} >
                     <FontAwesomeIcon icon={fasFaHeart} className={classes.love}/>
                     <h3>Favorites</h3>

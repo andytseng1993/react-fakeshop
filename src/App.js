@@ -15,6 +15,7 @@ import Address from './component/address/Address';
 import AccountLists from './component/account/AccountLists';
 import useWrapper from './component/address/AddressWrapper';
 import AddressList from './component/address/AddressLists';
+import AddressEdit from './component/address/AddressEdit';
 
   
 function App() {
@@ -27,6 +28,7 @@ function App() {
   }
   const GoogleMapsUrl = `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_MAP_API}&libraries=places`
   const AdressAuto = useWrapper(GoogleMapsUrl,Address)
+  const AdressEditAuto = useWrapper(GoogleMapsUrl,AddressEdit)
   return (
     <div className="App">
       <UserAuthContextProvider>
@@ -41,6 +43,7 @@ function App() {
                 <Route path='profile' element={<Profile />} />
                 <Route path='addresses' element={<AddressList/>}/> 
                 <Route path='addresses/newaddress' element={<AdressAuto/>} />
+                <Route path='addresses/editaddress/:productKey' element={<AdressEditAuto/>} />
                 <Route path='favorites' element={<FavoritePage/>}/>
               </Route>
             </Route>

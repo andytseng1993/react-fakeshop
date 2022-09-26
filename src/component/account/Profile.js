@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faEnvelopeCircleCheck} from "@fortawesome/free-solid-svg-icons";
 import classes from './Profile.module.css'
 import PasswordInput from '../logIn/PasswordInput'
+import { NavLink } from 'react-router-dom'
 
 
 const Profile=()=>{
@@ -98,8 +99,11 @@ const Profile=()=>{
     }
     return (
         <section className={classes.profile}>
+            <div className={classes.routes}>
+                <NavLink to='/account'>Account </NavLink>/<span style={{fontWeight:700}}> Profile</span>
+            </div>
             <div className={classes.profileArea}> 
-            <span>Profile</span>
+                <span>Profile</span>
                 <form onSubmit={nameSubmitHandler}>
                     <div className={classes.name}>
                        <label>Name : </label>
