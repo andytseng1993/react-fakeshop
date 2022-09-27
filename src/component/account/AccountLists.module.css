@@ -3,25 +3,27 @@
     border-left: 2px solid rgb(203, 203, 203);
 }
 .accountInfo{
+    position: relative;
     margin: 30px auto;
     width: 70%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    border: 1px solid rgb(192, 192, 192);
     border-radius: 15px;
-    padding-bottom: 15px;
+    padding-bottom: 10px;
+    box-shadow: 1px 1px 3px rgb(185, 185, 185), inset -1px -1px 5px rgb(232, 232, 232);
 }
 .accountInfoTitle{
     display: flex;
+    position: relative;
     justify-content: space-between;
     align-items: center;
     width: 100%;
     font-size: 1.4rem;
     font-weight: 600;
     padding: 12px 30px;
-    background-color: rgb(215, 241, 255);
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(253,238,255,1) 0%, rgba(145,225,255,1) 100%, rgba(0,212,255,1) 100%);
     border-radius: 15px 15px 0px 0px;
 }
 .accountInfo > div{
@@ -32,7 +34,7 @@
     width: 100%;
     font-size: 1.2rem;
     font-weight: 600;
-    padding: 15px 30px 10px;
+    padding: 10px 30px 5px;
 }
 .accountInfoContent{
     font-size: 1rem;
@@ -54,10 +56,10 @@
     background-color: rgb(166, 251, 166);
     color: rgb(0, 72, 0);
     padding: 2px 15px;
-    border-radius: 0px 7px 0px 5px;
-    box-shadow: 2px 1px 3px rgb(209, 209, 209);
 }
 .addressSummary{
+    width: 100%;
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -88,9 +90,19 @@
 .favoritesCard{
     display: flex;
     align-items: center;
-    margin: 15px auto 10px;
+    margin: 15px 0px 10px;
+    width: 100%;
+    flex-direction: row;
+    padding: 0px 20px;
 }
 
+.viewAll{
+    position: absolute;
+    font-size: 15px;
+    width: 100px;
+    top: 16px;
+    right: 27px;
+}
 .image{
     width: 50px;
     height: 50px;
@@ -101,13 +113,14 @@
     object-fit: contain;
 }
 .cartInfo{
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
     padding-left: 10px;
     font-size: 18px;
-    width: 450px;
+    width: 100%;
 }
 .title{
     font-weight: 700;
@@ -116,7 +129,6 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
     display: -webkit-box;
-    width: 100%;
     margin-bottom: 5px;
     font-size: 1.1rem;
 }

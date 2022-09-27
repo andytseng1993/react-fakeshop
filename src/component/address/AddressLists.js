@@ -3,6 +3,7 @@ import { NavLink, useNavigate} from "react-router-dom"
 import { useUserAuth } from "../../context/UserAuthContext"
 import { useUserData } from "../../context/UserDataContext"
 import classes from './AddressLists.module.css'
+import { getDatabase,ref ,onValue, query, orderByChild} from "firebase/database";
 
 const AddressList = ()=>{
     const { writeUserData,readUserData } = useUserData()
@@ -10,25 +11,27 @@ const AddressList = ()=>{
     const [addresses,setAddresses]= useState([])
     const [reload,setReload] = useState(false)
     const navigate = useNavigate()
-    
+    const db = getDatabase()
+
     useEffect(()=>{
+        const preferrAddress = []
         const addressesData =[]
         let isCancel = false
-        const readAddressData = async()=>{
-            await readUserData('users/'+currentUser.uid+'/addresses')
-            .then(res=>{
-                if(!isCancel){
-                    for(let key in res.val()){
-                        const review={...res.val()[key]}
-                        if(res.val()[key].default){
-                            addressesData.unshift(review)
+        const readAddressData = ()=>{
+            const topUserPostsRef = query(ref(db, 'users/'+currentUser.uid+'/addresses'), orderByChild('createTime'))
+             onValue(topUserPostsRef, (snapshot) => {
+                snapshot.forEach((childSnapshot)=> {
+                    if(!isCancel){
+                        if(childSnapshot.val().default){
+                            preferrAddress.push(childSnapshot.val())
                         }else{
-                            addressesData.push(review)
+                            addressesData.unshift(childSnapshot.val())
                         }
                     }
-                    setAddresses(addressesData);
-                }
-            })  
+                  })
+                  const Alladdress =  preferrAddress.concat(addressesData)
+                  setAddresses(Alladdress)
+            })
         }
         readAddressData()
         return ()=>{
@@ -36,7 +39,7 @@ const AddressList = ()=>{
         }
         // eslint-disable-next-line
     },[reload])
-
+    
     const handleEdit =(key)=>{
         navigate('editaddress/'+key)
     }

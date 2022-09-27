@@ -4,35 +4,55 @@ import classes from './AccountLists.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faChevronRight, faHouseChimney,faUser,faHeart} from "@fortawesome/free-solid-svg-icons";
 import { useSelector } from 'react-redux';
-
-const initialAddress ={"apt": "Apt101",
-"city": "Cypress",
-"createTime": 1664256386706,
-"default": false,
-"firstName": "Yuyu",
-"key": "0b6a1b68-56ef-4d4b-9a32-fa1824adcccf",
-"lastName": "Tseng",
-"phone": "+15624821121",
-"state": "CA",
-"street": "9091 Holder Street",
-"zipCode": "90630"}
+import { useUserAuth } from '../../context/UserAuthContext';
+import { useUserData } from '../../context/UserDataContext';
+import { getDatabase, onValue, orderByChild, query, ref } from 'firebase/database';
 
 const AccountLists=()=>{
-    const [address,setAddress]=useState(initialAddress)
+    const { readUserData } = useUserData()
+    const {currentUser}=useUserAuth()
+    const [address,setAddress]=useState({})
     const favoriteList = useSelector((state)=>state.favorites)
     const allProducts = useSelector((state)=>state.allProducts.products)
     const [favoriteData,setFavoriteData] = useState([])
+    const db = getDatabase()
     useEffect(()=>{
         function filterItems(arr1, arr2) {
             const data= arr1.filter((el) => arr2.includes(el.id));
+            if(data.length>3){ 
+                return setFavoriteData(data.slice(0,3))
+             }
             setFavoriteData(data);
         }
+        const readAddressData = ()=>{
+            const preferrAddress = []
+            const addressesData =[]
+            const topUserPostsRef = query(ref(db, 'users/'+currentUser.uid+'/addresses'), orderByChild('createTime'))
+             onValue(topUserPostsRef, (snapshot) => {
+                snapshot.forEach((childSnapshot)=> {
+                    if(!isCancel){
+                        if(childSnapshot.val().default){
+                            return preferrAddress.push(childSnapshot.val())
+                        }else{
+                            addressesData.unshift(childSnapshot.val())
+                        }
+                    }
+                  })
+                  const Alladdress =  preferrAddress.concat(addressesData)
+                  setAddress(Alladdress[0])
+            })
+        }
+        let isCancel = false
         filterItems(allProducts, favoriteList)
+        readAddressData()
+        return ()=>{
+            isCancel = true 
+        }
     },[allProducts,favoriteList])
-    console.log(favoriteData);
+
     return(
         <div className={classes.account}>
-            <h1 >Welcome to your Account</h1>
+            <h1 style={{margin:40}}>Welcome to your Account</h1>
             <div className={classes.accountInfo}>   
                 <Link className={classes.accountInfoTitle} to='/account/profile'>
                     <FontAwesomeIcon style={{fontSize:28}} icon={faUser} />
@@ -40,10 +60,10 @@ const AccountLists=()=>{
                     <FontAwesomeIcon icon={faChevronRight} />
                 </Link>
                 <div>Nickname:
-                    <div className={classes.accountInfoContent}>yuyu </div>
+                    <div className={classes.accountInfoContent}>{currentUser.displayName} </div>
                 </div>
                 <div>Email Address:
-                    <div className={classes.accountInfoContent}>@gmail </div>
+                    <div className={classes.accountInfoContent}>{currentUser.email} </div>
                 </div>
             </div>
             <div className={classes.accountInfo}>
@@ -67,21 +87,27 @@ const AccountLists=()=>{
             <div  className={classes.accountInfo}>
                 <Link className={classes.accountInfoTitle} to='/account/favorites'>
                     <FontAwesomeIcon style={{fontSize:28}} icon={faHeart} />
-                    Favorites ({favoriteData.length})
-                    <FontAwesomeIcon icon={faChevronRight} />
-                </Link>
-                <Link to={`/product/${favoriteData[0].id}`} className={classes.favoritesCard}>
-                    <div className={classes.image}>
-                        <img src={favoriteData[0].image} alt={favoriteData[0].title}></img>
+                    Favorites
+                    <div>
+                        <span className={classes.viewAll} >View All</span>
+                        <FontAwesomeIcon icon={faChevronRight} />
                     </div>
-                    <div className={classes.cartInfo}>
-                        <div className={classes.title}>{favoriteData[0].title}</div>
-                        <div className={classes.category}>
-                            {favoriteData[0].category}
-                            <div className={classes.price}>${favoriteData[0].price}</div>
+                </Link>
+
+                {favoriteData.map((favorite)=>(
+                    <Link to={`/product/${favorite.id}`} key={favorite.id} className={classes.favoritesCard}>
+                        <div className={classes.image}>
+                            <img src={favorite.image} alt={favorite.title}></img>
                         </div>
-                    </div>
-                </Link>
+                        <div className={classes.cartInfo}>
+                            <div className={classes.title}>{favorite.title}</div>
+                            <div className={classes.category}>
+                                {favorite.category}
+                                <div className={classes.price}>${favorite.price}</div>
+                            </div>
+                        </div>
+                    </Link>
+                ))}
             </div>
         </div>
 
