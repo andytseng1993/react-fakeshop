@@ -71,7 +71,7 @@ function Navigation(props) {
                     <div className={classes.user}>
                         {`Hello, ${userName}`}
                         <div className={classes.userBox}>
-                            <NavLink to='account/' className={classes.signout}>
+                            <NavLink to='account/home' className={classes.signout}>
                                 Account
                             </NavLink>
                             <NavLink to='account/favorites' className={classes.signout}>

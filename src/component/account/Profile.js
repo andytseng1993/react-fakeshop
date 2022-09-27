@@ -106,7 +106,7 @@ const Profile=()=>{
                 <span>Profile</span>
                 <form onSubmit={nameSubmitHandler}>
                     <div className={classes.name}>
-                       <label>Name : </label>
+                       <label>Nickname : </label>
                         <input  type='text' ref={NameRef} 
                                 onChange={nameInput}
                                 placeholder={displayName}

@@ -1,0 +1,136 @@
+.account{
+    width: 70%;
+    border-left: 2px solid rgb(203, 203, 203);
+}
+.accountInfo{
+    margin: 30px auto;
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    border: 1px solid rgb(192, 192, 192);
+    border-radius: 15px;
+    padding-bottom: 15px;
+}
+.accountInfoTitle{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    font-size: 1.4rem;
+    font-weight: 600;
+    padding: 12px 30px;
+    background-color: rgb(215, 241, 255);
+    border-radius: 15px 15px 0px 0px;
+}
+.accountInfo > div{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    font-size: 1.2rem;
+    font-weight: 600;
+    padding: 15px 30px 10px;
+}
+.accountInfoContent{
+    font-size: 1rem;
+    font-weight: 500;
+    margin-left: 10px;
+    letter-spacing: 0.3px;
+}
+/* Addresses */
+.card{
+    display: flex;
+    align-items: center;
+    margin: 5px auto;
+}
+.addressDefault{
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    font-size: 13px;
+    background-color: rgb(166, 251, 166);
+    color: rgb(0, 72, 0);
+    padding: 2px 15px;
+    border-radius: 0px 7px 0px 5px;
+    box-shadow: 2px 1px 3px rgb(209, 209, 209);
+}
+.addressSummary{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.addressName{
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin: 6px 0 6px;
+}
+.addressStreet{
+    text-align: left;
+    font-size: 1rem;
+    letter-spacing: 0.3px;
+    font-weight: 500;
+    color: rgb(62, 62, 62);
+    margin: 6px 0;
+}  
+.addressPhone{
+    text-align: left;
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    color: rgb(48, 48, 48);
+    margin: 6px 0 ;
+}
+/* Favorites */
+
+.favoritesCard{
+    display: flex;
+    align-items: center;
+    margin: 15px auto 10px;
+}
+
+.image{
+    width: 50px;
+    height: 50px;
+}
+.image img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+.cartInfo{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding-left: 10px;
+    font-size: 18px;
+    width: 450px;
+}
+.title{
+    font-weight: 700;
+    text-align: left;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    display: -webkit-box;
+    width: 100%;
+    margin-bottom: 5px;
+    font-size: 1.1rem;
+}
+.category{
+    width: 100%;
+    color: #777;
+    margin-bottom: 5px;
+    font-size: 1rem;
+    display: flex;
+    justify-content: space-between;
+}
+.price{
+    color: black;
+    margin-bottom: 5px;
+    font-size: 1rem;
+    font-weight: 600;
+}

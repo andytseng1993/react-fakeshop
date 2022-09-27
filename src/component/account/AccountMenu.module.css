@@ -1,4 +1,5 @@
 .menu{
+    min-width: 200px;
     margin-top: 30px;
     display: flex;
     flex-direction: column;
@@ -47,7 +48,7 @@
     left: 0;
     bottom: 0;
     width: 0;
-    transition: width .3s cubic-bezier(.45,.05,.5,.1);
+    transition: width .2s cubic-bezier(.45,.05,.5,.1);
     border-bottom: 2px solid #555;
 }
 .links a:hover::after{
@@ -59,4 +60,30 @@
 .joined{
     font-weight: 600;
     color: gray;
+}
+
+.isActive{
+    text-align: left;
+    width: 85%;
+    padding: 9px 20px;
+    position: relative;
+    font-weight: 700;
+    background-color: rgb(240, 240, 255);
+}
+.isActive::before{
+    content: "";
+    position: absolute;
+    width: 45px;
+    height: 45px;
+    background-color: rgb(240, 240, 255);
+    top: -0.5px;
+    right: -20px;
+    border-radius:0 50% 50% 0;
+}
+.link{
+    text-align: left;
+    width: 85%;
+    padding: 9px 20px;
+    position: relative;
+    
 }

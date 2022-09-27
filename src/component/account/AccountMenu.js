@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import { useUserAuth } from '../../context/UserAuthContext'
 import classes from './AccountMenu.module.css'
 
@@ -8,7 +8,6 @@ const AccountMenu = ()=>{
     const {currentUser}=useUserAuth()
     const {displayName,metadata} = currentUser
     const [day,setDay]= useState('')
-    console.log(currentUser);
     useEffect(() => {
         const accountDate=()=>{
             const date = new Date(parseInt(metadata.createdAt))
@@ -26,10 +25,11 @@ const AccountMenu = ()=>{
             <h2>Hello, {displayName}</h2>
             <div className={classes.joined}>Account since {day}</div>
             <div className={classes.links}>
-                <Link to='/account/profile'>Profile</Link>
-                <Link to='/account/addresses'>Address</Link>
-                <Link to='/account/favorites'>Favorites</Link>
-                <Link to='/account/ordered'>Purchase History</Link>   
+                <NavLink className={({ isActive }) => isActive ? classes.isActive : classes.link} to='/account/home'>Home</NavLink>
+                <NavLink className={({ isActive }) => isActive ? classes.isActive : classes.link} to='/account/profile'>Profile</NavLink>
+                <NavLink className={({ isActive }) => isActive ? classes.isActive : classes.link} to='/account/addresses'>Address</NavLink>
+                <NavLink className={({ isActive }) => isActive ? classes.isActive : classes.link} to='/account/favorites'>Favorites</NavLink>
+                {/* <NavLink to='/account/ordered'>Purchase History</NavLink>    */}
             </div>
         </div>
     )

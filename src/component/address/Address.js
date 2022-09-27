@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faTriangleExclamation} from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import { NavLink} from "react-router-dom"
+import { isValidPhoneNumber } from "react-phone-number-input";
 
 const initialAddress ={firstName:'',lastName:'', street:'',apt:'',city:'',state:'State',zipCode:'',phone:''}
 
@@ -30,6 +31,7 @@ const Address= ()=>{
         address.zipCode.trim()===''||address.phone.trim()===''){
             return setError('Please verify all fields below.')
         }
+        if(!isValidPhoneNumber(address.phone)) return setError('Invalid phone number')
         setError('')
         const key = uuidv4()
         const createTime = Date.now()

@@ -12,7 +12,7 @@ const AddressList = ()=>{
     const navigate = useNavigate()
     
     useEffect(()=>{
-        const addresses =[]
+        const addressesData =[]
         let isCancel = false
         const readAddressData = async()=>{
             await readUserData('users/'+currentUser.uid+'/addresses')
@@ -21,12 +21,12 @@ const AddressList = ()=>{
                     for(let key in res.val()){
                         const review={...res.val()[key]}
                         if(res.val()[key].default){
-                            addresses.unshift(review)
+                            addressesData.unshift(review)
                         }else{
-                            addresses.push(review)
+                            addressesData.push(review)
                         }
                     }
-                    setAddresses(addresses);
+                    setAddresses(addressesData);
                 }
             })  
         }
