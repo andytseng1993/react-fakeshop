@@ -1,10 +1,10 @@
 .menu{
+    width: 30%;
     min-width: 200px;
     margin-top: 30px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    flex-grow: 1;
     height: calc(100vh - 120px);
 }
 .imageBox{
@@ -20,14 +20,58 @@
     opacity: 0.5;
     margin: 10px 0 20px;
 }
-.edit{
+.editButtons{
     position: absolute;
+    right: 20px;
+    bottom: 10px;
+}
+.edit{
+    width: 70px;
+    position: relative;
     font-size: 16px;
     font-weight: 600;
+    padding: 5px 15px;
+    box-shadow: 1px 1px 4px rgb(186, 186, 186);
+    border-radius: 10px;
+    cursor: pointer;
+}
+.edit:active{
+    transform: translate(1px,1px);
+}
+.editChoice::before{
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background-color: white;
+    border-top: 1px solid rgb(235, 235, 235);
+    border-left: 1px solid rgb(240, 240, 240);
+    top: -9px;
+    transform: rotate(45deg);
+}
+.editChoice{
+    position: absolute;
+    left: -60px;
+    top: 45px;
+    width: 170px;
     padding: 5px 10px;
-    right: 10px;
-    bottom: 10px;
-
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 1px 2px 6px rgb(195, 195, 195);
+}
+.upload,.remove{
+    font-weight: 500;
+    position: relative;
+    text-align: left;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.remove{
+    
+}
+.upload:hover,.remove:hover{
+    background-color: rgb(245, 245, 245);
 }
 .links{
     width: 80%;
@@ -86,4 +130,146 @@
     padding: 9px 20px;
     position: relative;
     
+}
+/* upload picture */
+
+.uploadArea {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.content {
+    position: relative;
+    width: 50%;
+    max-width: 500px;
+    min-width: 400px;
+    height: 600px;
+    background-color: white;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.closeBtn {
+    position: absolute;
+    right: 25px;
+    top: 25px;
+    font-size: 30px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.closeBtn:hover {
+    transform: translate(0px, -1px);
+}
+
+.closeBtn:active {
+    transform: translate(0px, 1px);
+}
+.uploadLabel{
+    font-size: 18px;
+}
+.uploadInput{
+    font-size: 18px;
+}
+.uploadButton{
+    margin-top: 10px;
+    padding: 15px 30px;
+    font-size: 18px;
+    border-radius: 5px;
+    background-color: white;
+    border: 1px solid black;
+    cursor: pointer;
+}
+
+.uploadImageZone{
+    height: auto;
+    position: relative;
+    z-index: 1000;
+}
+.uploadImage{
+    position: relative;
+    width: auto;
+    max-width: 375px;
+    height: auto;
+    max-height: 450px;
+    border: none;
+    vertical-align: middle;
+}
+.uploadImageBackground{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    overflow:hidden;
+}
+.uploadImageCircle{
+    position: absolute;
+    box-shadow: 0 0 0 500px #00000030;
+    width: 250px;
+    height: 250px;
+    border:1px dotted rgb(255, 255, 255);
+    border-radius: 50%;
+    top: 0px;
+    left: 0px;
+    scale: 1; 
+    background-color: transparent;
+    background-clip:border-box;
+}
+.uploadImageSquare{
+    position: absolute;
+    width: 250px;
+    height: 250px;
+    border:1px dotted rgb(255, 255, 255);
+    top: 0px;
+    left: 0px;
+    scale: 1; 
+    cursor: move;
+    transform-origin: top right;
+    scale: 1;
+}
+.NWCircle,.SECircle{
+    cursor:nwse-resize;
+}
+.NECircle,.SWCircle{
+    cursor:nesw-resize;
+}
+
+.NWCircle::before,
+.NECircle::before,
+.SWCircle::before,
+.SECircle::before{
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: white;
+    border-radius: 50%;
+    z-index: 100;
+}
+
+.NWCircle::before{
+    top: -5px;
+    left: -5px;
+}
+.NECircle::before{
+    top: -5px;
+    right: -5px;
+}
+.SWCircle::before{
+    bottom: -5px;
+    left: -5px;
+}
+.SECircle::before{
+    bottom: -5px;
+    right: -5px;
 }
