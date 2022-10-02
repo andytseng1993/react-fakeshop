@@ -4,16 +4,16 @@ import {faXmark} from "@fortawesome/free-solid-svg-icons";
 import { useRef, useState } from 'react';
 
 const UploadImage= ({setUploadPicture})=>{
-    const [picture, setPicture] = useState({src:null,width:null,height:null})
+    const [picture, setPicture] = useState({src:null,width:null,height:null,max: 375,length:null})
     const [isCropping,setIsCropping] = useState(false)
     const [dragActive, setDragActive] = useState(false)
     const [uploadErr,setUploadErr] = useState('')
     const [position,setPosition] =useState({dragging: false,x: 0, y: 0,rect: null,oldPos: null })
     const hiddenFileInput = useRef(null)
-
+    
     const closeHandler =()=>{
         setUploadPicture(false)
-        setPicture({...picture,src:null})
+        setPicture(pre=>({...pre,src:null}))
         setIsCropping(false)
     }
     const handleDrag = (e)=>{
@@ -41,19 +41,27 @@ const UploadImage= ({setUploadPicture})=>{
         img.src = objectUrl
         img.onload = function () {
             console.log(img.naturalWidth + " " + img.naturalHeight);
+            let scaleWidth =  img.naturalWidth/picture.max
+            let scaleHeight = img.naturalHeight/picture.max
+            if(scaleWidth<=1 && scaleHeight<= 1) setPicture((pre)=>({...pre,width: img.naturalWidth, height: img.naturalHeight}))
+            else if (scaleWidth>= scaleHeight) setPicture((pre)=>({...pre,width: img.naturalWidth/scaleWidth, height: img.naturalHeight/scaleWidth,length:img.naturalHeight/scaleWidth}))
+            else setPicture(pre=>({...pre,width: img.naturalWidth/scaleHeight, height: img.naturalHeight/scaleHeight,length:img.naturalWidth/scaleHeight}))
             URL.revokeObjectURL(objectUrl);
         }
-        setPicture({...picture,src:objectUrl})
+        setPicture(pre=>({...pre,src:objectUrl}))
         setIsCropping(true)
     }
+
     const handleMouseMove = (e)=>{
         if (!position.dragging) return
         e.preventDefault()
         e.stopPropagation()
         let x = e.pageX  - position.oldPos.x + position.x
-        if(x<0) x= 0
         let y = e.pageY - position.oldPos.y + position.y
+        if(x<0) x= 0
+        if(x > (picture.width-picture.length)) x= picture.width-picture.length
         if(y<0) y= 0
+        if(y> (picture.height-picture.length)) y= picture.height-picture.length
         setPosition(pre=>({...pre,x,y,oldPos:{x:e.clientX,y:e.clientY}}))
     
     }
@@ -76,15 +84,12 @@ const UploadImage= ({setUploadPicture})=>{
                     <h1 style={{marginBottom:30}}>Profile picture</h1>
                     <div className={classes.uploadImageZone}>
                         {!isCropping &&<div className={`${classes.fileDragZone} ${dragActive ? classes.dragActive : "" }`} onDragEnter={handleDrag} onDragLeave={handleDrag} onDragOver={handleDrag} onDrop={handleDrag}> </div>}
-                        {picture.src && <img className={classes.uploadImage} style={{width:picture.width,height:picture.height}} src={picture.src} alt='user picture' ></img> }
+                        {isCropping && <img className={classes.uploadImage} style={{width:picture.width,height:picture.height,maxWidth:picture.max,maxHeight:picture.max}} src={picture.src} alt='user picture' ></img> }
                         {isCropping && <div className={classes.uploadImageBackground} >
-                            <div className={classes.uploadImageSquare} style={{left:position.x,top:position.y}} 
+                            <div className={classes.uploadImageSquare} style={{left:position.x,top:position.y,width:picture.length,height:picture.length}} 
                             onMouseMove={handleMouseMove} onMouseDown={hadleMouseDown} onMouseUp = {handleMouseUp} onMouseLeave={handleMouseUp}
                             >
                             <div className={classes.uploadImageCircle}></div>
-                                <div className={classes.NWCircle}></div>
-                                <div className={classes.NECircle}></div>
-                                <div className={classes.SWCircle}></div>
                                 <div className={classes.SECircle}></div>
                             </div>
                         </div>}   
