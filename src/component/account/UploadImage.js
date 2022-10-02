@@ -4,16 +4,16 @@ import {faXmark} from "@fortawesome/free-solid-svg-icons";
 import { useRef, useState } from 'react';
 
 const UploadImage= ({setUploadPicture})=>{
-    const [pictureSrc, setPictureSrc] = useState(null)
+    const [picture, setPicture] = useState({src:null,width:null,height:null})
     const [isCropping,setIsCropping] = useState(false)
     const [dragActive, setDragActive] = useState(false)
     const [uploadErr,setUploadErr] = useState('')
-    const [position,setPosition] =useState({x: 100, y: 0})
+    const [position,setPosition] =useState({dragging: false,x: 0, y: 0,rect: null,oldPos: null })
     const hiddenFileInput = useRef(null)
 
     const closeHandler =()=>{
         setUploadPicture(false)
-        setPictureSrc(null)
+        setPicture({...picture,src:null})
         setIsCropping(false)
     }
     const handleDrag = (e)=>{
@@ -43,10 +43,32 @@ const UploadImage= ({setUploadPicture})=>{
             console.log(img.naturalWidth + " " + img.naturalHeight);
             URL.revokeObjectURL(objectUrl);
         }
-        setPictureSrc(objectUrl)
+        setPicture({...picture,src:objectUrl})
         setIsCropping(true)
     }
-
+    const handleMouseMove = (e)=>{
+        if (!position.dragging) return
+        e.preventDefault()
+        e.stopPropagation()
+        let x = e.pageX  - position.oldPos.x + position.x
+        if(x<0) x= 0
+        let y = e.pageY - position.oldPos.y + position.y
+        if(y<0) y= 0
+        setPosition(pre=>({...pre,x,y,oldPos:{x:e.clientX,y:e.clientY}}))
+    
+    }
+    const hadleMouseDown = (e)=>{
+        let rect = e.currentTarget.getBoundingClientRect()
+        setPosition(pre=>({...pre,dragging: true,rect:{x:rect.x,y:rect.y},oldPos:{x:e.clientX,y:e.clientY}}))
+        e.stopPropagation()
+        e.preventDefault()
+    }
+    const handleMouseUp = (e)=>{
+        setPosition(pre=>({...pre,dragging: false}))
+        e.stopPropagation()
+        e.preventDefault()
+    }
+    
     return (
         <div className={classes.uploadArea}>
                 <div className={classes.content}>
@@ -54,9 +76,11 @@ const UploadImage= ({setUploadPicture})=>{
                     <h1 style={{marginBottom:30}}>Profile picture</h1>
                     <div className={classes.uploadImageZone}>
                         {!isCropping &&<div className={`${classes.fileDragZone} ${dragActive ? classes.dragActive : "" }`} onDragEnter={handleDrag} onDragLeave={handleDrag} onDragOver={handleDrag} onDrop={handleDrag}> </div>}
-                        {pictureSrc && <img className={classes.uploadImage} src={pictureSrc} alt='user' ></img> }
+                        {picture.src && <img className={classes.uploadImage} style={{width:picture.width,height:picture.height}} src={picture.src} alt='user picture' ></img> }
                         {isCropping && <div className={classes.uploadImageBackground} >
-                            <div className={classes.uploadImageSquare} style={{left:position.x,top:position.y}}>
+                            <div className={classes.uploadImageSquare} style={{left:position.x,top:position.y}} 
+                            onMouseMove={handleMouseMove} onMouseDown={hadleMouseDown} onMouseUp = {handleMouseUp} onMouseLeave={handleMouseUp}
+                            >
                             <div className={classes.uploadImageCircle}></div>
                                 <div className={classes.NWCircle}></div>
                                 <div className={classes.NECircle}></div>
