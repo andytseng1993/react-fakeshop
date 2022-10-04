@@ -96,14 +96,18 @@
     cursor: move;
     background-clip:content-box;
 }
-.NWCircle,.SECircle{
+.SECircle{
+    left: 100%;
+    top: 100%;
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: white;
     cursor:nwse-resize;
-}
-.NECircle,.SWCircle{
-    cursor:nesw-resize;
+    transform: translate(-10px,-10px);
 }
 
-.NWCircle::before,
+/* .NWCircle::before,
 .NECircle::before,
 .SWCircle::before,
 .SECircle::before{
@@ -114,7 +118,7 @@
     background-color: white;
     border-radius: 50%;
     z-index: 100;
-}
+} */
 
 .NWCircle::before{
     top: -5px;
