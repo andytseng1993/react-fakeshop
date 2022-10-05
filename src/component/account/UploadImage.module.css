@@ -77,10 +77,10 @@
 }
 .uploadImageCircle{
     position: absolute;
-    box-shadow: 0 0 0 500px #00000030;
+    box-shadow: 0 0 0 500px #00000060;
     width: 100%;
     height:  100%;
-    border:1px dashed rgb(255, 255, 255);
+    border: 2px dashed rgb(255, 255, 255);
     border-radius: 50%;
     top: 0px;
     left: 0px;
@@ -90,7 +90,7 @@
     position: absolute;
     width: 250px;
     height: 250px;
-    border:1px dashed rgb(255, 255, 255);
+    border:1.5px dashed rgb(255, 255, 255);
     top: 0px;
     left: 0px;
     cursor: move;
@@ -102,7 +102,7 @@
     position: absolute;
     width: 10px;
     height: 10px;
-    background-color: white;
+    background-color: rgb(255, 255, 255);
     cursor:nwse-resize;
     transform: translate(-10px,-10px);
 }

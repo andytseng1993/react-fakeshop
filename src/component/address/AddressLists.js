@@ -6,7 +6,7 @@ import classes from './AddressLists.module.css'
 import { getDatabase,ref ,onValue, query, orderByChild} from "firebase/database";
 
 const AddressList = ()=>{
-    const { writeUserData,readUserData } = useUserData()
+    const { writeUserData } = useUserData()
     const { currentUser }  = useUserAuth()
     const [addresses,setAddresses]= useState([])
     const [reload,setReload] = useState(false)

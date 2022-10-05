@@ -3,8 +3,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmark} from "@fortawesome/free-solid-svg-icons";
 import { useRef, useState } from 'react';
 import {image64toCanvasRef, extractImageFileExtensionFromBase64,downloadBase64File} from './Base64CropImage'
+import { useUserAuth } from '../../context/UserAuthContext';
+import { deleteObject, getStorage, ref, uploadString } from "firebase/storage";
+import { v4 as uuidv4 } from 'uuid';
+import { useUserData } from '../../context/UserDataContext';
 
-const UploadImage= ({setUploadPicture})=>{
+const UploadImage= ({setUploadPicture,pictureName,freshPage,setFreshPage})=>{
     const [picture, setPicture] = useState({src:null,imgSrcExt:null,width:null,height:null,max: 375,rectSize:null,aspectRatio:null})
     const [isCropping,setIsCropping] = useState(false)
     const [dragActive, setDragActive] = useState(false)
@@ -13,6 +17,8 @@ const UploadImage= ({setUploadPicture})=>{
     const [scropPosition,setScropPosition] = useState({scaling:false,x: 0, y: 0,oldPos:null})
     const imageRef = useRef(null)
     const hiddenFileInput = useRef(null)
+    const {currentUser}=useUserAuth()
+    const { writeUserData } = useUserData()
     
     const closeHandler =()=>{
         setUploadPicture(false)
@@ -144,12 +150,26 @@ const UploadImage= ({setUploadPicture})=>{
             height:picture.rectSize*picture.aspectRatio
         }
         const base64URL = image64toCanvasRef(pixelCrop,imageRef.current)
-        
+        const storage = getStorage();
+        const name = uuidv4()
+        writeUserData('users/'+currentUser.uid+'/profileImage/'+name,picture.imgSrcExt)
+        if(pictureName.name){
+            const desertRef = ref(storage, '/users/'+currentUser.uid+'/images/'+pictureName.name+'.'+pictureName.extension);
+            deleteObject(desertRef).then(() => {
+                writeUserData('users/'+currentUser.uid+'/profileImage/'+pictureName.name,{})
+            }).catch((error) => {
+                console.log(error);
+            });
+        }
+        const storageRef = ref(storage, '/users/'+currentUser.uid+'/images/'+name+'.'+ picture.imgSrcExt);
+        uploadString(storageRef, base64URL, 'data_url').then((snapshot) => {
+            setFreshPage(!freshPage)
+            setUploadPicture(false)
+            setPicture(pre=>({...pre,src:null}))
+            setIsCropping(false)
+        });
     }
-    // const handleDownload =()=>{
-    //     const imageData64 = canvasRef.current.toDataURL('image/'+picture.imgSrcExt)
-    //     downloadBase64File(imageData64,'aaa.'+picture.imgSrcExt)
-    // }
+    
     return (
         <div className={classes.uploadArea}>
                 <div className={classes.content}>
@@ -157,7 +177,7 @@ const UploadImage= ({setUploadPicture})=>{
                     <h1 style={{marginBottom:30}}>Profile picture</h1>
                     <div className={classes.uploadImageZone}>
                         {!isCropping &&<div className={`${classes.fileDragZone} ${dragActive ? classes.dragActive : "" }`} onDragEnter={handleDrag} onDragLeave={handleDrag} onDragOver={handleDrag} onDrop={handleDrag}> </div>}
-                        {isCropping && <img className={classes.uploadImage} style={{width:picture.width,height:picture.height,maxWidth:picture.max,maxHeight:picture.max}} src={picture.src} alt='user picture' ref={imageRef}></img> }
+                        {isCropping && <img className={classes.uploadImage} style={{width:picture.width,height:picture.height,maxWidth:picture.max,maxHeight:picture.max}} src={picture.src} alt='user' ref={imageRef}></img> }
                         {isCropping && 
                         (<div className={classes.uploadImageBackground} onMouseLeave={handleCropMouseUp} onMouseUp={handleCropMouseUp} onMouseMove={handleCropMouseMove}>
                             <div className={classes.uploadImageSquare} style={{left:position.x,top:position.y,width:picture.rectSize,height:picture.rectSize}} 
