@@ -1,16 +1,18 @@
 import classes from './UploadImage.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faL, faXmark} from "@fortawesome/free-solid-svg-icons";
+import { faXmark} from "@fortawesome/free-solid-svg-icons";
 import { useRef, useState } from 'react';
+import {image64toCanvasRef, extractImageFileExtensionFromBase64,downloadBase64File} from './Base64CropImage'
 
 const UploadImage= ({setUploadPicture})=>{
-    const [picture, setPicture] = useState({src:null,width:null,height:null,max: 375,rectSize:null})
+    const [picture, setPicture] = useState({src:null,imgSrcExt:null,width:null,height:null,max: 375,rectSize:null,aspectRatio:null})
     const [isCropping,setIsCropping] = useState(false)
     const [dragActive, setDragActive] = useState(false)
     const [uploadErr,setUploadErr] = useState('')
     const [position,setPosition] =useState({dragging: false,x: 0, y: 0,rect: null,oldPos: null })
-    const hiddenFileInput = useRef(null)
     const [scropPosition,setScropPosition] = useState({scaling:false,x: 0, y: 0,oldPos:null})
+    const imageRef = useRef(null)
+    const hiddenFileInput = useRef(null)
     
     const closeHandler =()=>{
         setUploadPicture(false)
@@ -28,7 +30,7 @@ const UploadImage= ({setUploadPicture})=>{
         }
     }
     
-    const handLeloadImage =(event)=>{
+    const handleLoadImage =(event)=>{
         hiddenFileInput.current.click()
     }
     const handleLoadImageChange =(event)=>{
@@ -38,21 +40,27 @@ const UploadImage= ({setUploadPicture})=>{
     const handleImage = (file)=>{
         if(file.size > 1024*1024*3) return setUploadErr('Please upload a picture smaller than 3 MB.')
         let img = new Image()
-        let objectUrl = URL.createObjectURL(file);
-        img.src = objectUrl
+        let reader = new FileReader();
+        reader.readAsDataURL(file)
+        reader.onload = ()=>{
+            img.src = reader.result
+            const fileExtension = extractImageFileExtensionFromBase64(reader.result)
+            setPicture(pre=>({...pre,src:reader.result,imgSrcExt:fileExtension}))
+        }
         img.onload = function () {
-            console.log(img.naturalWidth + " " + img.naturalHeight);
             let scaleWidth =  img.naturalWidth/picture.max
             let scaleHeight = img.naturalHeight/picture.max
             if(scaleWidth<=1 && scaleHeight<= 1) {
-                if(scaleWidth<=scaleHeight) setPicture((pre)=>({...pre,width: img.naturalWidth, height: img.naturalHeight,rectSize:scaleWidth}))
-                if(scaleWidth>scaleHeight) setPicture((pre)=>({...pre,width: img.naturalWidth, height: img.naturalHeight,rectSize:scaleHeight}))
-            }else if (scaleWidth>= scaleHeight) setPicture((pre)=>({...pre,width: img.naturalWidth/scaleWidth, height: img.naturalHeight/scaleWidth,rectSize:img.naturalHeight/scaleWidth}))
-            else setPicture(pre=>({...pre,width: img.naturalWidth/scaleHeight, height: img.naturalHeight/scaleHeight,rectSize:img.naturalWidth/scaleHeight}))
-            URL.revokeObjectURL(objectUrl);
+                if(scaleWidth<=scaleHeight) setPicture((pre)=>({...pre,width: img.naturalWidth, height: img.naturalHeight,rectSize:scaleWidth,aspectRatio:scaleWidth}))
+                if(scaleWidth>scaleHeight) setPicture((pre)=>({...pre,width: img.naturalWidth, height: img.naturalHeight,rectSize:scaleHeight,aspectRatio:scaleHeight}))
+            }else if (scaleWidth>= scaleHeight) setPicture((pre)=>({...pre,width: img.naturalWidth/scaleWidth, height: img.naturalHeight/scaleWidth,rectSize:img.naturalHeight/scaleWidth,aspectRatio:scaleWidth}))
+            else setPicture(pre=>({...pre,width: img.naturalWidth/scaleHeight, height: img.naturalHeight/scaleHeight,rectSize:img.naturalWidth/scaleHeight,aspectRatio:scaleHeight}))
+            
+            setIsCropping(true)
         }
-        setPicture(pre=>({...pre,src:objectUrl}))
-        setIsCropping(true)
+        
+        setPosition({dragging: false,x: 0, y: 0,rect: null,oldPos: null })
+        
     }
 
     const handleMouseMove = (e)=>{
@@ -127,6 +135,21 @@ const UploadImage= ({setUploadPicture})=>{
         e.nativeEvent.stopImmediatePropagation();
         e.preventDefault()
     }
+    const handleSaveImage = async (e)=>{
+        e.preventDefault()
+        const pixelCrop = {
+            x:position.x*picture.aspectRatio,
+            y:position.y*picture.aspectRatio,
+            width:picture.rectSize*picture.aspectRatio,
+            height:picture.rectSize*picture.aspectRatio
+        }
+        const base64URL = image64toCanvasRef(pixelCrop,imageRef.current)
+        
+    }
+    // const handleDownload =()=>{
+    //     const imageData64 = canvasRef.current.toDataURL('image/'+picture.imgSrcExt)
+    //     downloadBase64File(imageData64,'aaa.'+picture.imgSrcExt)
+    // }
     return (
         <div className={classes.uploadArea}>
                 <div className={classes.content}>
@@ -134,7 +157,7 @@ const UploadImage= ({setUploadPicture})=>{
                     <h1 style={{marginBottom:30}}>Profile picture</h1>
                     <div className={classes.uploadImageZone}>
                         {!isCropping &&<div className={`${classes.fileDragZone} ${dragActive ? classes.dragActive : "" }`} onDragEnter={handleDrag} onDragLeave={handleDrag} onDragOver={handleDrag} onDrop={handleDrag}> </div>}
-                        {isCropping && <img className={classes.uploadImage} style={{width:picture.width,height:picture.height,maxWidth:picture.max,maxHeight:picture.max}} src={picture.src} alt='user picture'></img> }
+                        {isCropping && <img className={classes.uploadImage} style={{width:picture.width,height:picture.height,maxWidth:picture.max,maxHeight:picture.max}} src={picture.src} alt='user picture' ref={imageRef}></img> }
                         {isCropping && 
                         (<div className={classes.uploadImageBackground} onMouseLeave={handleCropMouseUp} onMouseUp={handleCropMouseUp} onMouseMove={handleCropMouseMove}>
                             <div className={classes.uploadImageSquare} style={{left:position.x,top:position.y,width:picture.rectSize,height:picture.rectSize}} 
@@ -145,11 +168,12 @@ const UploadImage= ({setUploadPicture})=>{
                             <div className={classes.SECircle} style={{left:picture.rectSize+position.x,top:picture.rectSize+position.y}} 
                             onMouseDown={handleCropMouseDown} onMouseUp={handleCropMouseUp} onMouseMove={handleCropMouseMove} ></div>
                         </div>)}   
-                        
                     </div>
-                    <button className={classes.uploadButton} onClick={handLeloadImage}>Upload Image</button>
-                    
-                    <input ref={hiddenFileInput} onChange={handleLoadImageChange} style={{display:'none'}} type="file" accept="image/png, image/jpeg, image/gif" />
+                    <div>
+                        <button className={classes.uploadButton} onClick={handleLoadImage}>Upload Image</button>
+                        {isCropping && <button className={classes.uploadButton} onClick={handleSaveImage}>Save</button>}
+                        <input ref={hiddenFileInput} onChange={handleLoadImageChange} style={{display:'none'}} type="file" accept="image/png, image/jpeg, image/gif" />
+                    </div>
                     {uploadErr && {uploadErr}}
                 </div>
             </div>
