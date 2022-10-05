@@ -5,11 +5,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faChevronRight, faHouseChimney,faUser,faHeart} from "@fortawesome/free-solid-svg-icons";
 import { useSelector } from 'react-redux';
 import { useUserAuth } from '../../context/UserAuthContext';
-import { useUserData } from '../../context/UserDataContext';
 import { getDatabase, onValue, orderByChild, query, ref } from 'firebase/database';
 
 const AccountLists=()=>{
-    const { readUserData } = useUserData()
     const {currentUser}=useUserAuth()
     const [address,setAddress]=useState({})
     const favoriteList = useSelector((state)=>state.favorites)
@@ -48,7 +46,8 @@ const AccountLists=()=>{
         return ()=>{
             isCancel = true 
         }
-    },[allProducts,favoriteList])
+        // eslint-disable-next-line
+    },[allProducts,favoriteList,currentUser.uid])
 
     return(
         <div className={classes.account}>

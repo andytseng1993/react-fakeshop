@@ -15,9 +15,10 @@ const AccountMenu = ()=>{
     const [uploadPicture,setUploadPicture] = useState(false)
     const [uploaded,setUploaded] = useState(false)
     const { readUserData, writeUserData} = useUserData()
-    const [profilePic,setProfilePic] = useState(process.env.PUBLIC_URL+'/images/blank-profile-picture.png')
+    const [profilePic,setProfilePic] = useState()
     const [pictureName,setPictureName] = useState({name:'',extension:''})
     const [freshPage,setFreshPage] = useState(false)
+
 
     useEffect(() => {
         let isCancel = false
@@ -34,6 +35,8 @@ const AccountMenu = ()=>{
                             setUploaded(true)
                         })
                     });
+                }else{
+                    setProfilePic( process.env.PUBLIC_URL+'/images/blank-profile-picture.png')
                 }
             })  
         }
@@ -46,6 +49,7 @@ const AccountMenu = ()=>{
         return () => {
             isCancel = true 
         }
+        // eslint-disable-next-line
     }, [freshPage,metadata])
 
     useEffect(() => {

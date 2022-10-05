@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { NavLink,useNavigate } from "react-router-dom"
 import { useUserAuth } from "../../context/UserAuthContext"
@@ -6,6 +6,8 @@ import { setLogInBox, setUserName } from "../../redux/actions"
 import classes from './Navigation.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
+import { getDownloadURL, getStorage, ref } from "firebase/storage"
+import { useUserData } from "../../context/UserDataContext"
 
 function Navigation(props) {
     const openLogIn = useSelector((state) => state.openLogInbox.logIn)
@@ -14,7 +16,35 @@ function Navigation(props) {
     const { logout,currentUser } = useUserAuth()
     const navigate = useNavigate()
     const dispatch = useDispatch()
+    const { readUserData} = useUserData()
+    const {uid} = currentUser
+    const [profilePic,setProfilePic] = useState('')
+    const upLoadNewImage =  useSelector(state => state.upLoadImage)
 
+    useEffect(() => {
+        let isCancel = false
+        const readProfilePictureData = async()=>{
+            await readUserData('users/'+uid+'/profileImage/')
+            .then(res=>{
+                if(!isCancel && res.val()){
+                    res.forEach(element => {
+                        const storage = getStorage();
+                        const pathReference = ref(storage, '/users/'+uid+'/images/'+element.key+'.'+element.val());
+                        getDownloadURL(pathReference).then((url)=>{
+                            setProfilePic(url);
+                        })
+                    });
+                }else{
+                    setProfilePic(process.env.PUBLIC_URL+'/images/blank-profile-picture.png')
+                }
+            })  
+        }
+        readProfilePictureData()
+        console.log(uid);
+        return () => {
+            isCancel = true 
+        }
+    }, [uid,upLoadNewImage,readUserData])
 
     useEffect(()=>{
         currentUser?.displayName? 
@@ -59,7 +89,7 @@ function Navigation(props) {
                     FakeStore
                 </NavLink>
             </div>
-            <nav>
+            <nav style={{display:'flex', alignItems:'center'}}>
                 <NavLink to='/' onClick={()=> scrollToHome()} >
                     Home
                 </NavLink>
@@ -69,7 +99,8 @@ function Navigation(props) {
                 
                 {userName?
                     <div className={classes.user}>
-                        {`Hello, ${userName}`}
+                        <img className={classes.userPicture} src={profilePic} alt={''}></img>
+                        {`${userName}`}
                         <div className={classes.userBox}>
                             <NavLink to='account/home' className={classes.signout}>
                                 Account

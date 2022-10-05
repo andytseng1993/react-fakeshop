@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch } from 'react-redux';
 import { setLogInBox, setRegisterBox } from '../../redux/actions';
+
 const LogInBox=({children})=>{
     const dispatch = useDispatch()
     const closeHandler = () => {

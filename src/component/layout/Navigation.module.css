@@ -61,6 +61,8 @@ nav button {
 }
 
 .user {
+    display: flex;
+    align-items: center;
     position: relative;
     font-size: 1.1em;
     font-weight: 700;
@@ -70,6 +72,7 @@ nav button {
 .user::after{
     content: '';
     position: absolute;
+    right: -25px;
     width: 0px;
     height: 0px;
     margin: 5px;
@@ -78,14 +81,20 @@ nav button {
     border-right: 5px solid transparent;
     border-left: 5px solid transparent;
 }
+.userPicture{
+    width: 35px;
+    margin: 0px 5px 0px 15px;
+    border-radius: 50%;
+    font-size: 5px;
+}
 .userBox{
     display: none;
     position: absolute;
     border: 1px solid rgb(239, 239, 239);
     background-color: white;
-    width: calc( 100% + 15px );
+    width: calc( 100% + 30px );
     min-width: 130px;
-    top: 30px;
+    top: 45px;
     border-radius: 5px;
     box-shadow: 2px 2px 4px 1px rgba(0, 0, 0, 0.15);
     padding: 7px 0px;

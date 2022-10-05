@@ -2,11 +2,13 @@ import classes from './UploadImage.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmark} from "@fortawesome/free-solid-svg-icons";
 import { useRef, useState } from 'react';
-import {image64toCanvasRef, extractImageFileExtensionFromBase64,downloadBase64File} from './Base64CropImage'
+import {image64toCanvasRef, extractImageFileExtensionFromBase64 } from './Base64CropImage'
 import { useUserAuth } from '../../context/UserAuthContext';
 import { deleteObject, getStorage, ref, uploadString } from "firebase/storage";
 import { v4 as uuidv4 } from 'uuid';
 import { useUserData } from '../../context/UserDataContext';
+import { useDispatch } from 'react-redux';
+import { upLoadNewImage } from '../../redux/actions';
 
 const UploadImage= ({setUploadPicture,pictureName,freshPage,setFreshPage})=>{
     const [picture, setPicture] = useState({src:null,imgSrcExt:null,width:null,height:null,max: 375,rectSize:null,aspectRatio:null})
@@ -19,6 +21,8 @@ const UploadImage= ({setUploadPicture,pictureName,freshPage,setFreshPage})=>{
     const hiddenFileInput = useRef(null)
     const {currentUser}=useUserAuth()
     const { writeUserData } = useUserData()
+    const dispatch = useDispatch()
+
     
     const closeHandler =()=>{
         setUploadPicture(false)
@@ -167,6 +171,7 @@ const UploadImage= ({setUploadPicture,pictureName,freshPage,setFreshPage})=>{
             setUploadPicture(false)
             setPicture(pre=>({...pre,src:null}))
             setIsCropping(false)
+            dispatch(upLoadNewImage())
         });
     }
     

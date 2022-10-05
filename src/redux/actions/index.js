@@ -84,3 +84,9 @@ export const deleteFavoriteList =(productId)=>{
         payload: productId
     }
 }
+
+export const upLoadNewImage =()=>{
+    return{
+        type: ACTIONS.UPLOAD_NEW_IMAGE
+    }
+}

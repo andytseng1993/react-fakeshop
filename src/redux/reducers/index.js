@@ -4,7 +4,8 @@ import { productReducer,
          openLogInBoxReducer,
          setUserNameReducer, 
          setCartListReducer, 
-         setFavoriteReducer} from "./ProductReducer";
+         setFavoriteReducer,
+         setUpLoadImageReducer} from "./ProductReducer";
 
 export const reducers = combineReducers({
     allProducts: productReducer,
@@ -12,5 +13,6 @@ export const reducers = combineReducers({
     openLogInbox: openLogInBoxReducer,
     setUserName:setUserNameReducer,
     setCartList:setCartListReducer,
-    favorites: setFavoriteReducer
+    favorites: setFavoriteReducer,
+    upLoadImage: setUpLoadImageReducer
 })
