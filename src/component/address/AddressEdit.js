@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faTriangleExclamation} from "@fortawesome/free-solid-svg-icons";
 import { useNavigate, useParams } from "react-router-dom";
 import { NavLink} from "react-router-dom"
+import { isValidPhoneNumber } from "react-phone-number-input";
 
 const initialAddress ={firstName:'',lastName:'', street:'',apt:'',city:'',state:'State',zipCode:'',phone:''}
 
@@ -34,6 +35,7 @@ const AddressEdit= ()=>{
         return () => {
             isCancel = true 
         }
+        // eslint-disable-next-line
     }, [])
 
     const handleCancel =(e)=>{
@@ -44,11 +46,11 @@ const AddressEdit= ()=>{
         e.preventDefault()
         if(address.firstName.trim()===''||address.lastName.trim()===''||
         address.street.trim()===''||address.city.trim()===''||
-        address.zipCode.trim()===''||address.phone.trim()===''){
-            return setError('Please verify all fields below.')
-        }
+        address.zipCode.trim()===''||address.phone.trim()==='') return setError('Please verify all fields below.')
+        if(!isValidPhoneNumber(address.phone)) return setError('Invalid phone number')
         setError('')
-        const addressData = {...address,default:checked}
+        const createTime = Date.now()
+        const addressData = {...address,default:checked,createTime}
         if(checked){
             return editAddressData(address.key,addressData)
         }
@@ -71,7 +73,7 @@ const AddressEdit= ()=>{
     return(
         <div className={classes.address}>
             <div className={classes.routes}>
-                <NavLink to='/account'>Account </NavLink>/<NavLink to='/account/addresses'> Addresses</NavLink> / <span style={{fontWeight:700}}> Edit Address</span>
+                <NavLink to='/account/home'>Account </NavLink>/<NavLink to='/account/addresses'> Addresses</NavLink> / <span style={{fontWeight:700}}> Edit Address</span>
             </div>
             <h1 style={{margin:10}}>Edit delivery address</h1>
             {error && <div className={classes.errorMessage}><FontAwesomeIcon className={classes.exclamation} icon={faTriangleExclamation} />{error}</div>}

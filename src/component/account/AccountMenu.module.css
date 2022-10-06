@@ -1,9 +1,10 @@
 .menu{
+    width: 30%;
+    min-width: 200px;
     margin-top: 30px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    flex-grow: 1;
     height: calc(100vh - 120px);
 }
 .imageBox{
@@ -13,20 +14,63 @@
 }
 .image{
     width: 180px;
+    height: 180px;
     border-radius: 50%;
-    padding: 5px;
-    border: 2px solid black;
-    opacity: 0.5;
+    border: 2px solid rgba(0, 0, 0, 0.309);
     margin: 10px 0 20px;
 }
-.edit{
+.editButtons{
     position: absolute;
+    right: 20px;
+    bottom: 10px;
+}
+.edit{
+    width: 70px;
+    position: relative;
     font-size: 16px;
     font-weight: 600;
+    padding: 5px 15px;
+    box-shadow: 1px 1px 4px rgb(186, 186, 186);
+    border-radius: 10px;
+    cursor: pointer;
+}
+.edit:active{
+    transform: translate(1px,1px);
+}
+.editChoice::before{
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background-color: white;
+    border-top: 1px solid rgb(235, 235, 235);
+    border-left: 1px solid rgb(240, 240, 240);
+    top: -9px;
+    transform: rotate(45deg);
+}
+.editChoice{
+    position: absolute;
+    left: -60px;
+    top: 45px;
+    width: 170px;
     padding: 5px 10px;
-    right: 10px;
-    bottom: 10px;
-
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 1px 2px 6px rgb(195, 195, 195);
+}
+.upload,.remove{
+    font-weight: 500;
+    position: relative;
+    text-align: left;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.remove{
+    
+}
+.upload:hover,.remove:hover{
+    background-color: rgb(245, 245, 245);
 }
 .links{
     width: 80%;
@@ -47,7 +91,7 @@
     left: 0;
     bottom: 0;
     width: 0;
-    transition: width .3s cubic-bezier(.45,.05,.5,.1);
+    transition: width .2s cubic-bezier(.45,.05,.5,.1);
     border-bottom: 2px solid #555;
 }
 .links a:hover::after{
@@ -55,4 +99,34 @@
 }
 .links a:hover{
     font-weight: 800;
+}
+.joined{
+    font-weight: 600;
+    color: gray;
+}
+
+.isActive{
+    text-align: left;
+    width: 85%;
+    padding: 9px 20px;
+    position: relative;
+    font-weight: 700;
+    background-color: rgb(240, 240, 255);
+}
+.isActive::before{
+    content: "";
+    position: absolute;
+    width: 45px;
+    height: 45px;
+    background-color: rgb(240, 240, 255);
+    top: -0.5px;
+    right: -20px;
+    border-radius:0 50% 50% 0;
+}
+.link{
+    text-align: left;
+    width: 85%;
+    padding: 9px 20px;
+    position: relative;
+    
 }

@@ -1,0 +1,166 @@
+.uploadArea {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.content {
+    position: relative;
+    width: 50%;
+    max-width: 500px;
+    min-width: 400px;
+    height: auto;
+    padding: 30px 20px;
+    background-color: white;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+.closeBtn {
+    position: absolute;
+    right: 25px;
+    top: 25px;
+    font-size: 30px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.closeBtn:hover {
+    transform: translate(0px, -1px);
+}
+
+.closeBtn:active {
+    transform: translate(0px, 1px);
+}
+.uploadLabel{
+    font-size: 18px;
+}
+.uploadInput{
+    font-size: 18px;
+}
+.uploadButton{
+    margin: 20px;
+    padding: 15px 30px;
+    font-size: 18px;
+    border-radius: 5px;
+    background-color: white;
+    border: 1px solid black;
+    cursor: pointer;
+}
+
+.uploadImageZone{
+    height: auto;
+    position: relative;
+    z-index: 1000;
+}
+.uploadImage{
+    position: relative;
+    
+    border: none;
+    vertical-align: middle;
+}
+.uploadImageBackground{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    overflow:hidden;
+}
+.uploadImageCircle{
+    position: absolute;
+    box-shadow: 0 0 0 500px #00000060;
+    width: 100%;
+    height:  100%;
+    border: 2px dashed rgb(255, 255, 255);
+    border-radius: 50%;
+    top: 0px;
+    left: 0px;
+    background-clip:content-box;
+}
+.uploadImageSquare{
+    position: absolute;
+    width: 250px;
+    height: 250px;
+    border:1.5px dashed rgb(255, 255, 255);
+    top: 0px;
+    left: 0px;
+    cursor: move;
+    background-clip:content-box;
+}
+.SECircle{
+    left: 100%;
+    top: 100%;
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: rgb(255, 255, 255);
+    cursor:nwse-resize;
+    transform: translate(-10px,-10px);
+}
+
+/* .NWCircle::before,
+.NECircle::before,
+.SWCircle::before,
+.SECircle::before{
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: white;
+    border-radius: 50%;
+    z-index: 100;
+} */
+
+.NWCircle::before{
+    top: -5px;
+    left: -5px;
+}
+.NECircle::before{
+    top: -5px;
+    right: -5px;
+}
+.SWCircle::before{
+    bottom: -5px;
+    left: -5px;
+}
+.SECircle::before{
+    bottom: -5px;
+    right: -5px;
+}
+.fileDragZone{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 300px;
+    height: 300px;
+    border: 2px dashed rgb(174, 174, 174);
+    border-radius: 10px;
+    background-color: #d9d9d91e;
+    z-index: 100;
+}
+.fileDragZone::before {
+    content: 'Drag and drop your file here';
+    font-size: 20px;
+    z-index: 50;
+}
+.fileDragZone.dragActive{
+    background-color: #ffffff;
+    border: 2px dashed rgb(40, 40, 40);
+    opacity: 0.5;
+}
+.error{
+    color: rgb(118, 0, 0);
+    background-color: rgb(242, 192, 192);
+    padding: 5px 15px;
+    border-radius: 5px;
+    box-shadow: 1px 1px 4px rgb(255, 154, 154);
+}

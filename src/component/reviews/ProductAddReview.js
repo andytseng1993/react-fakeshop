@@ -106,7 +106,7 @@ const ProductAddReview=({currentUser,cancelAddReview,productId,submitReview,allR
                 <form>
                     <label className={classes.addReviewNickname}>
                         <p>Nickname:</p>
-                        <input type='text' value={nameInput} onChange={handleNameChange} maxLength="25" required></input>
+                        <input className={classes.textInput} type='text' value={nameInput} onChange={handleNameChange} maxLength="25" required></input>
                         <div className={classes.wordCount}>{nameInput.length}/25</div>
                     </label>
                     <div className={classes.addReviewRating}>
@@ -116,7 +116,7 @@ const ProductAddReview=({currentUser,cancelAddReview,productId,submitReview,allR
                             </div>
                     </div>
                     <label className={classes.addReviewTitle}>Add a title:
-                        <input type='text' maxLength="50" value={titleInput} onChange={handleTitleChange} required></input>
+                        <input className={classes.textInput} type='text' maxLength="50" value={titleInput} onChange={handleTitleChange} required></input>
                         <div className={classes.wordCount}>{titleInput.length}/50</div>
                     </label>
                     <label className={classes.addReviewDescription}>

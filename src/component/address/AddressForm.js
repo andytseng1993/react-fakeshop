@@ -6,6 +6,7 @@ import AddressInput from "./AddressInput";
 import Input from 'react-phone-number-input/input'
 import Select from 'react-select';
 import { geocodeByAddress } from 'react-places-autocomplete';
+import { isValidPhoneNumber } from 'react-phone-number-input';
 
 const AddressForm=({address,setAddress,checked,setChecked,handleCancel,handleSave})=>{
     const [isFocus,setIsFocus] = useState(false)
@@ -17,9 +18,8 @@ const AddressForm=({address,setAddress,checked,setChecked,handleCancel,handleSav
     }
     const onBlurChange = ()=>{
         setIsFocus(false)
-        if(address.phone.length ===0){
-            return setError('Please enter a valid Phone number*.')
-        }
+        if(address.phone.length ===0) return setError('Please enter a valid Phone number*.')
+        if(!isValidPhoneNumber(address.phone)) return setError('Invalid phone number')
         setError('')
     }
     const handleChangeAddress= (e,changeName)=>{
@@ -81,7 +81,7 @@ const AddressForm=({address,setAddress,checked,setChecked,handleCancel,handleSav
                 <label className={classes.searchLabel} htmlFor={'phone'} style={(isFocus||address.phone)?isFocusStyle:{}} >
                     <span>Phone number*</span>
                 </label>
-                <Input className={classes.inputBox} country="US" value={address.phone} onChange={handleChangePhone} id='phone' 
+                <Input className={classes.inputBox} country="US" value={address.phone} onChange={handleChangePhone} id='phone'
                     required inputMode="decimal" style={error?{borderColor:'red'}:{}}/>
                 {error && <div className={classes.errorMessage}>{error}</div> }
             </div>

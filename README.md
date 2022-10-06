@@ -82,3 +82,6 @@ create a ProtectedRoute, when there is a logged in user, the Home component does
   https://www.npmjs.com/package/react-async-script
   ### react-phone-number-input
   https://catamphetamine.gitlab.io/react-phone-number-input/
+
+  ### Using hidden file input elements using the click() method
+  Use input element with display:none and calling the click() method on the <input> element.

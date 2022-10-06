@@ -33,6 +33,8 @@ const LogIn = () => {
             setLoading(true)
             await login(email, password)
                 .then(() => { 
+                    setEmail('')
+                    setPassword('')
                     unlockScroll()
                     dispatch(setLogInBox(false))
                     dispatch(setUserName(currentUser.displayName))

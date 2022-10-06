@@ -100,13 +100,13 @@ const Profile=()=>{
     return (
         <section className={classes.profile}>
             <div className={classes.routes}>
-                <NavLink to='/account'>Account </NavLink>/<span style={{fontWeight:700}}> Profile</span>
+                <NavLink to='/account/home'>Account </NavLink>/<span style={{fontWeight:700}}> Profile</span>
             </div>
             <div className={classes.profileArea}> 
                 <span>Profile</span>
                 <form onSubmit={nameSubmitHandler}>
                     <div className={classes.name}>
-                       <label>Name : </label>
+                       <label>Nickname : </label>
                         <input  type='text' ref={NameRef} 
                                 onChange={nameInput}
                                 placeholder={displayName}
@@ -122,8 +122,6 @@ const Profile=()=>{
                             }
                         </div>
                     </div>
-                    <div className={classes.joined}>Joined : {metadata.creationTime}</div>
-                    <div className={classes.joined}>Last SignIn Time : {metadata.lastSignInTime}</div>
                     <button disabled={profileDisabledBtn} >Update User Name</button>
                 </form>
                 <div>{userUpdateSuccess && <div className={classes.success}>{userUpdateSuccess}</div>}</div>

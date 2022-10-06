@@ -39,7 +39,7 @@ function App() {
             <Route path='product/:productId' element={<ProductDetail/>}/>
             <Route element={<ProtectedRoute/>}>
               <Route path='account' element={<AccountPage/>} >
-                <Route index element={<AccountLists />} />
+                <Route path='home' element={<AccountLists />} />
                 <Route path='profile' element={<Profile />} />
                 <Route path='addresses' element={<AddressList/>}/> 
                 <Route path='addresses/newaddress' element={<AdressAuto/>} />

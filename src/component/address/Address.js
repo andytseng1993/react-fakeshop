@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faTriangleExclamation} from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import { NavLink} from "react-router-dom"
+import { isValidPhoneNumber } from "react-phone-number-input";
 
 const initialAddress ={firstName:'',lastName:'', street:'',apt:'',city:'',state:'State',zipCode:'',phone:''}
 
@@ -30,9 +31,11 @@ const Address= ()=>{
         address.zipCode.trim()===''||address.phone.trim()===''){
             return setError('Please verify all fields below.')
         }
+        if(!isValidPhoneNumber(address.phone)) return setError('Invalid phone number')
         setError('')
         const key = uuidv4()
-        const addressData = {...address,key,default:checked}
+        const createTime = Date.now()
+        const addressData = {...address,key,default:checked,createTime}
         if(checked){
             return editAddressData(key,addressData)
         }
@@ -55,7 +58,7 @@ const Address= ()=>{
     return(
         <div className={classes.address}>
             <div className={classes.routes}>
-                <NavLink to='/account'>Account </NavLink>/<NavLink to='/account/addresses'> Addresses</NavLink> / <span style={{fontWeight:700}}> Add New Addresses</span>
+                <NavLink to='/account/home'>Account </NavLink>/<NavLink to='/account/addresses'> Addresses</NavLink> / <span style={{fontWeight:700}}> Add New Addresses</span>
             </div>
             <h1>Add new delivery address</h1>
             {error && <div className={classes.errorMessage}><FontAwesomeIcon className={classes.exclamation} icon={faTriangleExclamation} />{error}</div>}

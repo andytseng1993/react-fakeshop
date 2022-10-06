@@ -87,3 +87,11 @@ export const setFavoriteReducer =(state=[],action)=>{
             return state
     }
 }
+export const setUpLoadImageReducer = (state=false,action)=>{
+    switch(action.type){
+        case ACTIONS.UPLOAD_NEW_IMAGE:
+            return !state
+        default: 
+            return state
+    }
+}
