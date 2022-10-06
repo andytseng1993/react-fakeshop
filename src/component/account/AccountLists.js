@@ -71,7 +71,7 @@ const AccountLists=()=>{
                     Shipping Address 
                     <FontAwesomeIcon icon={faChevronRight} />
                 </Link>
-                {address.street?
+                {address?.street?
                 <div className={classes.card}>
                     <div className={classes.addressSummary}>
                         {address.default && <div className={classes.addressDefault}>&#9733; Default address</div>}

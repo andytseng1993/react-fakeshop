@@ -100,7 +100,7 @@ const Profile=()=>{
     return (
         <section className={classes.profile}>
             <div className={classes.routes}>
-                <NavLink to='/account'>Account </NavLink>/<span style={{fontWeight:700}}> Profile</span>
+                <NavLink to='/account/home'>Account </NavLink>/<span style={{fontWeight:700}}> Profile</span>
             </div>
             <div className={classes.profileArea}> 
                 <span>Profile</span>

@@ -17,19 +17,19 @@ function Navigation(props) {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const { readUserData} = useUserData()
-    const {uid} = currentUser
     const [profilePic,setProfilePic] = useState('')
     const upLoadNewImage =  useSelector(state => state.upLoadImage)
 
     useEffect(() => {
         let isCancel = false
+        if(!currentUser) return
         const readProfilePictureData = async()=>{
-            await readUserData('users/'+uid+'/profileImage/')
+            await readUserData('users/'+currentUser.uid+'/profileImage/')
             .then(res=>{
                 if(!isCancel && res.val()){
                     res.forEach(element => {
                         const storage = getStorage();
-                        const pathReference = ref(storage, '/users/'+uid+'/images/'+element.key+'.'+element.val());
+                        const pathReference = ref(storage, '/users/'+currentUser.uid+'/images/'+element.key+'.'+element.val());
                         getDownloadURL(pathReference).then((url)=>{
                             setProfilePic(url);
                         })
@@ -40,11 +40,10 @@ function Navigation(props) {
             })  
         }
         readProfilePictureData()
-        console.log(uid);
         return () => {
             isCancel = true 
         }
-    }, [uid,upLoadNewImage,readUserData])
+    }, [currentUser,upLoadNewImage,readUserData])
 
     useEffect(()=>{
         currentUser?.displayName? 

@@ -51,13 +51,15 @@ const AddressList = ()=>{
     return(
         <div className={classes.addressList}> 
             <div className={classes.routes}>
-                <NavLink to='/account'>Account </NavLink>/<NavLink style={{fontWeight:700}} to='/account/addresses'> Addresses</NavLink>
+                <NavLink to='/account/home'>Account </NavLink>/<NavLink style={{fontWeight:700}} to='/account/addresses'> Addresses</NavLink>
             </div>
             <div className={classes.title}>
                 <h1>Addresses</h1>
                 <NavLink className={classes.addressAdd} to='/account/addresses/newaddress'>+ Add new address!</NavLink>
             </div>
-            {addresses.map((address=>(
+            {addresses.length === 0? (<div className={classes.card} >Save an address and watch it magically show up at checkout!</div>)
+            :
+            (addresses.map((address=>(
                 <div className={classes.card} key={address.key}>
                     <div className={classes.addressSummary}>
                         {address.default && <div className={classes.addressDefault}>&#9733; Default address</div>}
@@ -71,7 +73,8 @@ const AddressList = ()=>{
                        <button className={classes.addressRemove} onClick={()=>handleRemove(address.key)}>Remove</button>
                     </div>
                 </div>
-            )))}
+            ))))
+            }
                     
                
         </div>

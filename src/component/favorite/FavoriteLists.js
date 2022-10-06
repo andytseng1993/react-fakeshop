@@ -30,7 +30,7 @@ const FavoritLists = ()=>{
         <>
             <div className={classes.favoriteTiltle}>
                 <div className={classes.routes}>
-                    <NavLink to='/account'>Account </NavLink>/<span style={{fontWeight:700}}> Favorites</span>
+                    <NavLink to='/account/home'>Account </NavLink>/<span style={{fontWeight:700}}> Favorites</span>
                 </div>
                 <div className={classes.title} >
                     <FontAwesomeIcon icon={fasFaHeart} className={classes.love}/>

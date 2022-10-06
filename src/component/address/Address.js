@@ -58,7 +58,7 @@ const Address= ()=>{
     return(
         <div className={classes.address}>
             <div className={classes.routes}>
-                <NavLink to='/account'>Account </NavLink>/<NavLink to='/account/addresses'> Addresses</NavLink> / <span style={{fontWeight:700}}> Add New Addresses</span>
+                <NavLink to='/account/home'>Account </NavLink>/<NavLink to='/account/addresses'> Addresses</NavLink> / <span style={{fontWeight:700}}> Add New Addresses</span>
             </div>
             <h1>Add new delivery address</h1>
             {error && <div className={classes.errorMessage}><FontAwesomeIcon className={classes.exclamation} icon={faTriangleExclamation} />{error}</div>}

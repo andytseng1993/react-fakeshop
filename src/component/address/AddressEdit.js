@@ -73,7 +73,7 @@ const AddressEdit= ()=>{
     return(
         <div className={classes.address}>
             <div className={classes.routes}>
-                <NavLink to='/account'>Account </NavLink>/<NavLink to='/account/addresses'> Addresses</NavLink> / <span style={{fontWeight:700}}> Edit Address</span>
+                <NavLink to='/account/home'>Account </NavLink>/<NavLink to='/account/addresses'> Addresses</NavLink> / <span style={{fontWeight:700}}> Edit Address</span>
             </div>
             <h1 style={{margin:10}}>Edit delivery address</h1>
             {error && <div className={classes.errorMessage}><FontAwesomeIcon className={classes.exclamation} icon={faTriangleExclamation} />{error}</div>}

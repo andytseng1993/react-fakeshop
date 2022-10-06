@@ -48,10 +48,12 @@ const UploadImage= ({setUploadPicture,pictureName,freshPage,setFreshPage})=>{
         
     }
     const handleImage = (file)=>{
+        if(file.type!=='image/png'&& file.type!=='image/jpeg' && file.type!=='image/gif') return setUploadErr('Please upload png, jpeg or gif image.')
         if(file.size > 1024*1024*3) return setUploadErr('Please upload a picture smaller than 3 MB.')
         let img = new Image()
         let reader = new FileReader();
         reader.readAsDataURL(file)
+        setUploadErr('')
         reader.onload = ()=>{
             img.src = reader.result
             const fileExtension = extractImageFileExtensionFromBase64(reader.result)
@@ -199,7 +201,7 @@ const UploadImage= ({setUploadPicture,pictureName,freshPage,setFreshPage})=>{
                         {isCropping && <button className={classes.uploadButton} onClick={handleSaveImage}>Save</button>}
                         <input ref={hiddenFileInput} onChange={handleLoadImageChange} style={{display:'none'}} type="file" accept="image/png, image/jpeg, image/gif" />
                     </div>
-                    {uploadErr && {uploadErr}}
+                    {uploadErr && <div className={classes.error}>{uploadErr}</div>}
                 </div>
             </div>
     )
