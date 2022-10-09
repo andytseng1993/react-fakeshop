@@ -16,6 +16,7 @@ import AccountLists from './component/account/AccountLists';
 import useWrapper from './component/address/AddressWrapper';
 import AddressList from './component/address/AddressLists';
 import AddressEdit from './component/address/AddressEdit';
+import CheckOutPage from './pages/CheckOutPage';
 
   
 function App() {
@@ -48,6 +49,7 @@ function App() {
               </Route>
             </Route>
             <Route path='cart' element={<Cart/>}/>
+            <Route path='checkout' element={<CheckOutPage/>}/>
             <Route
               path="*"
               element={

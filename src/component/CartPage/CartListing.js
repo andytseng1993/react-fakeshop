@@ -1,6 +1,10 @@
 import { useDispatch, useSelector } from "react-redux"
 import classes from './CartListing.module.css'
 import { increaseQuantity,decreaseQuantity } from "../../redux/actions"
+import { useUserAuth } from '../../context/UserAuthContext'
+import { useState } from "react"
+import LoginCheck from "./LoginCheck"
+import { useNavigate } from "react-router-dom"
 
 const CartListing= ()=>{
     const dispatch= useDispatch()
@@ -9,6 +13,10 @@ const CartListing= ()=>{
     const taxPrice = itemPrice*0.0775
     const shippingPrice = itemPrice>100? 0: 50
     const totalPrice = itemPrice+taxPrice+shippingPrice
+    const {currentUser}=useUserAuth()
+    const [loginCheck,setLoginCheck]= useState(false)
+    const navigate = useNavigate()
+
     const increaseQtyHandler=(productId)=>{
         dispatch(increaseQuantity(productId))
     } 
@@ -38,6 +46,14 @@ const CartListing= ()=>{
             </div>
         )
     })
+    const handleCheckout = (e)=>{
+        e.preventDefault()
+        if(!currentUser){
+            return setLoginCheck(true)
+        }
+        navigate('/checkout')
+    }
+
     if(itemPrice===0){
         return (
             <h2>There are no items in your bag!</h2>
@@ -65,9 +81,9 @@ const CartListing= ()=>{
                     <div><strong>Total Price</strong></div>
                     <div><strong>$ {totalPrice.toFixed(2)}</strong></div>
                 </div>
-                <button>Checkout</button>
+                <button onClick={handleCheckout}>Checkout</button>
             </div> 
-            
+            {loginCheck && <LoginCheck {...{setLoginCheck}} />} 
             
         </div>
     )
