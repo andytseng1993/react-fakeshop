@@ -1,0 +1,29 @@
+.addressSummary{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.buttons{
+    height: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-right: 15px;
+}
+.addressName{
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 3px 0 6px;
+}
+.addressStreet,.addressCity{
+    font-size: 15px;
+    font-weight: 500;
+    color: rgb(62, 62, 62);
+    margin: 3px 0;
+}  
+.addressPhone{
+    font-size: 15px;
+    font-weight: 500;
+    color: rgb(48, 48, 48);
+    margin: 3px 0 ;
+}

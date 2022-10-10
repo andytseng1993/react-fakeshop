@@ -10,13 +10,13 @@ function Layout(props){
     useEffect(() => {
         let isCancel = false
         const cartItems = JSON.parse(localStorage.getItem('cartItems'));
-        if(cartItems.length!=0 && !isCancel){
+        if(cartItems.length!==0 && !isCancel){
             dispatch(updateCartList(cartItems))
         }
         return ()=>{
             isCancel = true
         }
-    }, [])
+    }, [dispatch])
     
     function scroll(){
         props.scroll()
