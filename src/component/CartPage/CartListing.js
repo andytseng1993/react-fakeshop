@@ -23,6 +23,7 @@ const CartListing= ()=>{
     const decreaseQtyHandler=(productId)=>{
         dispatch(decreaseQuantity(productId))
     } 
+    
     const list = cartLists.map(product => { 
         const itemPrice = product.price*product.count
         return (
@@ -54,7 +55,7 @@ const CartListing= ()=>{
         navigate('/checkout')
     }
 
-    if(itemPrice===0){
+    if(cartLists.length===0){
         return (
             <h2>There are no items in your bag!</h2>
         )

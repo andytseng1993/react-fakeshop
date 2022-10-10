@@ -1,6 +1,10 @@
+import CheckoutContent from "../component/checkoutPage/CheckoutContent"
+
 const CheckOutPage = ()=>{
     return (
-        <h1 style={{marginTop: 100}}>Check out</h1>
+        <div style={{marginTop:100}}>
+            <CheckoutContent/>
+        </div>
     )
 }
 

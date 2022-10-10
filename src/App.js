@@ -30,6 +30,7 @@ function App() {
   const GoogleMapsUrl = `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_MAP_API}&libraries=places`
   const AdressAuto = useWrapper(GoogleMapsUrl,Address)
   const AdressEditAuto = useWrapper(GoogleMapsUrl,AddressEdit)
+  const CheckoutAddress = useWrapper(GoogleMapsUrl,CheckOutPage)
   return (
     <div className="App">
       <UserAuthContextProvider>
@@ -49,7 +50,7 @@ function App() {
               </Route>
             </Route>
             <Route path='cart' element={<Cart/>}/>
-            <Route path='checkout' element={<CheckOutPage/>}/>
+            <Route path='checkout' element={<CheckoutAddress/>}/>
             <Route
               path="*"
               element={
