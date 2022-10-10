@@ -17,7 +17,6 @@ const ProductDetail=()=>{
     const favoriteList = useSelector((state)=>state.favorites)
     const {image, title,price,description,category,id} = productDetail
     const product = {...productDetail,count,productId:id}
-    console.log(productDetail);
    
     useEffect(()=>{
         const cancelToken = axios.CancelToken.source()

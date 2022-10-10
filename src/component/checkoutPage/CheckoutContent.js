@@ -20,7 +20,10 @@ const CheckoutContent = ()=>{
             <NavLink to={'/cart'}>back to shopping cart</NavLink>
             <div>Review items</div>
             <div style={{width:'70%'}}>Shipping address
-                <AddressForm {...{address,setAddress,checked,setChecked,handleCancel,handleSave}} />
+            {address.firstName && address.street? (<div> Hele</div>)
+            :
+            <AddressForm {...{address,setAddress,checked,setChecked,handleCancel,handleSave}} />
+            }
             </div>
             <div>Payment method</div>
             <div>Place your order</div>
