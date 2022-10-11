@@ -2,7 +2,7 @@ import classes from './AddressBox.module.css'
 
 const AddressBox=({address,handleEdit,handleRemove})=>{
     return (
-        <div className={classes.card} key={address.key}>
+        <div className={classes.card}>
             <div className={classes.addressSummary}>
                 {address.default && <div className={classes.addressDefault}>&#9733; Default address</div>}
                 <div className={classes.addressName}>{address.firstName} {address.lastName}</div>

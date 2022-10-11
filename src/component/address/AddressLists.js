@@ -61,7 +61,7 @@ const AddressList = ()=>{
             {addresses.length === 0? (<div className={classes.card} >Save an address and watch it magically show up at checkout!</div>)
             :
             (addresses.map((address=>(
-                <AddressBox {...{address,handleEdit,handleRemove}}/>
+                <AddressBox key={address.key} {...{address,handleEdit,handleRemove}}/>
             ))))
             }
                     
