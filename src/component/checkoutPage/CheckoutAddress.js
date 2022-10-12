@@ -14,7 +14,6 @@ const initialAddress ={firstName:'',lastName:'', street:'',apt:'',city:'',state:
 const CheckoutAddress = ({currentUser,address,setAddress,handleCancel,handleSave,emailValue,seteEmailValue})=>{
     const [isLoad,setIsLoad] = useState(true)
     const [addresses,setAddresses]= useState([])
-    const [checked,setChecked]=useState(false)
     const db = getDatabase()
     const [addNewAddress,setAddNewAddress]= useState(false)
     const [addNewAddressChecked,setAddNewAddressChecked]= useState(false)
@@ -108,7 +107,7 @@ const CheckoutAddress = ({currentUser,address,setAddress,handleCancel,handleSave
     if(currentUser===null){ 
         return(
             <div style={{paddingBottom: 30}}>
-                <AddressForm emailInput='true' defaultAddress='false' btnName='Use this Address' {...{address,setAddress,handleCancel,handleSave,emailValue,seteEmailValue}} />
+                <AddressForm emailInput='true' defaultAddress='false' leftBtnName='Clear' rightBtnName='Use this Address' {...{address,setAddress,handleCancel,handleSave,emailValue,seteEmailValue}} />
             </div>
         )}
     return (
@@ -138,7 +137,7 @@ const CheckoutAddress = ({currentUser,address,setAddress,handleCancel,handleSave
                 )
                 :
                 <div style={{paddingBottom: 30}}>
-                    <AddressForm btnName='Use this Address' address={addNewAddressForm} setAddress={setAddNewAddressForm} handleSave={addNewAddressSave} 
+                    <AddressForm rightBtnName='Use this Address' address={addNewAddressForm} setAddress={setAddNewAddressForm} handleSave={addNewAddressSave} 
                          checked={addNewAddressChecked} setChecked={setAddNewAddressChecked} handleCancel={closeHandler} />
                 </div>
             }
@@ -148,7 +147,7 @@ const CheckoutAddress = ({currentUser,address,setAddress,handleCancel,handleSave
                         <div className={classes.closeBtn} onClick={closeHandler}><FontAwesomeIcon icon={faXmark} /></div>
                         <div style={{fontSize:'2rem'}}>Add a new address</div>
                         {error && <div className={classes.errorMessage}><FontAwesomeIcon className={classes.exclamation} icon={faTriangleExclamation} />{error}</div>}
-                        <AddressForm btnName='Use this Address' address={addNewAddressForm} setAddress={setAddNewAddressForm} handleSave={addNewAddressSave} 
+                        <AddressForm rightBtnName='Use this Address' address={addNewAddressForm} setAddress={setAddNewAddressForm} handleSave={addNewAddressSave} 
                          checked={addNewAddressChecked} setChecked={setAddNewAddressChecked} handleCancel={closeHandler} />
                     </div>
                 </div>

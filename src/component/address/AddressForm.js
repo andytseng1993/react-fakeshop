@@ -8,7 +8,7 @@ import Select from 'react-select';
 import { geocodeByAddress } from 'react-places-autocomplete';
 import { isValidPhoneNumber } from 'react-phone-number-input';
 
-const AddressForm=({defaultAddress, btnName,address,setAddress,checked,setChecked,handleCancel,handleSave,emailInput,emailValue,seteEmailValue})=>{
+const AddressForm=({defaultAddress,leftBtnName, rightBtnName,address,setAddress,checked,setChecked,handleCancel,handleSave,emailInput,emailValue,seteEmailValue})=>{
     const [isFocus,setIsFocus] = useState(false)
     const [error,setError] = useState('')
     const aptRef = useRef(null)
@@ -93,8 +93,8 @@ const AddressForm=({defaultAddress, btnName,address,setAddress,checked,setChecke
                 <span>Set as my preferred delivery address</span> 
             </label>}
             <div className={classes.buttons} >
-                <button className={classes.buttonCancel} onClick={handleCancel}>Cancel</button>
-                <button type="submit" className={classes.buttonSave} >{btnName}</button>
+                <button className={classes.buttonCancel} onClick={handleCancel}>{leftBtnName||'Cancel'}</button>
+                <button type="submit" className={classes.buttonSave} >{rightBtnName||'Save'}</button>
             </div>
         </form>
     )

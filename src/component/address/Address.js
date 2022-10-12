@@ -62,7 +62,7 @@ const Address= ()=>{
             </div>
             <h1>Add new delivery address</h1>
             {error && <div className={classes.errorMessage}><FontAwesomeIcon className={classes.exclamation} icon={faTriangleExclamation} />{error}</div>}
-            <AddressForm btnName='Save' {...{address,setAddress,checked,setChecked,handleCancel,handleSave}} />
+            <AddressForm {...{address,setAddress,checked,setChecked,handleCancel,handleSave}} />
         </div>
     )
 }
