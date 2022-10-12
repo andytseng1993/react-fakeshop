@@ -8,11 +8,10 @@ import Select from 'react-select';
 import { geocodeByAddress } from 'react-places-autocomplete';
 import { isValidPhoneNumber } from 'react-phone-number-input';
 
-const AddressForm=({address,setAddress,checked,setChecked,handleCancel,handleSave})=>{
+const AddressForm=({defaultAddress, btnName,address,setAddress,checked,setChecked,handleCancel,handleSave,emailInput,emailValue,seteEmailValue})=>{
     const [isFocus,setIsFocus] = useState(false)
     const [error,setError] = useState('')
     const aptRef = useRef(null)
-
     const onFocusChange = ()=>{
         setIsFocus(true)
     }
@@ -63,6 +62,7 @@ const AddressForm=({address,setAddress,checked,setChecked,handleCancel,handleSav
             <p>*Required fields</p>
             <div style={{display: 'flex',width:'70%'}}>
                 <AddressInput title={'First name*'} id={uuidv4()} value={address.firstName} handleChange={(e)=>handleChangeAddress(e,'firstName')} required='required'/>       
+                <span style={{width:10}}></span>
                 <AddressInput title={'Last name*'} id={uuidv4()} value={address.lastName} handleChange={(e)=>handleChangeAddress(e,'lastName')} required='required'/>
             </div>
             <AddressAutoComplete street={address.street} handleChangeAuto={handleChangeAuto} handleSelectAuto={handleSelectAuto} />
@@ -79,6 +79,7 @@ const AddressForm=({address,setAddress,checked,setChecked,handleCancel,handleSav
                 </div>
                 <AddressInput title={'Zip code*'} id={uuidv4()} value={address.zipCode} handleChange={(e)=>handleChangeAddress(e,'zipCode')} required='required' inputMode='numeric' pattern="[0-9]*" />
             </div>
+            {emailInput && <AddressInput title={'Email*'} id={uuidv4()} value={emailValue} handleChange={(e)=>seteEmailValue(e.target.value)} required='required'/>}
             <div className={classes.searchBox} onFocus={onFocusChange} onBlur={onBlurChange} >
                 <label className={classes.searchLabel} htmlFor={'phone'} style={(isFocus||address.phone)?isFocusStyle:{}} >
                     <span>Phone number*</span>
@@ -87,13 +88,13 @@ const AddressForm=({address,setAddress,checked,setChecked,handleCancel,handleSav
                     required inputMode="decimal" style={error?{borderColor:'red'}:{}}/>
                 {error && <div className={classes.errorMessage}>{error}</div> }
             </div>
-            <label className={classes.checkboxlabel}>
+            {!defaultAddress && <label className={classes.checkboxlabel}>
                 <input type='checkbox' className={classes.checkbox} value={checked} onChange={()=>setChecked(!checked)} checked={checked}/>
                 <span>Set as my preferred delivery address</span> 
-            </label>
+            </label>}
             <div className={classes.buttons} >
                 <button className={classes.buttonCancel} onClick={handleCancel}>Cancel</button>
-                <button type="submit" className={classes.buttonSave} >Save</button>
+                <button type="submit" className={classes.buttonSave} >{btnName}</button>
             </div>
         </form>
     )

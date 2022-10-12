@@ -77,7 +77,7 @@ const AddressEdit= ()=>{
             </div>
             <h1 style={{margin:10}}>Edit delivery address</h1>
             {error && <div className={classes.errorMessage}><FontAwesomeIcon className={classes.exclamation} icon={faTriangleExclamation} />{error}</div>}
-            <AddressForm {...{address,setAddress,checked,setChecked,handleCancel,handleSave}} />
+            <AddressForm btnName='Save' {...{address,setAddress,checked,setChecked,handleCancel,handleSave}} />
         </div>
     )
 }

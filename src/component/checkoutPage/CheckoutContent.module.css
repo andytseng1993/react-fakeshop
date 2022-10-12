@@ -1,0 +1,59 @@
+.checkoutContent{
+    margin: auto;
+    width: 90%;
+    display: flex;
+    max-width: 1200px;
+}
+.checkoutDetail{
+    width: 70%;
+}
+.shoppingAddress{
+    font-weight: 700;
+    text-align: left;
+    border: 1.5px solid rgb(225, 225, 225);
+    border-radius: 5px;
+}
+.shoppingTitle{
+    font-size: 1.2rem;
+    padding: 15px 15px;
+    border-bottom: 1px solid rgb(198, 198, 198);
+}
+/*  */
+.editAddress{
+    background-color: rgb(252, 252, 252);
+    text-align: left;
+    border: 1.5px solid rgb(217, 217, 217);
+    padding: 10px 30px 20px 30px;
+    border-radius: 5px;
+}
+.editAddressTitle{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.editAddressTitle > p{
+    margin: 10px 0px;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+.editAddressTitle >button{
+    font-size: 16px;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    font-weight: 700;
+    color: rgb(66, 66, 255);
+}
+.editAddressTitle >button:hover{
+    text-decoration: underline;
+    color: rgb(0, 0, 0);
+}
+.addressName{
+    font-size: 16px;
+    font-weight: 600;
+    color: rgb(93, 93, 93);
+}
+.addressStreet{
+    font-size: 15px;
+    color: rgb(93, 93, 93);
+}
