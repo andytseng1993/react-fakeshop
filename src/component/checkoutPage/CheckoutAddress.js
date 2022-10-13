@@ -103,7 +103,7 @@ const CheckoutAddress = ({currentUser,address,setAddress,handleCancel,handleSave
         })  
     }
 
-    if(isLoad) return(<div>Loading</div>)
+    if(isLoad) return(<div>Loading...</div>)
     if(currentUser===null){ 
         return(
             <div style={{paddingBottom: 30}}>

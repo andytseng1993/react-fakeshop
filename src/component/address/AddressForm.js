@@ -1,6 +1,5 @@
 import classes from './AddressForm.module.css'
 import { useRef, useState } from "react";
-import { v4 as uuidv4 } from 'uuid';
 import AddressAutoComplete from "./AddressAutoComplete";
 import AddressInput from "./AddressInput";
 import Input from 'react-phone-number-input/input'
@@ -61,13 +60,13 @@ const AddressForm=({defaultAddress,leftBtnName, rightBtnName,address,setAddress,
         <form className={classes.inputBoxes} onSubmit={handleSave}>
             <p>*Required fields</p>
             <div style={{display: 'flex',width:'70%'}}>
-                <AddressInput title={'First name*'} id={uuidv4()} value={address.firstName} handleChange={(e)=>handleChangeAddress(e,'firstName')} required='required'/>       
+                <AddressInput title={'First name*'} value={address.firstName} handleChange={(e)=>handleChangeAddress(e,'firstName')} required='required'/>       
                 <span style={{width:10}}></span>
-                <AddressInput title={'Last name*'} id={uuidv4()} value={address.lastName} handleChange={(e)=>handleChangeAddress(e,'lastName')} required='required'/>
+                <AddressInput title={'Last name*'} value={address.lastName} handleChange={(e)=>handleChangeAddress(e,'lastName')} required='required'/>
             </div>
             <AddressAutoComplete street={address.street} handleChangeAuto={handleChangeAuto} handleSelectAuto={handleSelectAuto} />
-            <AddressInput title={'Apt, suite,etc.(optional)'} id={uuidv4()} value={address.apt} handleChange={(e)=>handleChangeAddress(e,'apt')} refProp={aptRef} />
-            <AddressInput title={'City*'} id={uuidv4()} value={address.city} handleChange={(e)=>handleChangeAddress(e,'city')} required='required'/>
+            <AddressInput title={'Apt, suite,etc.(optional)'} value={address.apt} handleChange={(e)=>handleChangeAddress(e,'apt')} refProp={aptRef} />
+            <AddressInput title={'City*'} value={address.city} handleChange={(e)=>handleChangeAddress(e,'city')} required='required'/>
             <div style={{display:'flex', width:'70%', justifyContent:'space-between'}}>
                 <div className={classes.stateBox}>
                     <label className={classes.stateLabel} htmlFor='stateid'>
@@ -77,9 +76,9 @@ const AddressForm=({defaultAddress,leftBtnName, rightBtnName,address,setAddress,
                         options={stateList} isSearchable={true} styles={customStyles} id='stateid'
                     />
                 </div>
-                <AddressInput title={'Zip code*'} id={uuidv4()} value={address.zipCode} handleChange={(e)=>handleChangeAddress(e,'zipCode')} required='required' inputMode='numeric' pattern="[0-9]*" />
+                <AddressInput title={'Zip code*'} value={address.zipCode} handleChange={(e)=>handleChangeAddress(e,'zipCode')} required='required' inputMode='numeric' pattern="[0-9]*" />
             </div>
-            {emailInput && <AddressInput title={'Email*'} id={uuidv4()} value={emailValue} handleChange={(e)=>seteEmailValue(e.target.value)} required='required'/>}
+            {emailInput && <AddressInput title={'Email*'} value={emailValue} handleChange={(e)=>seteEmailValue(e.target.value)} required='required'/>}
             <div className={classes.searchBox} onFocus={onFocusChange} onBlur={onBlurChange} >
                 <label className={classes.searchLabel} htmlFor={'phone'} style={(isFocus||address.phone)?isFocusStyle:{}} >
                     <span>Phone number*</span>
@@ -171,7 +170,7 @@ const isFocusStyle ={
 const customStyles = {
     control: base => ({
         ...base,
-        height: 50,
-        minHeight: 50
+        height: 40,
+        minHeight: 40
     })
 }

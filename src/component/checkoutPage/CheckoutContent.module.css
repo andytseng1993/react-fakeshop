@@ -7,36 +7,26 @@
 .checkoutDetail{
     width: 70%;
 }
+/* Address */
 .shoppingAddress{
-    font-weight: 700;
-    text-align: left;
-    border: 1.5px solid rgb(225, 225, 225);
-    border-radius: 5px;
-}
-.shoppingTitle{
-    font-size: 1.2rem;
-    padding: 15px 15px;
-    border-bottom: 1px solid rgb(198, 198, 198);
-}
-/*  */
-.editAddress{
     background-color: rgb(252, 252, 252);
     text-align: left;
     border: 1.5px solid rgb(217, 217, 217);
     padding: 10px 30px 20px 30px;
     border-radius: 5px;
+    margin: 10px 0px;
 }
-.editAddressTitle{
+.shoppingAddressTitle{
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
-.editAddressTitle > p{
+.shoppingAddressTitle > p{
     margin: 10px 0px;
     font-size: 1.2rem;
     font-weight: 600;
 }
-.editAddressTitle >button{
+.shoppingAddressTitle >button{
     font-size: 16px;
     border: none;
     background-color: transparent;
@@ -44,9 +34,23 @@
     font-weight: 700;
     color: rgb(66, 66, 255);
 }
-.editAddressTitle >button:hover{
+.shoppingTitle >button:hover{
     text-decoration: underline;
     color: rgb(0, 0, 0);
+}
+
+/*  Edit Address */
+.editAddress,.editPayment{
+    font-weight: 700;
+    text-align: left;
+    border: 1.5px solid rgb(225, 225, 225);
+    border-radius: 5px;
+    margin: 10px 0px;
+}
+.editAddressTitle,.editPaymentTitle{
+    font-size: 1.2rem;
+    padding: 15px 15px;
+    border-bottom: 1px solid rgb(198, 198, 198);
 }
 .addressName{
     font-size: 16px;
@@ -56,4 +60,15 @@
 .addressStreet{
     font-size: 15px;
     color: rgb(93, 93, 93);
+}
+/* Payment */
+/* Edit Payment */
+.editPayment{
+    text-align: left;
+    border: 1.5px solid rgb(225, 225, 225);
+    border-radius: 5px;
+    margin: 10px 0px;
+}
+.editPaymentTitle{
+
 }

@@ -1,9 +1,11 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import classes from './AddressInput.module.css'
+import { v4 as uuidv4 } from 'uuid';
 
-const AddressInput=({title,id,value,handleChange,refProp,required,inputMode,pattern})=>{
+const AddressInput=({name,title,value,handleChange,refProp,required,inputMode,pattern,type,onFocus})=>{
     const [isFocus,setIsFocus] = useState(false)
     const [error,setError] = useState('')
+    const [id,setId] = useState('')
     const onFocusChange = ()=>{
         setIsFocus(true)
     }
@@ -14,13 +16,17 @@ const AddressInput=({title,id,value,handleChange,refProp,required,inputMode,patt
         }
         setError('')
     }
+    useEffect(() => {
+        setId(uuidv4())
+    }, [])
+    
     
     return(
-        <div className={classes.searchBox} onFocus={onFocusChange} onBlur={onBlurChange} >
+        <div className={classes.searchBox} onFocus={onFocus??onFocusChange} onBlur={onBlurChange} >
             <label className={classes.searchLabel} htmlFor={id} style={(isFocus||value)?isFocusStyle:{}} ref={refProp}>
                 <span>{title}</span>
             </label>
-            <input className={classes.inputBox} id={id} type='text' value={value} 
+            <input className={classes.inputBox} id={id} type={type??'text'} value={value} name={name}
                    onChange={handleChange} required={required} inputMode={inputMode} pattern={pattern} style={(error&&required)?{borderColor:'red'}:{}}/>
             {(error&&required) && <div className={classes.errorMessage}>{error}</div> }
         </div>

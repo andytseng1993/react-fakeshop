@@ -1,0 +1,9 @@
+.addressName{
+    font-size: 16px;
+    font-weight: 600;
+    color: rgb(93, 93, 93);
+}
+.addressStreet{
+    font-size: 15px;
+    color: rgb(93, 93, 93);
+}
