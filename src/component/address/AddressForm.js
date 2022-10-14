@@ -7,7 +7,7 @@ import Select from 'react-select';
 import { geocodeByAddress } from 'react-places-autocomplete';
 import { isValidPhoneNumber } from 'react-phone-number-input';
 
-const AddressForm=({defaultAddress,leftBtnName, rightBtnName,address,setAddress,checked,setChecked,handleCancel,handleSave,emailInput,emailValue,seteEmailValue})=>{
+const AddressForm=({phoneInput,defaultAddress,leftBtnName, rightBtnName,address,setAddress,checked,setChecked,handleCancel,handleSave,emailInput,emailValue,seteEmailValue})=>{
     const [isFocus,setIsFocus] = useState(false)
     const [error,setError] = useState('')
     const aptRef = useRef(null)
@@ -79,14 +79,16 @@ const AddressForm=({defaultAddress,leftBtnName, rightBtnName,address,setAddress,
                 <AddressInput title={'Zip code*'} value={address.zipCode} handleChange={(e)=>handleChangeAddress(e,'zipCode')} required='required' inputMode='numeric' pattern="[0-9]*" />
             </div>
             {emailInput && <AddressInput title={'Email*'} value={emailValue} handleChange={(e)=>seteEmailValue(e.target.value)} required='required'/>}
-            <div className={classes.searchBox} onFocus={onFocusChange} onBlur={onBlurChange} >
-                <label className={classes.searchLabel} htmlFor={'phone'} style={(isFocus||address.phone)?isFocusStyle:{}} >
-                    <span>Phone number*</span>
-                </label>
-                <Input className={classes.inputBox} country="US" value={address.phone} onChange={handleChangePhone} id='phone'
-                    required inputMode="decimal" style={error?{borderColor:'red'}:{}}/>
-                {error && <div className={classes.errorMessage}>{error}</div> }
-            </div>
+            {!phoneInput && 
+                <div className={classes.searchBox} onFocus={onFocusChange} onBlur={onBlurChange} >
+                    <label className={classes.searchLabel} htmlFor={'phone'} style={(isFocus||address.phone)?isFocusStyle:{}} >
+                        <span>Phone number*</span>
+                    </label>
+                    <Input className={classes.inputBox} country="US" value={address.phone} onChange={handleChangePhone} id='phone'
+                        required inputMode="decimal" style={error?{borderColor:'red'}:{}}/>
+                    {error && <div className={classes.errorMessage}>{error}</div> }
+                </div>
+            }
             {!defaultAddress && <label className={classes.checkboxlabel}>
                 <input type='checkbox' className={classes.checkbox} value={checked} onChange={()=>setChecked(!checked)} checked={checked}/>
                 <span>Set as my preferred delivery address</span> 

@@ -1,0 +1,46 @@
+.creditCardTitle{
+    font-size: 1.2rem;
+}
+.creditCardCheckbox{
+    font-size: 15px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    margin: 10px 20px;
+}
+.notCheck{
+    font-size: 15px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    margin: 10px 20px;
+    color: gray;
+}
+.creditCardCheckboxInput{
+    margin-right: 10px;
+}
+.billingAddress{
+    position: relative;
+    margin: 10px 40px;
+    font-size: 15px;
+    font-weight: 500;
+    color: rgb(94, 94, 94);
+}
+.addressName{
+    font-weight: 700;
+}
+.edit{
+    position: absolute;
+    right: 0;
+    padding: 5px;
+    border: none;
+    background-color: transparent;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: underline;
+    cursor: pointer;
+    color: black;
+}
+.edit:hover{
+    color: rgb(49, 43, 226);
+}

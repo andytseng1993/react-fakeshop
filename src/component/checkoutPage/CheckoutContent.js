@@ -6,22 +6,26 @@ import { useUserAuth } from "../../context/UserAuthContext";
 import { getDatabase,ref ,onValue, query, orderByChild} from "firebase/database";
 import CheckoutComfirmAddress from "./CheckoutComfirmAddress";
 import CheckoutCreditCard from "./CheckoutCreditCard";
+import BillingAddress from "./BillingAddress";
 
 const initialAddress ={firstName:'',lastName:'', street:'',apt:'',city:'',state:'State',zipCode:'',phone:'',key:''}
-
+const initialBillingAddress ={firstName:'',lastName:'', street:'',apt:'',city:'',state:'State',zipCode:''}
 const CheckoutContent = ()=>{
     const { currentUser }  = useUserAuth()
     const [address,setAddress] = useState(initialAddress)
     const [emailValue,seteEmailValue] =useState('')
     const [editAddress,setEditAddress] = useState(true)
     const [editPayment,setEditPayment] = useState(false)
+    const [card,setCard]= useState({number:'',cvc:'',expiry:'',focus:'',name:'',issuer:''})
     const db = getDatabase()
+    const [billingAddress,setBillingAddress] = useState(initialBillingAddress)
     
     useEffect(()=>{
         const preferrAddress = []
         let isCancel = false
         const readAddressData = ()=>{
             if(!currentUser) return
+            seteEmailValue(currentUser.email)
             const topUserPostsRef = query(ref(db, 'users/'+currentUser?.uid+'/addresses'), orderByChild('createTime'))
             onValue(topUserPostsRef, (snapshot) => {
                 snapshot.forEach((childSnapshot)=> {
@@ -78,10 +82,10 @@ const CheckoutContent = ()=>{
                         {!editPayment && <button onClick={handleEdit} >Edit</button>}
                     </div>
                     {editPayment?
-                        <div>
+                        <div className={classes.checkoutCreditCard}>
                             <div>promotional code</div>
-                            <CheckoutCreditCard />
-                            <div>Billing Address</div>
+                            <CheckoutCreditCard {...{card,setCard}} />
+                            <BillingAddress {...{address,billingAddress,setBillingAddress}} />
                         </div>
                         :
                         <div></div>
