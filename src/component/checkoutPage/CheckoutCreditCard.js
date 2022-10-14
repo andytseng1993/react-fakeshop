@@ -3,17 +3,19 @@ import classes from './CheckoutCreditCard.module.css'
 import { useState } from "react";
 import Cards from 'react-credit-cards';
 import 'react-credit-cards/es/styles-compiled.css';
+import {formatCreditCardNumber,formatCVC,formatExpirationDate} from "./utils";
 
 const CheckoutCreditCard =()=>{
-    const [card,setCard]= useState({number:'',cvc:'',expiry:'',focus:'',name:'',})
+    const [card,setCard]= useState({number:'',cvc:'',expiry:'',focus:'',name:'',issuer:''})
 
     const handleChangeCard = ({target})=>{
-        
-        if(target.name ==='number'||target.name ==='expiry'||target.name ==='cvc'){
-            const value = target.value.replace(/[^0-9]/g,'')
-            return setCard(pre=>{return{...pre,[target.name]:value}})
+        if(target.name ==='number'){ 
+            target.value = formatCreditCardNumber(target.value)[0]||''
+            const issuer = formatCreditCardNumber(target.value)[1]||''
+            return setCard(pre=>{return{...pre,[target.name]:target.value,issuer:issuer}})
         }
-
+        else if(target.name ==='expiry') target.value = formatExpirationDate(target.value)
+        else if(target.name ==='cvc') target.value = formatCVC(target.value)
         setCard(pre=>{return{...pre,[target.name]:target.value}})
     }
     const handleInputFocus =({target})=>{
@@ -22,7 +24,7 @@ const CheckoutCreditCard =()=>{
     console.log(card);
     return (
         <div className={classes.creditCardArea}>
-            <div>Your credit or debit card</div>
+            <div className={classes.creditCardTitle}>Your credit or debit card</div>
             <div className={classes.creditCard}>
                 <form className={classes.creditCardForm}>
                     <AddressInput title={'Card number*'} value={card.number} 
