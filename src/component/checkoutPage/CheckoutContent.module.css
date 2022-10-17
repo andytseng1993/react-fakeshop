@@ -2,10 +2,23 @@
     margin: auto;
     width: 90%;
     display: flex;
-    max-width: 1200px;
+    max-width: 1300px;
+}
+.backToCart{
+    font-size: 1.3rem;
+    font-weight: 600;
+    display: flex;
+    width: 170px;
+    justify-items: flex-start;
+    align-items: center;
+}
+.faChevronLeft{
+    margin-right: 5px;
+    font-size: 1.5rem;
 }
 .checkoutDetail{
     width: 70%;
+    max-width: 750px;
 }
 /* Address */
 .shoppingAddress{
@@ -35,7 +48,7 @@
     font-weight: 700;
     color: rgb(66, 66, 255);
 }
-.shoppingTitle >button:hover{
+.shoppingAddressTitle > button:hover{
     text-decoration: underline;
     color: rgb(0, 0, 0);
 }
@@ -64,6 +77,25 @@
     color: rgb(93, 93, 93);
 }
 /* Payment */
+.shoppingPaymentTitle{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(232, 232, 232);
+    text-align: left;
+    border: 1.5px solid rgb(213, 213, 213);
+    padding: 10px 30px 10px 30px;
+    /* border-radius: 5px 5px 0px 0px; */
+    border-radius: 5px;
+    margin-top: 10px;
+    min-width: 420px;
+    color: rgb(124, 124, 124);
+}
+.shoppingPaymentTitle>p{
+    margin: 10px 0px;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
 /* Edit Payment */
 .editPayment{
     text-align: left;
@@ -72,6 +104,79 @@
     margin: 10px 0px;
     min-width: 420px;
 }
+
 .checkoutCreditCard{
-    padding: 0px 20px
+    padding: 15px 20px;
+    background-color: rgb(249, 249, 249);
+    /* border: 1.5px solid rgb(213, 213, 213); */
+    border-top: none;
+    border-radius: 0px 0px 5px 5px;
+    transition: .2s;
+}
+.checkoutCreditCard.editCheckoutCreditCard{
+    background-color: transparent;
+}
+.paymentInfo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.billingAddress{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex-grow: 0.5;
+}
+.billing{
+    font-size: 1.1rem;
+    color: rgb(88, 88, 88);
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+.addressName{
+    font-size: 1.1rem;
+    color: rgb(122, 122, 122);
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+.addressStreet{
+    font-size: 15px;
+    color: rgb(126, 126, 126);
+    font-weight: 500;
+    margin-bottom: 2px;
+}
+.paymentEdit{
+    font-size: 16px;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    font-weight: 700;
+    color: rgb(66, 66, 255);
+}
+.paymentEdit:hover{
+    text-decoration: underline;
+    color: rgb(0, 0, 0);
+}
+.paymentSubmmit{
+    
+    font-size: 17px;
+    font-weight: 600;
+    padding: 5px 20px;
+    border-radius: 5px;
+    background-color:rgb(255, 235, 105);
+    box-shadow: 1px 1px 2px rgb(171, 171, 171);
+    border:none;
+    margin: 0px 20px 10px;
+    cursor: pointer;
+}
+.paymentSubmmit:hover{
+    background-color:rgb(255, 199, 79)
+}
+.cardError{
+    color: rgb(196, 10, 10);
+    background-color: rgb(255, 208, 208);
+    padding: 5px 10px;
+    border-radius: 5px;
+    border-left: 5px solid rgb(196, 10, 10);
+    margin-bottom: 5px;
 }

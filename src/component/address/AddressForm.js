@@ -172,6 +172,7 @@ const isFocusStyle ={
 const customStyles = {
     control: base => ({
         ...base,
+        backgroundColor:'transparent',
         height: 40,
         minHeight: 40
     })

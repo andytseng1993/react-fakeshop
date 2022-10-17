@@ -37,10 +37,10 @@
     background-color: transparent;
     font-size: 14px;
     font-weight: 600;
-    text-decoration: underline;
     cursor: pointer;
     color: black;
 }
 .edit:hover{
     color: rgb(49, 43, 226);
+    text-decoration: underline;
 }

@@ -12,6 +12,7 @@ const CheckoutCreditCard =({card,setCard})=>{
             const issuer = formatCreditCardNumber(target.value)[1]||''
             return setCard(pre=>{return{...pre,[target.name]:target.value,issuer:issuer}})
         }
+        else if(target.name ==='name') target.value = target.value.toUpperCase()
         else if(target.name ==='expiry') target.value = formatExpirationDate(target.value)
         else if(target.name ==='cvc') target.value = formatCVC(target.value)
         setCard(pre=>{return{...pre,[target.name]:target.value}})
