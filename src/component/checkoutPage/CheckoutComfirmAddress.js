@@ -2,7 +2,7 @@ import classes from './CheckoutComfirmAddress.module.css'
 
 const CheckoutComfirmAddress =({address,emailValue})=>{
     return(
-        <div>
+        <div style={{padding: '20px 30px'}}>
             <div className={classes.addressName}>{address.firstName} {address.lastName}</div>
             <div className={classes.addressStreet}>{address.street} {address.apt}, {address.city}, {address.state} {address.zipCode}</div>
             <div style={{height:7}} ></div>
