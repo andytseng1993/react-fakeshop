@@ -12,7 +12,8 @@ import { useUserData } from "../../context/UserDataContext"
 function Navigation(props) {
     const openLogIn = useSelector((state) => state.openLogInbox.logIn)
     const userName = useSelector((state)=> state.setUserName) 
-    const cartCount = useSelector((state)=> state.setCartList).length
+    const cartLists = useSelector((state)=> state.setCartList)
+    const cartCount = cartLists.reduce((pre,cur)=> pre+cur.count,0)
     const { logout,currentUser } = useUserAuth()
     const navigate = useNavigate()
     const dispatch = useDispatch()

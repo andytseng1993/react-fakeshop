@@ -23,7 +23,7 @@ const CartListing= ()=>{
     const decreaseQtyHandler=(productId)=>{
         dispatch(decreaseQuantity(productId))
     } 
-    
+
     const list = cartLists.map(product => { 
         const itemPrice = product.price*product.count
         return (

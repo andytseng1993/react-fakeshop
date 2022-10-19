@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faChevronLeft} from "@fortawesome/free-solid-svg-icons";
 import CardInfo from "./CardInfo";
 import OrderSummary from "./OrderSummary";
+import ItemsDetail from "./ItemsDetail";
 
 const initialAddress ={firstName:'',lastName:'', street:'',apt:'',city:'',state:'State',zipCode:'',phone:'',key:''}
 const initialBillingAddress ={firstName:'',lastName:'', street:'',apt:'',city:'',state:'State',zipCode:''}
@@ -19,9 +20,10 @@ const CheckoutContent = ()=>{
     const db = getDatabase()
     const [address,setAddress] = useState(initialAddress)
     const [emailValue,seteEmailValue] =useState('')
+    const [itemPrice,setItemPrice] = useState(0)
     const [billingAddress,setBillingAddress] = useState(initialBillingAddress)
     const [card,setCard]= useState(initialCard)
-    const [editAddress,setEditAddress] = useState(false)
+    const [editAddress,setEditAddress] = useState(true)
     const [editPayment,setEditPayment] = useState(false)
     const [paymentInfo,setPaymentInfo] = useState(false)
     const [isLoad,setIsLoad] = useState(true)
@@ -85,8 +87,8 @@ const CheckoutContent = ()=>{
                 <CardInfo {...{editPayment,setEditPayment,address,billingAddress,setBillingAddress,card,setCard,paymentInfo,setPaymentInfo}} />
             </div>
             <div className={classes.checkoutPrice}>
-                <OrderSummary/> 
-                <div>123</div>      
+                <OrderSummary {...{itemPrice,address}} /> 
+                <ItemsDetail {...{setItemPrice}} /> 
             </div>
         </div>
 
