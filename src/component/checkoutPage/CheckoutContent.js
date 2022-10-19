@@ -8,6 +8,7 @@ import CheckoutComfirmAddress from "./CheckoutComfirmAddress";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faChevronLeft} from "@fortawesome/free-solid-svg-icons";
 import CardInfo from "./CardInfo";
+import OrderSummary from "./OrderSummary";
 
 const initialAddress ={firstName:'',lastName:'', street:'',apt:'',city:'',state:'State',zipCode:'',phone:'',key:''}
 const initialBillingAddress ={firstName:'',lastName:'', street:'',apt:'',city:'',state:'State',zipCode:''}
@@ -23,6 +24,7 @@ const CheckoutContent = ()=>{
     const [editAddress,setEditAddress] = useState(false)
     const [editPayment,setEditPayment] = useState(false)
     const [paymentInfo,setPaymentInfo] = useState(false)
+    const [isLoad,setIsLoad] = useState(true)
 
     useEffect(()=>{
         const preferrAddress = []
@@ -39,10 +41,12 @@ const CheckoutContent = ()=>{
                             setAddress(childSnapshot.val())
                             setEditAddress(false)
                             setEditPayment(true)
+                            setIsLoad(false)
         }}})})}
         readAddressData()
         return ()=>{
             isCancel = true
+            setIsLoad(true)
         }
         // eslint-disable-next-line
     },[currentUser])
@@ -69,21 +73,20 @@ const CheckoutContent = ()=>{
                     <FontAwesomeIcon icon={faChevronLeft} className={classes.faChevronLeft} />
                     shopping cart
                 </NavLink>
-                <div>Review items</div>
                 <div className={`${editAddress?classes.editAddress:classes.shoppingAddress}`}>
                     <div className={`${editAddress?classes.editAddressTitle:classes.shoppingAddressTitle}`}>
                         {editAddress?<p>Choose your shipping address</p>:<p>Shipping address</p>}
                         {!editAddress && <button onClick={handleAddressEdit} >Edit</button>}
                     </div>
                     {editAddress?
-                        <CheckoutAddress {...{currentUser,address,setAddress,handleCancel,handleSave,emailValue,seteEmailValue}} />:
-                        <CheckoutComfirmAddress {...{address,emailValue}} />}
+                        <CheckoutAddress {...{currentUser,address,setAddress,handleCancel,handleSave,emailValue,seteEmailValue,isLoad,setIsLoad}} />:
+                        <CheckoutComfirmAddress {...{address,emailValue,isLoad,setIsLoad}} />}
                 </div>
                 <CardInfo {...{editPayment,setEditPayment,address,billingAddress,setBillingAddress,card,setCard,paymentInfo,setPaymentInfo}} />
-                <div className={classes.placeOrder}>Place your order</div>
             </div>
-            <div>
-                Price
+            <div className={classes.checkoutPrice}>
+                <OrderSummary/> 
+                <div>123</div>      
             </div>
         </div>
 

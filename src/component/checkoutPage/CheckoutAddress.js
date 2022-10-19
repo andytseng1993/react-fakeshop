@@ -11,8 +11,7 @@ import { useUserData } from '../../context/UserDataContext';
 
 const initialAddress ={firstName:'',lastName:'', street:'',apt:'',city:'',state:'State',zipCode:'',phone:'',key:''}
 
-const CheckoutAddress = ({currentUser,address,setAddress,handleCancel,handleSave,emailValue,seteEmailValue})=>{
-    const [isLoad,setIsLoad] = useState(true)
+const CheckoutAddress = ({currentUser,address,setAddress,handleCancel,handleSave,emailValue,seteEmailValue,isLoad,setIsLoad})=>{
     const [addresses,setAddresses]= useState([])
     const db = getDatabase()
     const [addNewAddress,setAddNewAddress]= useState(false)
@@ -48,6 +47,7 @@ const CheckoutAddress = ({currentUser,address,setAddress,handleCancel,handleSave
         readAddressData()
         return ()=>{
             isCancel = true
+            setIsLoad(true)
         }
         // eslint-disable-next-line
     },[currentUser])

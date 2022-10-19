@@ -3,6 +3,8 @@
     width: 90%;
     display: flex;
     max-width: 1300px;
+    justify-content: space-between;
+    align-items: flex-start;
 }
 .backToCart{
     font-size: 1.3rem;
@@ -18,7 +20,7 @@
 }
 .checkoutDetail{
     width: 70%;
-    max-width: 750px;
+    max-width: 850px;
 }
 /* Address */
 .shoppingAddress{
@@ -78,4 +80,9 @@
 .addressStreet{
     font-size: 15px;
     color: rgb(93, 93, 93);
+}
+.checkoutPrice{
+    margin-top: 34px;
+    width: 30%;
+    margin-left: 10px;
 }

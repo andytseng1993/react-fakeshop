@@ -1,6 +1,11 @@
 import classes from './CheckoutComfirmAddress.module.css'
 
-const CheckoutComfirmAddress =({address,emailValue})=>{
+const CheckoutComfirmAddress =({address,emailValue,isLoad})=>{
+    if(isLoad){
+        return(
+            <div>Loading</div>
+        )
+    }
     return(
         <div style={{padding: '20px 30px'}}>
             <div className={classes.addressName}>{address.firstName} {address.lastName}</div>
