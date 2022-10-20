@@ -11,8 +11,8 @@ const PromoCode =({setDiscountRate})=>{
         setCode(e.target.value)
     }
     const handleApply = ()=>{
+        if(code==='') return
         if(code.toUpperCase()==='FAKESTORE'){
-            setCode('')
             setError('')
             setDiscountRate(30)
             return setSuccess('Save 30% on checkout.')

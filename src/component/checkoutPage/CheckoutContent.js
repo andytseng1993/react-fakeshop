@@ -88,7 +88,7 @@ const CheckoutContent = ()=>{
                     setBillingAddress,card,setCard,paymentInfo,setPaymentInfo,setDiscountRate}} />
             </div>
             <div className={classes.checkoutPrice}>
-                <OrderSummary {...{itemPrice,address}} /> 
+                <OrderSummary {...{itemPrice,address,discountRate}} /> 
                 <ItemsDetail {...{setItemPrice}} /> 
             </div>
         </div>

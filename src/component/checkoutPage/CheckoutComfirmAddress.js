@@ -7,7 +7,7 @@ const CheckoutComfirmAddress =({address,emailValue,isLoad})=>{
         )
     }
     return(
-        <div style={{padding: '20px 30px'}}>
+        <div style={{padding: '15px 30px'}}>
             <div className={classes.addressName}>{address.firstName} {address.lastName}</div>
             <div className={classes.addressStreet}>{address.street} {address.apt}, {address.city}, {address.state} {address.zipCode}</div>
             <div style={{height:7}} ></div>

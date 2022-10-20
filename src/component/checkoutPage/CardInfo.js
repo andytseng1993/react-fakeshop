@@ -45,7 +45,7 @@ const CardInfo =({editPayment,setEditPayment,address,billingAddress,setBillingAd
                         {editPayment?<p>Choose a payment method</p>:<p>Payment Info</p>}
                         {(paymentInfo&&!editPayment) && <button className={classes.paymentEdit} onClick={handleEditPayment} >Edit</button>}
                     </div>
-                    <div className={`${classes.checkoutCreditCard} ${editPayment?classes.editCheckoutCreditCard:''}`}>
+                    <div className={`${classes.checkoutCreditCard} ${editPayment?classes.editCheckoutCreditCard:classes.creditCard}`}>
                         {editPayment?
                             <>
                                 <PromoCode {...{setDiscountRate}} />

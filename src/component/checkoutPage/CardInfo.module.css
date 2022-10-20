@@ -33,6 +33,7 @@
     border-bottom: 1px solid rgb(198, 198, 198);
 }
 .checkoutCreditCard{
+    padding: 20px;
     background-color: rgb(249, 249, 249);
     /* border: 1.5px solid rgb(213, 213, 213); */
     border-top: none;
@@ -41,6 +42,9 @@
 }
 .checkoutCreditCard.editCheckoutCreditCard{
     background-color: transparent;
+}
+.checkoutCreditCard.creditCard{
+    padding: 0px;
 }
 .paymentInfo{
     display: flex;

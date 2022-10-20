@@ -13,6 +13,7 @@
     width: 170px;
     justify-items: flex-start;
     align-items: center;
+    margin-bottom: 20px;
 }
 .faChevronLeft{
     margin-right: 5px;
@@ -82,7 +83,7 @@
     color: rgb(93, 93, 93);
 }
 .checkoutPrice{
-    margin-top: 34px;
+    margin-top: 45px;
     width: 30%;
     margin-left: 20px;
 }

@@ -24,7 +24,7 @@ const LoginCheck = ({setLoginCheck})=>{
                 <div className={classes.closeBtn} onClick={closeHandler}><FontAwesomeIcon icon={faXmark} /></div>
                 <div className={classes.guest}>
                     <h2>GUEST CUSTOMERS</h2>
-                    <h3>Check out without a account </h3>
+                    <h3>Check out without an account </h3>
                     <button onClick={handleCheckout}>CHECKOUT AS GUEST</button>
                 </div>
                 <div className={classes.break}>

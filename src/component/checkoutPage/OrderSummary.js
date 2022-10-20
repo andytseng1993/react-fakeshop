@@ -3,25 +3,30 @@ import { useEffect, useState } from 'react'
 import classes from './OrderSummary.module.css'
 
 
-const OrderSummary = ({itemPrice,address})=>{
+const OrderSummary = ({itemPrice,address,discountRate})=>{
     const [tax,setTax] = useState(null)
     const [shipping,setShipping] = useState(null)
     const [total,setTotal] = useState(null)
-    const num = 0
-    useEffect(()=>{
-        if(address.state==='State') return
-        setTax(price(TAX[address.state].rate*itemPrice))
-    },[address.state])
+    const [discount,setDiscount] = useState(null)
 
     useEffect(()=>{
+        if(address.state!=='State') setTax(price(TAX[address.state].rate*(itemPrice-discount)))
+        if(discountRate!== 0) setDiscount(price(itemPrice*discountRate/100))
+        else setDiscount(0)
+    },[address.state,discountRate,discount])
+
+    useEffect(()=>{
+        itemPrice> 150? setShipping(0):setShipping(50)
         const orderTotal = [tax,itemPrice,shipping].reduce((pre,cur)=>pre+cur,0)
-        setTotal(price(orderTotal))
+        setTotal(price(orderTotal-discount))
     },[tax,shipping,itemPrice])
 
     const price = (price)=>{
+        if(price===0) return 0
         if(!price) return null
         return Math.round(price*100)/100
     }
+    console.log(tax);
     return (
         <div className={classes.orderContent}>
             <button className={classes.placeOrder} disabled >Place your order</button>
@@ -31,14 +36,23 @@ const OrderSummary = ({itemPrice,address})=>{
                     <span>${price(itemPrice)}</span>
                 </div>
                 <div className={classes.price}>Discount:
-                    <span>{num?'$':''}{num||'--'}</span>
-                </div>
-                <div className={classes.price}>Shipping:
-                    <span>{num?'$':''}{num===0?'Free':num||'--'}</span>
+                    <span>{discount?'-$':''}{discount||'--'}</span>
                 </div>
                 <div className={classes.price}>Estimated Tax:
-                    <span>{tax?'$':''}{tax||'--'}</span>
+                    <span>{tax!==null?'$':''}{tax??'--'}</span>
                 </div>
+                <div className={classes.shipping}>Shipping:
+                    <span>{shipping?'$':''}{shipping===0?'Free':shipping||'--'}</span>
+                </div>
+                {!shipping?
+                    <div className={classes.shippingDiscount}>
+                        <div className={classes.shippingPromo}>Free shipping on orders of $150+ </div>
+                    </div>:
+                    <div className={classes.noneShippingDiscount}>
+                        <div className={classes.shippingPromo}>Spend ${price(150-itemPrice)} more to unlock free shipping. </div>
+                    </div>
+                }
+                
                 <div className={classes.total}>Order total:
                     <span>${total}</span>
                 </div>

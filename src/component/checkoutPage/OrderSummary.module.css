@@ -26,7 +26,7 @@
     align-items: flex-start;
     padding: 10px 10px ;
 }
-.price{
+.price,.shipping{
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -46,4 +46,22 @@
 }
 .total>span{
     font-size: 17px;
+}
+.shipping{
+    margin-bottom: 3px;
+}
+.shippingDiscount,.noneShippingDiscount{
+    width: 100%;
+    padding: 4px 10px;
+    background-color: rgba(186, 245, 186,0.7);
+    color: rgb(7, 63, 7);
+    border-radius: 5px;
+    margin-bottom: 7px;
+}
+.shippingPromo{
+    font-size: 12px;
+}
+.noneShippingDiscount{
+    background-color: rgba(211, 209, 255, 0.7);
+    color: rgb(14, 4, 197);
 }

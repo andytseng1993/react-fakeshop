@@ -11,7 +11,7 @@ const CartListing= ()=>{
     const cartLists = useSelector((state)=> state.setCartList)
     const itemPrice = cartLists.reduce((pre,cur)=> pre+cur.price*cur.count,0)
     const taxPrice = itemPrice*0.0775
-    const shippingPrice = itemPrice>100? 0: 50
+    const shippingPrice = itemPrice>150? 0: 50
     const totalPrice = itemPrice+taxPrice+shippingPrice
     const {currentUser}=useUserAuth()
     const [loginCheck,setLoginCheck]= useState(false)
