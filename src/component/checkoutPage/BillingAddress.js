@@ -36,7 +36,7 @@ const BillingAddress =({address,billingAddress,setBillingAddress})=>{
     }
     
     return(
-        <div>
+        <div className={classes.billingAddressArea}>
             <div className={classes.creditCardTitle}>Billing Address</div>  
             <label className={`${isChecked?classes.creditCardCheckbox:classes.notCheck}`}>
                 <input className={classes.creditCardCheckboxInput} type='checkbox' value={isChecked} checked={isChecked} onChange={handleCheckBox} />Use Shipping address as billing address

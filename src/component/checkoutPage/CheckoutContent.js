@@ -21,6 +21,7 @@ const CheckoutContent = ()=>{
     const [address,setAddress] = useState(initialAddress)
     const [emailValue,seteEmailValue] =useState('')
     const [itemPrice,setItemPrice] = useState(0)
+    const [discountRate,setDiscountRate]=useState(0)
     const [billingAddress,setBillingAddress] = useState(initialBillingAddress)
     const [card,setCard]= useState(initialCard)
     const [editAddress,setEditAddress] = useState(true)
@@ -48,11 +49,10 @@ const CheckoutContent = ()=>{
         readAddressData()
         return ()=>{
             isCancel = true
-            setIsLoad(true)
         }
         // eslint-disable-next-line
     },[currentUser])
-
+    console.log(editAddress,isLoad);
 
     const handleCancel =(e)=>{
         e.preventDefault()
@@ -84,7 +84,8 @@ const CheckoutContent = ()=>{
                         <CheckoutAddress {...{currentUser,address,setAddress,handleCancel,handleSave,emailValue,seteEmailValue,isLoad,setIsLoad}} />:
                         <CheckoutComfirmAddress {...{address,emailValue,isLoad,setIsLoad}} />}
                 </div>
-                <CardInfo {...{editPayment,setEditPayment,address,billingAddress,setBillingAddress,card,setCard,paymentInfo,setPaymentInfo}} />
+                <CardInfo {...{editPayment,setEditPayment,address,billingAddress,
+                    setBillingAddress,card,setCard,paymentInfo,setPaymentInfo,setDiscountRate}} />
             </div>
             <div className={classes.checkoutPrice}>
                 <OrderSummary {...{itemPrice,address}} /> 

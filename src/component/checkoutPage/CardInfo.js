@@ -5,8 +5,9 @@ import CheckoutCreditCard from "./CheckoutCreditCard";
 import BillingAddress from "./BillingAddress";
 import 'react-credit-cards/es/styles-compiled.css';
 import Payment from "payment";
+import PromoCode from './PromoCode';
 
-const CardInfo =({editPayment,setEditPayment,address,billingAddress,setBillingAddress,card,setCard,paymentInfo,setPaymentInfo})=>{
+const CardInfo =({editPayment,setEditPayment,address,billingAddress,setBillingAddress,card,setCard,paymentInfo,setPaymentInfo,setDiscountRate})=>{
     const [cardNumberPreview,setCardNumberPreview] = useState('')
     const [cardError,setCardError]=useState('')
     const [billingAddressError,setBillingAddressError]=useState('')
@@ -47,7 +48,7 @@ const CardInfo =({editPayment,setEditPayment,address,billingAddress,setBillingAd
                     <div className={`${classes.checkoutCreditCard} ${editPayment?classes.editCheckoutCreditCard:''}`}>
                         {editPayment?
                             <>
-                                {/* <div>promotional code</div> */}
+                                <PromoCode {...{setDiscountRate}} />
                                 <CheckoutCreditCard {...{card,setCard}}/>
                                 {cardError && <div className={classes.cardError}>{cardError}</div> }
                                 <BillingAddress checkbox={true} {...{address,billingAddress,setBillingAddress}} />

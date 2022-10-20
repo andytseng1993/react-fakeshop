@@ -47,7 +47,6 @@ const CheckoutAddress = ({currentUser,address,setAddress,handleCancel,handleSave
         readAddressData()
         return ()=>{
             isCancel = true
-            setIsLoad(true)
         }
         // eslint-disable-next-line
     },[currentUser])

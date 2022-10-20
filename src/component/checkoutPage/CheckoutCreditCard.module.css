@@ -3,6 +3,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding: 10px 30px 10px 20px ;
 }
 .creditCardTitle{
     font-size: 1.1rem;

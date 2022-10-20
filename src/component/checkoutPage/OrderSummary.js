@@ -4,13 +4,19 @@ import classes from './OrderSummary.module.css'
 
 
 const OrderSummary = ({itemPrice,address})=>{
-    const [taxRate,setTaxRate] = useState(null)
+    const [tax,setTax] = useState(null)
+    const [shipping,setShipping] = useState(null)
+    const [total,setTotal] = useState(null)
     const num = 0
     useEffect(()=>{
         if(address.state==='State') return
-        setTaxRate(TAX[address.state].rate)
+        setTax(price(TAX[address.state].rate*itemPrice))
     },[address.state])
-    console.log(taxRate);
+
+    useEffect(()=>{
+        const orderTotal = [tax,itemPrice,shipping].reduce((pre,cur)=>pre+cur,0)
+        setTotal(price(orderTotal))
+    },[tax,shipping,itemPrice])
 
     const price = (price)=>{
         if(!price) return null
@@ -28,13 +34,13 @@ const OrderSummary = ({itemPrice,address})=>{
                     <span>{num?'$':''}{num||'--'}</span>
                 </div>
                 <div className={classes.price}>Shipping:
-                    <span>{price(taxRate*itemPrice)?'$':''}{price(taxRate*itemPrice)||'--'}</span>
+                    <span>{num?'$':''}{num===0?'Free':num||'--'}</span>
                 </div>
                 <div className={classes.price}>Estimated Tax:
-                    <span>{num?'$':''}{num||'--'}</span>
+                    <span>{tax?'$':''}{tax||'--'}</span>
                 </div>
                 <div className={classes.total}>Order total:
-                    <span>$</span>
+                    <span>${total}</span>
                 </div>
             </div>
         </div>
