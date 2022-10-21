@@ -11,6 +11,8 @@ const CardInfo =({editPayment,setEditPayment,address,billingAddress,setBillingAd
     const [cardNumberPreview,setCardNumberPreview] = useState('')
     const [cardError,setCardError]=useState('')
     const [billingAddressError,setBillingAddressError]=useState('')
+    const [promoCode , setPromoCode] = useState('')
+    const [promoCodeTitle , setPromoCodeTitle] = useState('')
 
     useEffect(()=>{
         if(card.number.length<4) return
@@ -48,7 +50,7 @@ const CardInfo =({editPayment,setEditPayment,address,billingAddress,setBillingAd
                     <div className={`${classes.checkoutCreditCard} ${editPayment?classes.editCheckoutCreditCard:classes.creditCard}`}>
                         {editPayment?
                             <>
-                                <PromoCode {...{setDiscountRate}} />
+                                <PromoCode {...{setDiscountRate,setPromoCode,promoCodeTitle,setPromoCodeTitle}} />
                                 <CheckoutCreditCard {...{card,setCard}}/>
                                 {cardError && <div className={classes.cardError}>{cardError}</div> }
                                 <BillingAddress checkbox={true} {...{address,billingAddress,setBillingAddress}} />
@@ -56,15 +58,22 @@ const CardInfo =({editPayment,setEditPayment,address,billingAddress,setBillingAd
                             </>
                             :<></>}
                         {paymentInfo?
-                            <div className={classes.paymentInfo}>
-                                <Card name={card.name} number={cardNumberPreview} expiry={card.expiry} 
-                                    cvc={card.cvc}  preview={true} issuer={card.issuer}
-                                />
-                                <div className={classes.billingAddress}>
-                                    <div className={classes.billing}>Billing Address:</div>
-                                    <div className={classes.addressName}>{billingAddress.firstName} {billingAddress.lastName}</div>
-                                    <div className={classes.addressStreet}>{billingAddress.street} {billingAddress.apt}</div>
-                                    <div className={classes.addressStreet}>{billingAddress.city}, {address.state} {billingAddress.zipCode}</div>
+                            <div className={classes.payment}>
+                                {promoCode && 
+                                    <div className={classes.promo}>
+                                        <div className={classes.billing}>Promo Apply:</div>
+                                        <span className={classes.promoCode}>{promoCode}</span>: {promoCodeTitle} 
+                                    </div>}
+                                <div className={classes.paymentInfo}>
+                                    <Card name={card.name} number={cardNumberPreview} expiry={card.expiry} 
+                                        cvc={card.cvc}  preview={true} issuer={card.issuer}
+                                    />
+                                    <div className={classes.billingAddress}>
+                                        <div className={classes.billing}>Billing Address:</div>
+                                        <div className={classes.addressName}>{billingAddress.firstName} {billingAddress.lastName}</div>
+                                        <div className={classes.addressStreet}>{billingAddress.street} {billingAddress.apt}</div>
+                                        <div className={classes.addressStreet}>{billingAddress.city}, {address.state} {billingAddress.zipCode}</div>
+                                    </div>
                                 </div>
                             </div>
                             :<></>}

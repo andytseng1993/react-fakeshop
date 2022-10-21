@@ -18,6 +18,22 @@
     font-size: 1.2rem;
     font-weight: 600;
 }
+.payment{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 15px 0px;
+}
+.promo{
+    margin-left: 30px;
+    width: auto;
+    text-align: left;
+    color: rgb(21, 119, 21);
+}
+.promoCode{
+    margin-left: 20px;
+    font-weight: 600;
+}
 /* Edit Payment */
 .editPayment{
     font-weight: 700;
@@ -47,6 +63,8 @@
     padding: 0px;
 }
 .paymentInfo{
+    width: 100%;
+    align-self: center;
     display: flex;
     justify-content: center;
     align-items: center;

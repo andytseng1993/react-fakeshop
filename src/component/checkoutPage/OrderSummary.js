@@ -6,7 +6,7 @@ import classes from './OrderSummary.module.css'
 
 const OrderSummary = ({itemPrice,address,discountRate,editAddress,editPayment,paymentInfo})=>{
     const [tax,setTax] = useState(null)
-    const [shipping,setShipping] = useState(null)
+    const [shipping,setShipping] = useState(0)
     const [total,setTotal] = useState(null)
     const [discount,setDiscount] = useState(null)
     const [disabled,setDisabled] = useState(true)
@@ -17,8 +17,9 @@ const OrderSummary = ({itemPrice,address,discountRate,editAddress,editPayment,pa
     },[address.state,discountRate,discount])
 
     useEffect(()=>{
-        itemPrice> 150? setShipping(0):setShipping(50)
-        const orderTotal = [tax,itemPrice,shipping].reduce((pre,cur)=>pre+cur,0)
+        const shippingPrice = itemPrice>=150? 0:50
+        const orderTotal = [tax,itemPrice,shippingPrice].reduce((pre,cur)=>pre+cur,0)
+        setShipping(shippingPrice)
         setTotal(price(orderTotal-discount))
     },[tax,shipping,itemPrice])
 
@@ -53,7 +54,7 @@ const OrderSummary = ({itemPrice,address,discountRate,editAddress,editPayment,pa
                     <span>{tax!==null?'$':''}{tax??'--'}</span>
                 </div>
                 <div className={classes.shipping}>Shipping:
-                    <span>{shipping?'$':''}{shipping===0?'Free':shipping||'--'}</span>
+                    <span>{shipping?'$':''}{shipping===0?'Free':shipping.toFixed(2)||'--'}</span>
                 </div>
                 {!shipping?
                     <div className={classes.shippingDiscount}>

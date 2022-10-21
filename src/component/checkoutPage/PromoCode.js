@@ -2,7 +2,7 @@ import { useState } from "react"
 import classes from './PromoCode.module.css'
 import AddressInput from "../address/AddressInput"
 
-const PromoCode =({setDiscountRate})=>{
+const PromoCode =({setDiscountRate,setPromoCode,promoCodeTitle,setPromoCodeTitle})=>{
     const [code,setCode] = useState('')
     const [success,setSuccess] = useState('')
     const [error,setError] = useState('')
@@ -13,13 +13,15 @@ const PromoCode =({setDiscountRate})=>{
     const handleApply = ()=>{
         if(code==='') return
         if(code.toUpperCase()==='FAKESTORE'){
+            setPromoCode('FAKESTORE')
             setError('')
             setDiscountRate(30)
-            return setSuccess('Save 30% on checkout.')
+            return setPromoCodeTitle('Save 30% on checkout.')
         }
         setError('This promoo code is not available')
+        setPromoCode('')
         setDiscountRate(0)
-        setSuccess('')
+        setPromoCodeTitle('')
     }
     return(
         <div className={classes.promo}>
@@ -29,7 +31,7 @@ const PromoCode =({setDiscountRate})=>{
                 <button onClick={handleApply}>Apply</button>
             </div>
             <span>E.g.:Fakestore</span>
-            {success && <div className={classes.success}>{success}</div>}
+            {promoCodeTitle && <div className={classes.success}>{promoCodeTitle}</div>}
             {error && <div className={classes.error}>{error}</div>}
         </div>
     )
