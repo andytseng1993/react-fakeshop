@@ -43,7 +43,7 @@
 }
 .shoppingAddressTitle > p{
     margin: 10px 0px;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     font-weight: 600;
 }
 .shoppingAddressTitle >button{
@@ -69,7 +69,7 @@
     min-width: 420px;
 }
 .editAddressTitle{
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     padding: 15px 15px;
     border-bottom: 1px solid rgb(198, 198, 198);
 }

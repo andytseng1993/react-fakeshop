@@ -28,12 +28,12 @@
     min-width: 420px;
 }
 .editPaymentTitle{
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     padding: 15px 15px;
     border-bottom: 1px solid rgb(198, 198, 198);
 }
 .checkoutCreditCard{
-    padding: 20px;
+    padding: 0px 20px;
     background-color: rgb(249, 249, 249);
     /* border: 1.5px solid rgb(213, 213, 213); */
     border-top: none;
@@ -50,6 +50,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 15px 0px;
 }
 .billingAddress{
     display: flex;

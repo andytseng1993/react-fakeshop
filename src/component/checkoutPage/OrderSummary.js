@@ -1,14 +1,15 @@
 
 import { useEffect, useState } from 'react'
+import CheckoutReminder from './CheckoutReminder'
 import classes from './OrderSummary.module.css'
 
 
-const OrderSummary = ({itemPrice,address,discountRate})=>{
+const OrderSummary = ({itemPrice,address,discountRate,editAddress,editPayment,paymentInfo})=>{
     const [tax,setTax] = useState(null)
     const [shipping,setShipping] = useState(null)
     const [total,setTotal] = useState(null)
     const [discount,setDiscount] = useState(null)
-
+    const [disabled,setDisabled] = useState(true)
     useEffect(()=>{
         if(address.state!=='State') setTax(price(TAX[address.state].rate*(itemPrice-discount)))
         if(discountRate!== 0) setDiscount(price(itemPrice*discountRate/100))
@@ -21,15 +22,25 @@ const OrderSummary = ({itemPrice,address,discountRate})=>{
         setTotal(price(orderTotal-discount))
     },[tax,shipping,itemPrice])
 
+    useEffect(()=>{
+        if(!editAddress && !editPayment && paymentInfo) return setDisabled(false)
+        setDisabled(true)
+    },[editAddress,editPayment,paymentInfo])
     const price = (price)=>{
         if(price===0) return 0
         if(!price) return null
         return Math.round(price*100)/100
     }
-    console.log(tax);
+    const handleCheckout =()=>{
+        console.log('check out');
+    }
+
     return (
         <div className={classes.orderContent}>
-            <button className={classes.placeOrder} disabled >Place your order</button>
+            <div style={{position: 'relative'}}>
+                <button className={`${classes.placeOrder} ${!disabled?classes.ablePlaceOrder:''}`} disabled={disabled} onClick={handleCheckout} >Place your order</button>
+                {!(!editAddress&&!editPayment&&paymentInfo) && <CheckoutReminder {...{editAddress,editPayment,paymentInfo}} />}
+            </div>
             <h3 className={classes.orderSummaryTitle}>Order Summary</h3>
             <div className={classes.orderSummary}>
                 <div className={classes.price}>Items:

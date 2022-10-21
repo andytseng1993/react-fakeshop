@@ -13,7 +13,30 @@
     box-shadow: 1px 1px 4px rgb(194, 194, 194);
     border: none;
     margin: 5px 20px 10px;
-    cursor: pointer;
+    cursor:not-allowed;
+}
+.placeOrder.ablePlaceOrder{
+    cursor:pointer;
+}
+.placeOrder.ablePlaceOrder:hover{
+    background-color: rgb(250, 227, 80);
+}
+.placeOrder.ablePlaceOrder:active{
+    transform: translate(1px,1px);
+}
+.placeOrder:hover + div{
+    display: block;
+    transform: translateX(-50%);
+    animation: both moveUp 0.3s ease;
+}
+@keyframes moveUp {
+    0%{
+        transform: translateX(-50%);
+    }
+    100%{
+        transform: translate(-50%,-5px);
+        opacity: 1;
+    }
 }
 .orderSummaryTitle{
     padding: 10px 10px;

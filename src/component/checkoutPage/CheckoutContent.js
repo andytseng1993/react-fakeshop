@@ -52,7 +52,6 @@ const CheckoutContent = ()=>{
         }
         // eslint-disable-next-line
     },[currentUser])
-    console.log(editAddress,isLoad);
 
     const handleCancel =(e)=>{
         e.preventDefault()
@@ -61,7 +60,7 @@ const CheckoutContent = ()=>{
     }
     const handleSave =()=>{
         setEditAddress(false)
-        setEditPayment(true)
+        if(!paymentInfo) return setEditPayment(true)
     }
     const handleAddressEdit =()=>{
         setEditAddress(true)
@@ -88,7 +87,7 @@ const CheckoutContent = ()=>{
                     setBillingAddress,card,setCard,paymentInfo,setPaymentInfo,setDiscountRate}} />
             </div>
             <div className={classes.checkoutPrice}>
-                <OrderSummary {...{itemPrice,address,discountRate}} /> 
+                <OrderSummary {...{itemPrice,address,discountRate,editAddress,editPayment,paymentInfo}} /> 
                 <ItemsDetail {...{setItemPrice}} /> 
             </div>
         </div>

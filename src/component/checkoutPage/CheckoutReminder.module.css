@@ -2,8 +2,8 @@
     display: none;
     color: black;
     position: absolute;
-    white-space: nowrap;
-    top: -25px;
+    white-space: wrap;
+    top: -53px;
     left: 50%;
     text-align: center;
     background-color: white;
@@ -13,12 +13,13 @@
     padding: 5px 12px;
     opacity: 0;
     cursor: default;
-    z-index: 100;
+    z-index: 90;
+    width: 100%;
 }
 .box::after{
     content: '';
     position: absolute;
-    top: 18px;
+    top: 35px;
     right: 50%;
     width: 12px;
     height: 12px;

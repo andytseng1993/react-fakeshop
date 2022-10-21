@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import classes from './AddressInput.module.css'
 import { v4 as uuidv4 } from 'uuid';
 
-const AddressInput=({name,title,value,handleChange,refProp,required,inputMode,pattern,type,onFocus})=>{
+const AddressInput=({inputStyle,name,title,value,handleChange,refProp,required,inputMode,pattern,type,onFocus})=>{
     const [isFocus,setIsFocus] = useState(false)
     const [error,setError] = useState('')
     const [id,setId] = useState('')

@@ -10,7 +10,7 @@ const BillingAddress =({address,billingAddress,setBillingAddress})=>{
     const [billingAddressInput,setBillingAddressInput] = useState(initialBillingAddress)
     useEffect(()=>{
         setBillingAddress(address)
-    },[])
+    },[address])
     const handleCheckBox =()=>{
         if(isChecked){
             setBillingAddress(initialBillingAddress)
