@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { NavLink } from "react-router-dom"
+import { NavLink, useLocation, useNavigate, useParams } from "react-router-dom"
 import CheckoutAddress from "./CheckoutAddress"
 import classes from './CheckoutContent.module.css'
 import { useUserAuth } from "../../context/UserAuthContext";
@@ -16,6 +16,7 @@ const initialBillingAddress ={firstName:'',lastName:'', street:'',apt:'',city:''
 const initialCard= {number:'',cvc:'',expiry:'',focus:'',name:'',issuer:''}
 
 const CheckoutContent = ()=>{
+    const navigate = useNavigate()
     const { currentUser }  = useUserAuth()
     const db = getDatabase()
     const [address,setAddress] = useState(initialAddress)
@@ -28,8 +29,12 @@ const CheckoutContent = ()=>{
     const [editPayment,setEditPayment] = useState(false)
     const [paymentInfo,setPaymentInfo] = useState(false)
     const [isLoad,setIsLoad] = useState(true)
-
+    const location = useLocation()
+    const {checkoutId} = useParams()
+    
+    console.log(location);
     useEffect(()=>{
+        if(!location || location.state?.id!==checkoutId) return navigate('/cart')
         const preferrAddress = []
         let isCancel = false
         const readAddressData = ()=>{
@@ -65,8 +70,9 @@ const CheckoutContent = ()=>{
     const handleAddressEdit =()=>{
         setEditAddress(true)
     }
-
-    
+    const handleCheckout = ()=>{
+        navigate('/ordercomfirmation', {replace: true});
+    }
     return (
         <div className={classes.checkoutContent}>
             <div className={classes.checkoutDetail}>
@@ -87,9 +93,10 @@ const CheckoutContent = ()=>{
                     setBillingAddress,card,setCard,paymentInfo,setPaymentInfo,setDiscountRate}} />
             </div>
             <div className={classes.checkoutPrice}>
-                <OrderSummary {...{itemPrice,address,discountRate,editAddress,editPayment,paymentInfo}} /> 
+                <OrderSummary {...{itemPrice,address,discountRate,editAddress,editPayment,paymentInfo,handleCheckout}} /> 
                 <ItemsDetail {...{setItemPrice}} /> 
             </div>
+            <button onClick={handleCheckout}>test</button>
         </div>
 
 

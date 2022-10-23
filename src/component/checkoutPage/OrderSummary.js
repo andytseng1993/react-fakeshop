@@ -4,7 +4,7 @@ import CheckoutReminder from './CheckoutReminder'
 import classes from './OrderSummary.module.css'
 
 
-const OrderSummary = ({itemPrice,address,discountRate,editAddress,editPayment,paymentInfo})=>{
+const OrderSummary = ({itemPrice,address,discountRate,editAddress,editPayment,paymentInfo,handleCheckout})=>{
     const [tax,setTax] = useState(null)
     const [shipping,setShipping] = useState(0)
     const [total,setTotal] = useState(null)
@@ -31,9 +31,6 @@ const OrderSummary = ({itemPrice,address,discountRate,editAddress,editPayment,pa
         if(price===0) return 0
         if(!price) return null
         return Math.round(price*100)/100
-    }
-    const handleCheckout =()=>{
-        console.log('check out');
     }
 
     return (
