@@ -10,6 +10,7 @@ function Layout(props){
     useEffect(() => {
         let isCancel = false
         const cartItems = JSON.parse(localStorage.getItem('cartItems'));
+        if(!cartItems) return
         if(cartItems.length!==0 && !isCancel){
             dispatch(updateCartList(cartItems))
         }

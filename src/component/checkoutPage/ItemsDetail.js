@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import classes from './ItemsDetail.module.css'
 
 
 const ItemsDetail= ({setItemPrice})=>{
+    const navigate = useNavigate()
     const [totalItems,setTotalItems] = useState(0)
     const cartLists = useSelector((state)=> state.setCartList)
-
     useEffect(()=>{
+        if(cartLists.length===0) return navigate('/',{replace: true})
         const totalPrice = cartLists.reduce((pre,cur)=> pre+cur.price*cur.count,0)
         const totalICount = cartLists.reduce((pre,cur)=> pre+cur.count,0)
         setItemPrice(totalPrice)
