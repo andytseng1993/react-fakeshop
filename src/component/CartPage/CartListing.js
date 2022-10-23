@@ -5,7 +5,7 @@ import { useUserAuth } from '../../context/UserAuthContext'
 import { useEffect, useState } from "react"
 import LoginCheck from "./LoginCheck"
 import { useNavigate } from "react-router-dom"
-import { v4 as uuidv4 } from 'uuid';
+import { nanoid } from 'nanoid'
 
 const CartListing= ()=>{
     const dispatch= useDispatch()
@@ -60,7 +60,7 @@ const CartListing= ()=>{
         if(!currentUser){
             return setLoginCheck(true)
         }
-        const id = uuidv4()
+        const id = nanoid()
         navigate(`/checkout/${id}`,{state:{id}})
     }
     const price = (price)=>{

@@ -12,7 +12,7 @@ import OrderSummary from "./OrderSummary";
 import ItemsDetail from "./ItemsDetail";
 import { useDispatch } from "react-redux";
 import { deleteAllCartProduct } from "../../redux/actions";
-import { v4 as uuidv4 } from 'uuid';
+import { customAlphabet } from 'nanoid'
 
 const initialAddress ={firstName:'',lastName:'', street:'',apt:'',city:'',state:'State',zipCode:'',phone:'',key:''}
 const initialBillingAddress ={firstName:'',lastName:'', street:'',apt:'',city:'',state:'State',zipCode:''}
@@ -71,11 +71,14 @@ const CheckoutContent = ()=>{
         setEditAddress(true)
     }
     const handleCheckout = ()=>{
-        const id = uuidv4()
-        navigate('/ordercomfirmation', {state:{id},replace: true})
+        const alphabet = '123456789ABCDEFGHJKLMNPQRSTUVWXYZ';
+        const nanoid = customAlphabet(alphabet, 20);
+        const id = nanoid()
+        const date = new Date().toString()
+        navigate('/ordercomfirmation', {state:{id,date},replace: true})
         dispatch(deleteAllCartProduct())
     }
-
+    
     return (
         <div className={classes.checkoutContent}>
             <div className={classes.checkoutDetail}>
@@ -99,6 +102,7 @@ const CheckoutContent = ()=>{
                 <OrderSummary {...{itemPrice,address,discountRate,editAddress,editPayment,paymentInfo,handleCheckout}} /> 
                 <ItemsDetail {...{setItemPrice}} /> 
             </div>
+            <button onClick={handleCheckout}>test</button>
         </div>
 
 
