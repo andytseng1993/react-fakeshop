@@ -53,6 +53,11 @@ export const deleteCartProduct = (id)=>{
         payload:id
     }
 }
+export const deleteAllCartProduct = ()=>{
+    return {
+        type:ACTIONS.DELETE_ALL_CARTPRODUCT
+    }
+}
 export const increaseQuantity = (productId)=>{
     return {
         type:ACTIONS.INCREASE_QUANTITY,

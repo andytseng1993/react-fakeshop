@@ -10,6 +10,8 @@ import {faChevronLeft} from "@fortawesome/free-solid-svg-icons";
 import CardInfo from "./CardInfo";
 import OrderSummary from "./OrderSummary";
 import ItemsDetail from "./ItemsDetail";
+import { useDispatch } from "react-redux";
+import { deleteAllCartProduct } from "../../redux/actions";
 
 const initialAddress ={firstName:'',lastName:'', street:'',apt:'',city:'',state:'State',zipCode:'',phone:'',key:''}
 const initialBillingAddress ={firstName:'',lastName:'', street:'',apt:'',city:'',state:'State',zipCode:''}
@@ -31,6 +33,7 @@ const CheckoutContent = ()=>{
     const [isLoad,setIsLoad] = useState(true)
     const location = useLocation()
     const {checkoutId} = useParams()
+    const dispatch= useDispatch()
     
     console.log(location);
     useEffect(()=>{
@@ -71,7 +74,8 @@ const CheckoutContent = ()=>{
         setEditAddress(true)
     }
     const handleCheckout = ()=>{
-        navigate('/ordercomfirmation', {replace: true});
+        navigate('/ordercomfirmation', {replace: true})
+        dispatch(deleteAllCartProduct())
     }
     return (
         <div className={classes.checkoutContent}>

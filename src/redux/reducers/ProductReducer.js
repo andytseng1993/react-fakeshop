@@ -61,6 +61,9 @@ export const setCartListReducer=(state=[],action)=>{
             products = state.filter((item)=> item.productId!==action.payload)
             localStorage.setItem('cartItems', JSON.stringify(products))
             return products
+        case ACTIONS.DELETE_ALL_CARTPRODUCT:
+            localStorage.removeItem('cartItems')
+            return []
         case ACTIONS.INCREASE_QUANTITY:
             products = state.map((item) => 
                 item.productId===action.payload?
