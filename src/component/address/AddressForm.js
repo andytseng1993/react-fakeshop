@@ -1,6 +1,5 @@
 import classes from './AddressForm.module.css'
 import { useRef, useState } from "react";
-import { v4 as uuidv4 } from 'uuid';
 import AddressAutoComplete from "./AddressAutoComplete";
 import AddressInput from "./AddressInput";
 import Input from 'react-phone-number-input/input'
@@ -8,11 +7,10 @@ import Select from 'react-select';
 import { geocodeByAddress } from 'react-places-autocomplete';
 import { isValidPhoneNumber } from 'react-phone-number-input';
 
-const AddressForm=({address,setAddress,checked,setChecked,handleCancel,handleSave})=>{
+const AddressForm=({phoneInput,defaultAddress,leftBtnName, rightBtnName,address,setAddress,checked,setChecked,handleCancel,handleSave,emailInput,emailValue,seteEmailValue})=>{
     const [isFocus,setIsFocus] = useState(false)
     const [error,setError] = useState('')
     const aptRef = useRef(null)
-
     const onFocusChange = ()=>{
         setIsFocus(true)
     }
@@ -61,11 +59,14 @@ const AddressForm=({address,setAddress,checked,setChecked,handleCancel,handleSav
     return(
         <form className={classes.inputBoxes} onSubmit={handleSave}>
             <p>*Required fields</p>
-            <AddressInput title={'First name*'} id={uuidv4()} value={address.firstName} handleChange={(e)=>handleChangeAddress(e,'firstName')} required='required'/>       
-            <AddressInput title={'Last name*'} id={uuidv4()} value={address.lastName} handleChange={(e)=>handleChangeAddress(e,'lastName')} required='required'/>
+            <div style={{display: 'flex',width:'70%'}}>
+                <AddressInput title={'First name*'} value={address.firstName} handleChange={(e)=>handleChangeAddress(e,'firstName')} required='required'/>       
+                <span style={{width:10}}></span>
+                <AddressInput title={'Last name*'} value={address.lastName} handleChange={(e)=>handleChangeAddress(e,'lastName')} required='required'/>
+            </div>
             <AddressAutoComplete street={address.street} handleChangeAuto={handleChangeAuto} handleSelectAuto={handleSelectAuto} />
-            <AddressInput title={'Apt, suite,etc.(optional)'} id={uuidv4()} value={address.apt} handleChange={(e)=>handleChangeAddress(e,'apt')} refProp={aptRef} />
-            <AddressInput title={'City*'} id={uuidv4()} value={address.city} handleChange={(e)=>handleChangeAddress(e,'city')} required='required'/>
+            <AddressInput title={'Apt, suite,etc.(optional)'} value={address.apt} handleChange={(e)=>handleChangeAddress(e,'apt')} refProp={aptRef} />
+            <AddressInput title={'City*'} value={address.city} handleChange={(e)=>handleChangeAddress(e,'city')} required='required'/>
             <div style={{display:'flex', width:'70%', justifyContent:'space-between'}}>
                 <div className={classes.stateBox}>
                     <label className={classes.stateLabel} htmlFor='stateid'>
@@ -75,23 +76,26 @@ const AddressForm=({address,setAddress,checked,setChecked,handleCancel,handleSav
                         options={stateList} isSearchable={true} styles={customStyles} id='stateid'
                     />
                 </div>
-                <AddressInput title={'Zip code*'} id={uuidv4()} value={address.zipCode} handleChange={(e)=>handleChangeAddress(e,'zipCode')} required='required' inputMode='numeric' pattern="[0-9]*" />
+                <AddressInput title={'Zip code*'} value={address.zipCode} handleChange={(e)=>handleChangeAddress(e,'zipCode')} required='required' inputMode='numeric' pattern="[0-9]*" />
             </div>
-            <div className={classes.searchBox} onFocus={onFocusChange} onBlur={onBlurChange} >
-                <label className={classes.searchLabel} htmlFor={'phone'} style={(isFocus||address.phone)?isFocusStyle:{}} >
-                    <span>Phone number*</span>
-                </label>
-                <Input className={classes.inputBox} country="US" value={address.phone} onChange={handleChangePhone} id='phone'
-                    required inputMode="decimal" style={error?{borderColor:'red'}:{}}/>
-                {error && <div className={classes.errorMessage}>{error}</div> }
-            </div>
-            <label className={classes.checkboxlabel}>
+            {emailInput && <AddressInput title={'Email*'} value={emailValue} handleChange={(e)=>seteEmailValue(e.target.value)} required='required'/>}
+            {!phoneInput && 
+                <div className={classes.searchBox} onFocus={onFocusChange} onBlur={onBlurChange} >
+                    <label className={classes.searchLabel} htmlFor={'phone'} style={(isFocus||address.phone)?isFocusStyle:{}} >
+                        <span>Phone number*</span>
+                    </label>
+                    <Input className={classes.inputBox} country="US" value={address.phone} onChange={handleChangePhone} id='phone'
+                        required inputMode="decimal" style={error?{borderColor:'red'}:{}}/>
+                    {error && <div className={classes.errorMessage}>{error}</div> }
+                </div>
+            }
+            {!defaultAddress && <label className={classes.checkboxlabel}>
                 <input type='checkbox' className={classes.checkbox} value={checked} onChange={()=>setChecked(!checked)} checked={checked}/>
                 <span>Set as my preferred delivery address</span> 
-            </label>
+            </label>}
             <div className={classes.buttons} >
-                <button className={classes.buttonCancel} onClick={handleCancel}>Cancel</button>
-                <button type="submit" className={classes.buttonSave} >Save</button>
+                <button className={classes.buttonCancel} onClick={handleCancel}>{leftBtnName||'Cancel'}</button>
+                <button type="submit" className={classes.buttonSave} >{rightBtnName||'Save'}</button>
             </div>
         </form>
     )
@@ -168,7 +172,8 @@ const isFocusStyle ={
 const customStyles = {
     control: base => ({
         ...base,
-        height: 50,
-        minHeight: 50
+        backgroundColor:'transparent',
+        height: 40,
+        minHeight: 40
     })
 }

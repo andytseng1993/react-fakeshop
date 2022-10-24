@@ -4,6 +4,7 @@ import { useUserAuth } from "../../context/UserAuthContext"
 import { useUserData } from "../../context/UserDataContext"
 import classes from './AddressLists.module.css'
 import { getDatabase,ref ,onValue, query, orderByChild} from "firebase/database";
+import AddressBox from "./AddressBox"
 
 const AddressList = ()=>{
     const { writeUserData } = useUserData()
@@ -19,7 +20,7 @@ const AddressList = ()=>{
         let isCancel = false
         const readAddressData = ()=>{
             const topUserPostsRef = query(ref(db, 'users/'+currentUser.uid+'/addresses'), orderByChild('createTime'))
-             onValue(topUserPostsRef, (snapshot) => {
+            onValue(topUserPostsRef, (snapshot) => {
                 snapshot.forEach((childSnapshot)=> {
                     if(!isCancel){
                         if(childSnapshot.val().default){
@@ -31,6 +32,9 @@ const AddressList = ()=>{
                   })
                   const Alladdress =  preferrAddress.concat(addressesData)
                   setAddresses(Alladdress)
+            },
+            {
+                onlyOnce: true
             })
         }
         readAddressData()
@@ -40,10 +44,12 @@ const AddressList = ()=>{
         // eslint-disable-next-line
     },[reload])
     
-    const handleEdit =(key)=>{
+    const handleEdit =(e,key)=>{
+        e.preventDefault()
         navigate('editaddress/'+key)
     }
-    const handleRemove=(key)=>{
+    const handleRemove=(e,key)=>{
+        e.preventDefault()
         writeUserData('users/'+currentUser.uid+'/addresses/'+key,{})
         setReload(!reload)
     }
@@ -60,19 +66,7 @@ const AddressList = ()=>{
             {addresses.length === 0? (<div className={classes.card} >Save an address and watch it magically show up at checkout!</div>)
             :
             (addresses.map((address=>(
-                <div className={classes.card} key={address.key}>
-                    <div className={classes.addressSummary}>
-                        {address.default && <div className={classes.addressDefault}>&#9733; Default address</div>}
-                        <div className={classes.addressName}>{address.firstName} {address.lastName}</div>
-                        <div className={classes.addressStreet}>{address.street} {address.apt}</div>
-                        <div className={classes.addressCity}>{address.city}, {address.state} {address.zipCode}</div>
-                        <div className={classes.addressPhone}>Phone number: {address.phone}</div>
-                    </div>
-                    <div className={classes.buttons}>
-                       <button className={classes.addressEdit} onClick={()=>handleEdit(address.key)}>Edit</button>
-                       <button className={classes.addressRemove} onClick={()=>handleRemove(address.key)}>Remove</button>
-                    </div>
-                </div>
+                <AddressBox key={address.key} {...{address,handleEdit,handleRemove}}/>
             ))))
             }
                     

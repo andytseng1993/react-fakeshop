@@ -92,21 +92,24 @@ const AccountLists=()=>{
                         <FontAwesomeIcon icon={faChevronRight} />
                     </div>
                 </Link>
-
-                {favoriteData.map((favorite)=>(
-                    <Link to={`/product/${favorite.id}`} key={favorite.id} className={classes.favoritesCard}>
-                        <div className={classes.image}>
-                            <img src={favorite.image} alt={favorite.title}></img>
-                        </div>
-                        <div className={classes.cartInfo}>
-                            <div className={classes.title}>{favorite.title}</div>
-                            <div className={classes.category}>
-                                {favorite.category}
-                                <div className={classes.price}>${favorite.price}</div>
+                {favoriteData.length===0?
+                    <div>You can save items while you shop.</div>
+                :
+                    (favoriteData.map((favorite)=>(
+                        <Link to={`/product/${favorite.id}`} key={favorite.id} className={classes.favoritesCard}>
+                            <div className={classes.image}>
+                                <img src={favorite.image} alt={favorite.title}></img>
                             </div>
-                        </div>
-                    </Link>
-                ))}
+                            <div className={classes.cartInfo}>
+                                <div className={classes.title}>{favorite.title}</div>
+                                <div className={classes.category}>
+                                    {favorite.category}
+                                    <div className={classes.price}>${favorite.price}</div>
+                                </div>
+                            </div>
+                        </Link>
+                    )))
+                }
             </div>
         </div>
 

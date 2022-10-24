@@ -42,34 +42,49 @@ export const setUserNameReducer=(state='',action)=>{
 }
 
 export const setCartListReducer=(state=[],action)=>{
+    let products=[]
     switch(action.type){
         case ACTIONS.UPDATE_CARTLIST:
-            return [...state,action.payload]
+            return [...action.payload]
         case ACTIONS.ADD_CARTLIST:
             if(state.find((item)=>item.productId===action.payload.productId)){
-                return state.map((item)=>
+                products =state.map((item)=>
                 item.productId===action.payload.productId?
                     {...item,count:item.count+action.payload.count}:item
                 )
+            }else{
+                products = [...state,action.payload]
             }
-            return [...state,action.payload]
+            localStorage.setItem('cartItems', JSON.stringify(products))
+            return products
         case ACTIONS.DELETE_CARTPRODUCT:
-            return state.filter((item)=> item.productId!==action.payload)
+            products = state.filter((item)=> item.productId!==action.payload)
+            localStorage.setItem('cartItems', JSON.stringify(products))
+            return products
+        case ACTIONS.DELETE_ALL_CARTPRODUCT:
+            localStorage.removeItem('cartItems')
+            return []
         case ACTIONS.INCREASE_QUANTITY:
-            return state.map((item) => 
+            products = state.map((item) => 
                 item.productId===action.payload?
                     {...item,count:item.count+1}:item
             )
+            localStorage.setItem('cartItems', JSON.stringify(products))
+            return products
         case ACTIONS.DECREASE_QUANTITY:
-            const changeProduct = state.find((item)=> item.productId === action.payload)
+            const changeProduct = state.find((item)=> item.productId === action.payload) 
             if(changeProduct.count>1){
-                return state.map((item) =>
+                products =  state.map((item) =>
                      item.productId===action.payload?
                     {...item,count:item.count-1}:item
-                )}else{
-                return state.filter(item => 
+                )
+
+            }else{
+                products = state.filter(item => 
                     item.productId!==action.payload
-                )}
+            )}
+            localStorage.setItem('cartItems', JSON.stringify(products))
+            return products
         default: 
             return state
     }

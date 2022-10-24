@@ -53,7 +53,7 @@ const Address= ()=>{
             writeUserData('users/'+currentUser.uid+'/addresses/'+addressKey,data)
             navigate('/account/addresses')
         })  
-}
+    }
     
     return(
         <div className={classes.address}>

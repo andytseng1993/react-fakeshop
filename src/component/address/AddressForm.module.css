@@ -1,4 +1,5 @@
 .inputBoxes{
+    width: 100%;
     margin-top: 5px;
     display: flex;
     flex-direction: column;
@@ -26,7 +27,7 @@
 }
 .stateSelectContainer{
     width: 95%;
-    font-size: 1.1rem;
+    font-size: 1rem;
     cursor: pointer;
     line-height: 1.1;
     z-index: 50;
@@ -36,7 +37,7 @@
     margin-top: 20px;
     margin: 25px auto 0px;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
 }
 .checkboxlabel{
@@ -58,8 +59,6 @@
 }
 .buttons button{
     font-size: 17px;
-    padding: 10px 55px;
-    margin-left: 50px;
     cursor: pointer;
     border-radius: 10px;
     border: none;
@@ -67,12 +66,14 @@
 .buttonCancel{
     box-shadow: 1px 1px 3px rgb(100, 99, 99),inset -1px -1px 2px rgb(171, 171, 171);
     background-color:white ;
+    padding: 10px 30px;
 }
-.buttonSave{
+.buttons .buttonSave{
     box-shadow: 1px 1px 4px rgb(100, 99, 99),inset -1px -1px 3px rgb(171, 171, 171);
     background-color: rgb(255, 93, 48);
     color: white;
     font-weight: 800;
+    padding: 10px 25px;
 }
 .buttonSave:hover{
     background-color: rgb(231, 56, 56);
@@ -96,14 +97,14 @@
     position: relative;
     transition: 0.1s;
     height: 15px;
-    top: 31px;
+    top: 26px;
     left: 10px;
     color: rgb(156, 156, 156);
     font-size: 16px;
     margin-left: 10px;
 }
 .inputBox{
-    height: 50px;
+    height: 40px;
     width: 100%;
     margin: 0;
     font-size: 18px;

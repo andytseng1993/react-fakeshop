@@ -15,8 +15,8 @@ const ProductDetail=()=>{
     const [count,setCount] = useState(1)
     const dispatch= useDispatch()
     const favoriteList = useSelector((state)=>state.favorites)
-    const {image, title,price,description,category} = productDetail
-    const product = {...productDetail,count}
+    const {image, title,price,description,category,id} = productDetail
+    const product = {...productDetail,count,productId:id}
    
     useEffect(()=>{
         const cancelToken = axios.CancelToken.source()

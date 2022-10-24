@@ -1,0 +1,48 @@
+.creditCardArea{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 30px 10px 20px ;
+}
+.creditCardTitle{
+    font-size: 1.2rem;
+    margin-bottom: -10px;
+    align-self: flex-start;
+}
+.creditCard{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items:center;
+}
+.creditCardForm{
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding-bottom: 20px;
+    margin-bottom: 10px;
+}
+.cards{
+    width: 20%;
+}
+@media only screen and (max-width: 1150px) {
+    .creditCardArea{
+        padding: 10px 0px ;
+        min-width: 415px;
+    }
+    .creditCard{
+        width: 100%;
+        flex-direction: column;
+        padding: 10px 0px ;
+    }
+    .creditCardForm{
+        width: 100%;
+        justify-content: center;
+        align-items:center;
+        padding: 0px 0px 10px;
+        margin-bottom: 30px;
+    }
+}

@@ -16,6 +16,8 @@ import AccountLists from './component/account/AccountLists';
 import useWrapper from './component/address/AddressWrapper';
 import AddressList from './component/address/AddressLists';
 import AddressEdit from './component/address/AddressEdit';
+import CheckOutPage from './pages/CheckOutPage';
+import ComfirmedPage from './pages/ComfirmedPage';
 
   
 function App() {
@@ -29,6 +31,7 @@ function App() {
   const GoogleMapsUrl = `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_MAP_API}&libraries=places`
   const AdressAuto = useWrapper(GoogleMapsUrl,Address)
   const AdressEditAuto = useWrapper(GoogleMapsUrl,AddressEdit)
+  const CheckoutAddress = useWrapper(GoogleMapsUrl,CheckOutPage)
   return (
     <div className="App">
       <UserAuthContextProvider>
@@ -39,6 +42,7 @@ function App() {
             <Route path='product/:productId' element={<ProductDetail/>}/>
             <Route element={<ProtectedRoute/>}>
               <Route path='account' element={<AccountPage/>} >
+                <Route index element={<AccountLists />} />
                 <Route path='home' element={<AccountLists />} />
                 <Route path='profile' element={<Profile />} />
                 <Route path='addresses' element={<AddressList/>}/> 
@@ -47,7 +51,9 @@ function App() {
                 <Route path='favorites' element={<FavoritePage/>}/>
               </Route>
             </Route>
-            <Route path='cart' element={<Cart/>}/>
+            <Route path='cart' element={<Cart/>} /> 
+            <Route path='checkout/:checkoutId' element={<CheckoutAddress/>}/>
+            <Route path='ordercomfirmation' element={<ComfirmedPage/>}/>
             <Route
               path="*"
               element={
