@@ -14,11 +14,22 @@
     margin-bottom: 10px;
  }
  .writeReviewBtn{
-    margin-top: 20px;
-    padding: 5px 0px;
-    font-size: 15px;
-    font-weight: 700;
-    cursor: pointer;
+   border-radius: 5px;
+   border: none;
+   background-color: white;
+   box-shadow: 0px 0px 2px rgb(65, 65, 65);
+   transition: 0.1s;
+   margin-top: 20px;
+   padding: 5px 0px;
+   font-size: 15px;
+   font-weight: 700;
+   cursor: pointer;
+ }
+ .writeReviewBtn:hover{
+   background-color: rgb(245, 245, 245);
+ }
+ .writeReviewBtn:active{
+   transform: translate(1px,1px);
  }
 /* Histogram Zone */
  .ratingHistogram{

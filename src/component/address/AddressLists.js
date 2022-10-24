@@ -20,7 +20,7 @@ const AddressList = ()=>{
         let isCancel = false
         const readAddressData = ()=>{
             const topUserPostsRef = query(ref(db, 'users/'+currentUser.uid+'/addresses'), orderByChild('createTime'))
-             onValue(topUserPostsRef, (snapshot) => {
+            onValue(topUserPostsRef, (snapshot) => {
                 snapshot.forEach((childSnapshot)=> {
                     if(!isCancel){
                         if(childSnapshot.val().default){
@@ -32,6 +32,9 @@ const AddressList = ()=>{
                   })
                   const Alladdress =  preferrAddress.concat(addressesData)
                   setAddresses(Alladdress)
+            },
+            {
+                onlyOnce: true
             })
         }
         readAddressData()
@@ -41,10 +44,12 @@ const AddressList = ()=>{
         // eslint-disable-next-line
     },[reload])
     
-    const handleEdit =(key)=>{
+    const handleEdit =(e,key)=>{
+        e.preventDefault()
         navigate('editaddress/'+key)
     }
-    const handleRemove=(key)=>{
+    const handleRemove=(e,key)=>{
+        e.preventDefault()
         writeUserData('users/'+currentUser.uid+'/addresses/'+key,{})
         setReload(!reload)
     }

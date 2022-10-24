@@ -24,10 +24,12 @@
     margin: 15px 18px 0px;
 }
 .reviewSelect select{
-    width: 100px;
-    font-size: 20px;
+    width: 150px;
+    font-size: 16px;
     padding: 5px 10px;
     margin-left: 10px;
+    border-radius: 5px;
+    text-align: center;
 }
 .reviewSelect select option{
     font-size: 20px;

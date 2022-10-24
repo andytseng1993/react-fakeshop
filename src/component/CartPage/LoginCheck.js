@@ -4,9 +4,10 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch } from 'react-redux';
 import { setLogInBox } from '../../redux/actions';
 import { useNavigate } from 'react-router-dom';
+import { nanoid } from 'nanoid'
 
 const LoginCheck = ({setLoginCheck})=>{
-    const navigation = useNavigate()
+    const navigate = useNavigate()
     const dispatch = useDispatch()
     const closeHandler =()=>{
         setLoginCheck(false)
@@ -16,7 +17,8 @@ const LoginCheck = ({setLoginCheck})=>{
         setLoginCheck(false)
     }
     const handleCheckout = ()=>{
-        navigation('/checkout')
+        const id = nanoid()
+        navigate(`/checkout/${id}`,{state:{id}})
     }
     return (
         <div className={classes.checkBox}>
