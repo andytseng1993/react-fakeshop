@@ -13,7 +13,6 @@ const ComfirmedPage = () =>{
         setOrderDate(location.state?.date)
     }, [])
     
-    console.log(location);
     return (
         <div style={{marginTop:100}}>
             <Comfirmation {...{orderNumber,orderDate}} />

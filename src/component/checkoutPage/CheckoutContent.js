@@ -102,7 +102,6 @@ const CheckoutContent = ()=>{
                 <OrderSummary {...{itemPrice,address,discountRate,editAddress,editPayment,paymentInfo,handleCheckout}} /> 
                 <ItemsDetail {...{setItemPrice}} /> 
             </div>
-            <button onClick={handleCheckout}>test</button>
         </div>
 
 
