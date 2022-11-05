@@ -18,6 +18,7 @@ import AddressList from './component/address/AddressLists';
 import AddressEdit from './component/address/AddressEdit';
 import CheckOutPage from './pages/CheckOutPage';
 import ComfirmedPage from './pages/ComfirmedPage';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
   
 function App() {
@@ -32,40 +33,43 @@ function App() {
   const AdressAuto = useWrapper(GoogleMapsUrl,Address)
   const AdressEditAuto = useWrapper(GoogleMapsUrl,AddressEdit)
   const CheckoutAddress = useWrapper(GoogleMapsUrl,CheckOutPage)
+  const queryClient = new QueryClient()
   return (
     <div className="App">
-      <UserAuthContextProvider>
-        <UserDataContextProvider>
-        <Layout scroll={scrollToProduct}>
-          <Routes>
-            <Route path='/' element={<HomePage refProp={myRef}/>} exact/>
-            <Route path='product/:productId' element={<ProductDetail/>}/>
-            <Route element={<ProtectedRoute/>}>
-              <Route path='account' element={<AccountPage/>} >
-                <Route index element={<AccountLists />} />
-                <Route path='home' element={<AccountLists />} />
-                <Route path='profile' element={<Profile />} />
-                <Route path='addresses' element={<AddressList/>}/> 
-                <Route path='addresses/newaddress' element={<AdressAuto/>} />
-                <Route path='addresses/editaddress/:productKey' element={<AdressEditAuto/>} />
-                <Route path='favorites' element={<FavoritePage/>}/>
+      <QueryClientProvider client={queryClient}>
+        <UserAuthContextProvider>
+          <UserDataContextProvider>
+          <Layout scroll={scrollToProduct}>
+            <Routes>
+              <Route path='/' element={<HomePage refProp={myRef}/>} exact/>
+              <Route path='product/:productId' element={<ProductDetail/>}/>
+              <Route element={<ProtectedRoute/>}>
+                <Route path='account' element={<AccountPage/>} >
+                  <Route index element={<AccountLists />} />
+                  <Route path='home' element={<AccountLists />} />
+                  <Route path='profile' element={<Profile />} />
+                  <Route path='addresses' element={<AddressList/>}/> 
+                  <Route path='addresses/newaddress' element={<AdressAuto/>} />
+                  <Route path='addresses/editaddress/:productKey' element={<AdressEditAuto/>} />
+                  <Route path='favorites' element={<FavoritePage/>}/>
+                </Route>
               </Route>
-            </Route>
-            <Route path='cart' element={<Cart/>} /> 
-            <Route path='checkout/:checkoutId' element={<CheckoutAddress/>}/>
-            <Route path='ordercomfirmation' element={<ComfirmedPage/>}/>
-            <Route
-              path="*"
-              element={
-                <main style={{ padding: "1rem" , marginTop: 100}}>
-                  <h1>There's nothing here!</h1>
-                </main>
-              }
-            />
-          </Routes>
-        </Layout>
-        </UserDataContextProvider>
-      </UserAuthContextProvider>
+              <Route path='cart' element={<Cart/>} /> 
+              <Route path='checkout/:checkoutId' element={<CheckoutAddress/>}/>
+              <Route path='ordercomfirmation' element={<ComfirmedPage/>}/>
+              <Route
+                path="*"
+                element={
+                  <main style={{ padding: "1rem" , marginTop: 100}}>
+                    <h1>There's nothing here!</h1>
+                  </main>
+                }
+              />
+            </Routes>
+          </Layout>
+          </UserDataContextProvider>
+        </UserAuthContextProvider>
+      </QueryClientProvider>
     </div>
   );
 }

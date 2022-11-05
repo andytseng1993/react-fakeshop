@@ -3,46 +3,33 @@ import { NavLink, useNavigate} from "react-router-dom"
 import { useUserAuth } from "../../context/UserAuthContext"
 import { useUserData } from "../../context/UserDataContext"
 import classes from './AddressLists.module.css'
-import { getDatabase,ref ,onValue, query, orderByChild} from "firebase/database";
+import { ref , query, orderByChild} from "firebase/database";
 import AddressBox from "./AddressBox"
+import { useDatabaseSnapshot } from "@react-query-firebase/database";
+import { database } from "../../firebase"
 
 const AddressList = ()=>{
     const { writeUserData } = useUserData()
     const { currentUser }  = useUserAuth()
     const [addresses,setAddresses]= useState([])
-    const [reload,setReload] = useState(false)
     const navigate = useNavigate()
-    const db = getDatabase()
+    const topAddressesRef = query(ref(database, 'users/'+currentUser.uid+'/addresses'), orderByChild('createTime'))
+    const {data:addressSnapshot,isLoading} = useDatabaseSnapshot(["addresses"], topAddressesRef);
 
-    useEffect(()=>{
-        const preferrAddress = []
+    useEffect(() => {
         const addressesData =[]
-        let isCancel = false
-        const readAddressData = ()=>{
-            const topUserPostsRef = query(ref(db, 'users/'+currentUser.uid+'/addresses'), orderByChild('createTime'))
-            onValue(topUserPostsRef, (snapshot) => {
-                snapshot.forEach((childSnapshot)=> {
-                    if(!isCancel){
-                        if(childSnapshot.val().default){
-                            preferrAddress.push(childSnapshot.val())
-                        }else{
-                            addressesData.unshift(childSnapshot.val())
-                        }
-                    }
-                  })
-                  const Alladdress =  preferrAddress.concat(addressesData)
-                  setAddresses(Alladdress)
-            },
-            {
-                onlyOnce: true
+        const Snapshot = ()=>{
+            addressSnapshot?.forEach((childSnapshot)=> {
+                childSnapshot.val().default?
+                addressesData.unshift(childSnapshot.val())
+                :
+                addressesData.push(childSnapshot.val())
             })
+            setAddresses(addressesData)
         }
-        readAddressData()
-        return ()=>{
-            isCancel = true 
-        }
-        // eslint-disable-next-line
-    },[reload])
+        Snapshot()
+    }, [addressSnapshot])
+
     
     const handleEdit =(e,key)=>{
         e.preventDefault()
@@ -51,11 +38,13 @@ const AddressList = ()=>{
     const handleRemove=(e,key)=>{
         e.preventDefault()
         writeUserData('users/'+currentUser.uid+'/addresses/'+key,{})
-        setReload(!reload)
+        setAddresses(pre=>{
+            return pre.filter(address=>address.key!==key)
+        })
     }
-
-    return(
-        <div className={classes.addressList}> 
+    
+    const AddressTitle = (
+        <>
             <div className={classes.routes}>
                 <NavLink to='/account/home'>Account </NavLink>/<NavLink style={{fontWeight:700}} to='/account/addresses'> Addresses</NavLink>
             </div>
@@ -63,14 +52,27 @@ const AddressList = ()=>{
                 <h1>Addresses</h1>
                 <NavLink className={classes.addressAdd} to='/account/addresses/newaddress'>+ Add new address!</NavLink>
             </div>
+        </>
+    )
+
+    if (isLoading) {
+        return(
+        <div className={classes.addressList}> 
+            {AddressTitle}
+            <strong>Loading...</strong>
+        </div>
+        )
+    }
+
+    return(
+        <div className={classes.addressList}> 
+            {AddressTitle}
             {addresses.length === 0? (<div className={classes.card} >Save an address and watch it magically show up at checkout!</div>)
             :
             (addresses.map((address=>(
                 <AddressBox key={address.key} {...{address,handleEdit,handleRemove}}/>
             ))))
             }
-                    
-               
         </div>
     )
 }
