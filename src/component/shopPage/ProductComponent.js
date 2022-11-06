@@ -4,30 +4,18 @@ import classes from './ProductComponent.module.css'
 import FavoriteBtn from '../favorite/FavoriteBtn';
 import Rating from '../reviews/Rating';
 import { useUserData } from '../../context/UserDataContext';
+import { useQuery } from '@tanstack/react-query';
 
 
 const ProductComponent=({product,favoriteList})=>{
     const {id,title,image,price,category} = product
     const {readUserData}= useUserData()
-    const [ratingObj,setRatingObj] = useState({rating:0,reviewCount:0})
-    
-    useEffect(()=>{
-        let isCancel = false
-        const getData =async()=>{
-            readUserData('productRating/'+ id)
-            .then((res)=>{
-                if(!isCancel){
-                    const value = res.val()
-                    if(!value) return setRatingObj({rating:0,reviewCount:0})
-                    setRatingObj(value)
-                }
-            })
-        }
-        getData()
-        return ()=>{
-            isCancel = true
-        }
-    },[id , readUserData])
+    const { data:ratingObj } = useQuery({queryKey:['productRating', id], queryFn: async()=>{
+        const response = await readUserData('productRating/'+ id)
+        const value = response.val()
+        if(value===null) return ({rating:0,reviewCount:0})
+        return value
+    },initialData:() =>({rating:0,reviewCount:0}),refetchOnWindowFocus:false})
 
     return(
         <div className={classes.container}>
@@ -45,7 +33,7 @@ const ProductComponent=({product,favoriteList})=>{
                         </div>
                         <div className={classes.rating}>
                             <Link to={`/product/${id}`}>
-                                {ratingObj.rating>0 && <Rating rating={ratingObj.rating} reviewsNum={ratingObj.reviewCount} fontSize={15}/>}
+                                {ratingObj.rating>0? <Rating rating={ratingObj.rating} reviewsNum={ratingObj.reviewCount} fontSize={15}/>:null}
                             </Link> 
                         </div>
                         <div className={classes.productInfo}>

@@ -13,7 +13,9 @@ export const UserDataContextProvider =({children})=>{
         return new Promise(resolve =>
             onValue(ref(db, url), (snapshot) => {
                 resolve(snapshot)
-            }));
+            },
+            {onlyOnce: true}
+            ));
     }
     
     const value={
