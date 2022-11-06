@@ -179,31 +179,31 @@ const UploadImage= ({setUploadPicture,pictureName,freshPage,setFreshPage})=>{
     
     return (
         <div className={classes.uploadArea}>
-                <div className={classes.content}>
-                    <div className={classes.closeBtn} onClick={closeHandler}><FontAwesomeIcon icon={faXmark} /></div>
-                    <h1 style={{marginBottom:30}}>Profile picture</h1>
-                    <div className={classes.uploadImageZone}>
-                        {!isCropping &&<div className={`${classes.fileDragZone} ${dragActive ? classes.dragActive : "" }`} onDragEnter={handleDrag} onDragLeave={handleDrag} onDragOver={handleDrag} onDrop={handleDrag}> </div>}
-                        {isCropping && <img className={classes.uploadImage} style={{width:picture.width,height:picture.height,maxWidth:picture.max,maxHeight:picture.max}} src={picture.src} alt='user' ref={imageRef}></img> }
-                        {isCropping && 
-                        (<div className={classes.uploadImageBackground} onMouseLeave={handleCropMouseUp} onMouseUp={handleCropMouseUp} onMouseMove={handleCropMouseMove}>
-                            <div className={classes.uploadImageSquare} style={{left:position.x,top:position.y,width:picture.rectSize,height:picture.rectSize}} 
-                            onMouseMove={handleMouseMove} onMouseDownCapture={hadleMouseDown} onMouseUp = {handleMouseUp} onMouseLeave={handleMouseLeave}
-                            >
-                                <div className={classes.uploadImageCircle}></div>
-                            </div>
-                            <div className={classes.SECircle} style={{left:picture.rectSize+position.x,top:picture.rectSize+position.y}} 
-                            onMouseDown={handleCropMouseDown} onMouseUp={handleCropMouseUp} onMouseMove={handleCropMouseMove} ></div>
-                        </div>)}   
-                    </div>
-                    <div>
-                        <button className={classes.uploadButton} onClick={handleLoadImage}>Upload Image</button>
-                        {isCropping && <button className={classes.uploadButton} onClick={handleSaveImage}>Save</button>}
-                        <input ref={hiddenFileInput} onChange={handleLoadImageChange} style={{display:'none'}} type="file" accept="image/png, image/jpeg, image/gif" />
-                    </div>
-                    {uploadErr && <div className={classes.error}>{uploadErr}</div>}
+            <div className={classes.content}>
+                <div className={classes.closeBtn} onClick={closeHandler}><FontAwesomeIcon icon={faXmark} /></div>
+                <h1 style={{marginBottom:30}}>Profile picture</h1>
+                <div className={classes.uploadImageZone}>
+                    {!isCropping &&<div className={`${classes.fileDragZone} ${dragActive ? classes.dragActive : "" }`} onDragEnter={handleDrag} onDragLeave={handleDrag} onDragOver={handleDrag} onDrop={handleDrag}> </div>}
+                    {isCropping && <img className={classes.uploadImage} style={{width:picture.width,height:picture.height,maxWidth:picture.max,maxHeight:picture.max}} src={picture.src} alt='user' ref={imageRef}></img> }
+                    {isCropping && 
+                    (<div className={classes.uploadImageBackground} onMouseLeave={handleCropMouseUp} onMouseUp={handleCropMouseUp} onMouseMove={handleCropMouseMove}>
+                        <div className={classes.uploadImageSquare} style={{left:position.x,top:position.y,width:picture.rectSize,height:picture.rectSize}} 
+                        onMouseMove={handleMouseMove} onMouseDownCapture={hadleMouseDown} onMouseUp = {handleMouseUp} onMouseLeave={handleMouseLeave}
+                        >
+                            <div className={classes.uploadImageCircle}></div>
+                        </div>
+                        <div className={classes.SECircle} style={{left:picture.rectSize+position.x,top:picture.rectSize+position.y}} 
+                        onMouseDown={handleCropMouseDown} onMouseUp={handleCropMouseUp} onMouseMove={handleCropMouseMove} ></div>
+                    </div>)}   
                 </div>
+                <div>
+                    <button className={classes.uploadButton} onClick={handleLoadImage}>Upload Image</button>
+                    {isCropping && <button className={classes.uploadButton} onClick={handleSaveImage}>Save</button>}
+                    <input ref={hiddenFileInput} onChange={handleLoadImageChange} style={{display:'none'}} type="file" accept="image/png, image/jpeg, image/gif" />
+                </div>
+                {uploadErr && <div className={classes.error}>{uploadErr}</div>}
             </div>
+        </div>
     )
 }
 export default UploadImage

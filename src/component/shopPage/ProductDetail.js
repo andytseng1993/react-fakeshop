@@ -7,35 +7,17 @@ import { addCartList} from "../../redux/actions"
 import classes from './ProductDetail.module.css'
 import ProductReviews from "../reviews/ProductReviews"
 import FavoriteBtn from '../favorite/FavoriteBtn'
+import { useQuery, useQueryClient } from "@tanstack/react-query"
 
 const ProductDetail=()=>{
     const {productId} = useParams()
-    const [isLoading,setIsLoading] = useState(true)
-    const [productDetail,setProductDetail] = useState({})
     const [count,setCount] = useState(1)
     const dispatch= useDispatch()
     const favoriteList = useSelector((state)=>state.favorites)
-    const {image, title,price,description,category} = productDetail
-    const product = {...productDetail,count}
-   
-    useEffect(()=>{
-        const cancelToken = axios.CancelToken.source()
-        setIsLoading(true)
-        axios.get(`https://fakestoreapi.com/products/${productId}`,{
-            cancelToken:cancelToken.token
-        })
-        .then(({data}) => {
-            setIsLoading(false)
-            setProductDetail(data)
-        })
-        .catch((err)=>{
-            axios.isCancel(err)? console.log('cancelled'): console.log(err)
-        })
-        return ()=>{
-            cancelToken.cancel()
-        }
-    },[productId,dispatch])
-
+    const {isLoading,isError, data:productDetail } = useQuery({ queryKey: ['products',productId], queryFn: ()=>{
+        return axios.get(`https://fakestoreapi.com/products/${productId}`).then(res=>res.data)
+    },refetchOnWindowFocus: false })
+    
     const addCartHandler =  (product)=>{
         product.id =  nanoid()
         dispatch(addCartList(product))
@@ -44,7 +26,14 @@ const ProductDetail=()=>{
     if(isLoading){
         return (
             <>
-                <h2 style={{marginTop:'120px'}}>Loading....</h2>
+                <h2 style={{marginTop:'120px'}}>Loading...</h2>
+            </>
+        )
+    }
+    if(isError){
+        return (
+            <>
+                <h2 style={{marginTop:'120px'}}>Something was wrong...</h2>
             </>
         )
     }
@@ -55,6 +44,8 @@ const ProductDetail=()=>{
             </>
         )
     }
+    const {image, title,price,description,category,id} = productDetail
+    const product = {...productDetail,count,productId:id}
     return (
         <section className={classes.productmain}>
             <div className={classes.product}>

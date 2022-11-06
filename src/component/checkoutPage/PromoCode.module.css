@@ -1,0 +1,52 @@
+.promo{
+    padding: 10px 20px 0px;
+}
+.promo > span{
+    font-size: 12px;
+    font-weight: 600;
+    color: rgb(128, 128, 128);
+    margin-left: 20px;
+}
+.promoTitle{
+    font-size: 1.2rem;
+    margin-bottom: -12px;
+}
+.promoInput{
+    margin-left: 20px;
+    display: flex;
+    width: 60%;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+.promoInput > button{
+    padding: 7px 15px;
+    border-radius: 5px;
+    background-color: white;
+    border: none;
+    box-shadow: 1px 1px 4px rgb(178, 178, 178);
+    font-size: 16px;
+    margin-bottom: 5px;
+    cursor: pointer;
+}
+.promoInput > button:hover{
+    background-color: rgb(240, 240, 240);
+}
+.promoInput > button:active{
+    transform: translate(1px,1px);
+}
+.success,.error{
+    width: 70%;
+    margin: 5px 0px 5px 20px;
+    font-size: 15px;
+    font-weight: 500;
+    background-color: rgb(255, 223, 223);
+    border-left: 5px solid rgb(255, 47, 47);
+    color: rgb(137, 31, 31);
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+.success{
+    background-color: rgb(206, 239, 160);
+    border-left: 5px solid rgb(102, 149, 31);
+    color: rgb(67, 97, 23);
+}

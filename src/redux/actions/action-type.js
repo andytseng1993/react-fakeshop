@@ -7,6 +7,7 @@ export const ACTIONS={
     UPDATE_CARTLIST:'update_cartlist',
     ADD_CARTLIST:'add_cartlist',
     DELETE_CARTPRODUCT:'delete_cartproduct',
+    DELETE_ALL_CARTPRODUCT:'delete_all_cartproduct',
     INCREASE_QUANTITY:'increase_quantity',
     DECREASE_QUANTITY:'decrease_quantity',
     SET_FAVORITE:'set_favorite',

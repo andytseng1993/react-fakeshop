@@ -20,7 +20,7 @@
     padding: 20px;
     border-radius: 10px;
     margin-bottom: 10px;
-    box-shadow: 1px 1px 3px #ccc;
+    box-shadow: 1px 1px 3px rgb(231, 231, 231);
 }
 .image{
     width: 150px;
@@ -34,7 +34,7 @@
 .cartInfo{
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: flex-start;
     padding-left: 30px;
     font-size: 18px;
@@ -48,42 +48,74 @@
 .category{
     color: #777;
     margin-bottom: 8px;
+    font-size: 16px;
 }
 .price{
     margin-bottom: 8px;
 }
 .count{
-    margin-bottom: 8px;
+    margin: 5px 0px 5px;
     display: flex;
+    border: 1px solid rgb(208, 208, 208);
+    padding: 5px;
+    border-radius: 20px;
 }
-.count > button{
-    font-size: 15px;
-    padding: 1px 5px;
-    text-align: center;
-    margin: 0px 5px;
+.countBtn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    padding: 2px;
+    height: 20px;
+    width: 20px;
     transition: 0.1s;
+    border: none;
+    background-color: white;
+    border-radius: 50%;
+    cursor: pointer;
 }
-.count > button:active{
+.countBtn:hover{
+    background-color: rgb(238, 238, 238);
+}
+.countBtn:active{
     transform: translate(1px,2px);
 }
 .quantity{
-    width: 30px;
+    width: 50px;
     text-align: center;
 }
+.subtotal{
+    font-weight: 600;
+    align-self: flex-end;
+}
 .shoppingSummary{
-    width: 250px;
-    margin-left: 50px;
+    padding: 20px 20px;
+    width: 320px;
+    margin-left: 40px;
+    border: 1px solid rgb(221, 221, 221);
+    border-radius: 5px;
 }
 .summaryContext{
     display: flex;
     justify-content: space-between;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
+    font-size: 18px;
+}
+.shippingContext{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    font-size: 18px;
+}
+.totalPriceContext{
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0px;
     font-size: 18px;
 }
 
 .shoppingSummary > button{
     width: 100%;
-    margin-top: 10px;
     padding: 10px 0px;
     background-color: black;
     color: white;
@@ -93,7 +125,23 @@
     border: none;
     border-radius: 5px;
     transition: 0.1s;
+    cursor: pointer;
 }
 .shoppingSummary > button:active{
     transform: translate(1px,2px);
+}
+.shippingDiscount,.noneShippingDiscount{
+    width: 100%;
+    padding: 4px 10px;
+    background-color: rgba(186, 245, 186,0.7);
+    color: rgb(7, 63, 7);
+    border-radius: 5px;
+    margin-bottom: 7px;
+}
+.shippingPromo{
+    font-size: 12px;
+}
+.noneShippingDiscount{
+    background-color: rgba(211, 209, 255, 0.7);
+    color: rgb(14, 4, 197);
 }

@@ -5,6 +5,8 @@ import { useUserData } from '../../context/UserDataContext'
 import classes from './AccountMenu.module.css'
 import UploadImage from './UploadImage'
 import { deleteObject, getDownloadURL, getStorage, ref } from "firebase/storage"
+import { upLoadNewImage } from '../../redux/actions'
+import { useDispatch } from 'react-redux'
 
 const AccountMenu = ()=>{
     const {currentUser}=useUserAuth()
@@ -18,6 +20,7 @@ const AccountMenu = ()=>{
     const [profilePic,setProfilePic] = useState()
     const [pictureName,setPictureName] = useState({name:'',extension:''})
     const [freshPage,setFreshPage] = useState(false)
+    const dispatch = useDispatch()
 
 
     useEffect(() => {
@@ -80,6 +83,7 @@ const AccountMenu = ()=>{
                 setFreshPage(!freshPage)
                 setProfilePic(process.env.PUBLIC_URL+'/images/blank-profile-picture.png')
                 setEditPicture(false)
+                dispatch(upLoadNewImage())
                 setPictureName({name:'',extension:''})
             }).catch((error) => {
                 console.log(error);
