@@ -25,7 +25,7 @@ const Profile=()=>{
     const [userUpdateSuccess,setUserUpdateSuccess] = useState('')
     const dispatch=useDispatch()
     const {currentUser,updatfile,updateNewPassword,sendVerificationEmail}=useUserAuth()
-    const {emailVerified,displayName,email,metadata} = currentUser
+    const {emailVerified,displayName,email} = currentUser
     
     useEffect(()=>{
         NameRef.current.value = displayName

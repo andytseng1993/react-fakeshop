@@ -1,6 +1,6 @@
 
 import MvArea from "../component/homePage/MvArea";
-import ProductListing from "../component/shopPage/ProductListing";
+import ShopPage from "./ShopPage";
 
 function HomePage(props){
     return(
@@ -14,7 +14,7 @@ function HomePage(props){
         >
             Product
         </h1>
-        <ProductListing />
+        <ShopPage />
     </>
     )
 }
