@@ -8,6 +8,7 @@ import {faTriangleExclamation} from "@fortawesome/free-solid-svg-icons";
 import { useNavigate, useParams } from "react-router-dom";
 import { NavLink} from "react-router-dom"
 import { isValidPhoneNumber } from "react-phone-number-input";
+import { useQuery } from "@tanstack/react-query";
 
 const initialAddress ={firstName:'',lastName:'', street:'',apt:'',city:'',state:'State',zipCode:'',phone:''}
 
@@ -20,23 +21,14 @@ const AddressEdit= ()=>{
     const {currentUser}  = useUserAuth()
     const navigate = useNavigate()
 
-    useEffect(() => {
-        let isCancel = false
-        const readAddressDate = async()=>{
-            await readUserData('users/'+currentUser.uid+'/addresses/'+productKey)
-            .then(res=>{
-                if(!isCancel){
-                    setAddress(res.val());
-                    setChecked(res.val().default)
-                }
-            })  
-        }
-        readAddressDate()
-        return () => {
-            isCancel = true 
-        }
-        // eslint-disable-next-line
-    }, [])
+    const fetchData = async ()=>{
+        const response = await readUserData('users/'+currentUser.uid+'/addresses/'+productKey)
+        const value = response.val()
+        setAddress(value)
+        setChecked(value.default)
+        return value
+    }
+    const {data,isLoading} = useQuery({queryKey:["addresses",productKey],queryFn:fetchData})
 
     const handleCancel =(e)=>{
         e.preventDefault()

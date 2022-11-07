@@ -86,6 +86,7 @@ function Navigation(props) {
         <header className={classes.header}>
             <div className={classes.logo}>
                 <NavLink to='/' onClick={()=> scrollToHome()}>
+                    <img src={process.env.PUBLIC_URL+'/logo192.png'}></img>
                     FakeStore
                 </NavLink>
             </div>
@@ -124,7 +125,7 @@ function Navigation(props) {
                         cartCount>0?
                             <div className={classes.cartCount}>{cartCount}</div>
                             :
-                            <div></div>
+                            null
                     }
                 </NavLink>
             </nav>

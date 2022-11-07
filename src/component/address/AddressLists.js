@@ -3,19 +3,29 @@ import { NavLink, useNavigate} from "react-router-dom"
 import { useUserAuth } from "../../context/UserAuthContext"
 import { useUserData } from "../../context/UserDataContext"
 import classes from './AddressLists.module.css'
-import { ref , query, orderByChild} from "firebase/database";
+import { ref , query, orderByChild, onValue} from "firebase/database";
 import AddressBox from "./AddressBox"
-import { useDatabaseSnapshot } from "@react-query-firebase/database";
 import { database } from "../../firebase"
+import { useQuery } from "@tanstack/react-query"
 
 const AddressList = ()=>{
     const { writeUserData } = useUserData()
     const { currentUser }  = useUserAuth()
     const [addresses,setAddresses]= useState([])
     const navigate = useNavigate()
-    const topAddressesRef = query(ref(database, 'users/'+currentUser.uid+'/addresses'), orderByChild('createTime'))
-    const {data:addressSnapshot,isLoading} = useDatabaseSnapshot(["addresses"], topAddressesRef);
 
+    const fetchData = ()=>{
+        const topAddressesRef = query(ref(database, 'users/'+currentUser.uid+'/addresses'), orderByChild('createTime'))
+        return new Promise(resolve =>
+            onValue(topAddressesRef, (snapshot) => {
+                resolve(snapshot)
+            },
+            {onlyOnce: true}
+        ))
+    }
+    
+    const {data:addressSnapshot,isLoading} = useQuery({queryKey:["addresses"],queryFn: fetchData,refetchOnWindowFocus:false})
+    
     useEffect(() => {
         const addressesData =[]
         const Snapshot = ()=>{
@@ -30,7 +40,6 @@ const AddressList = ()=>{
         Snapshot()
     }, [addressSnapshot])
 
-    
     const handleEdit =(e,key)=>{
         e.preventDefault()
         navigate('editaddress/'+key)

@@ -7,14 +7,14 @@ import { nanoid } from 'nanoid';
 import { useUserData } from '../../context/UserDataContext';
 
 const ProductAddReview=({currentUser,cancelAddReview,productId,submitReview,allReviewData})=>{
-    const [ratingInput,setRatingInput] = useState(0)
     const [nameInput,setNameInput] = useState(currentUser.displayName)
+    const [ratingInput,setRatingInput] = useState(0)
     const [titleInput,setTitleInput] = useState('')
     const [descriptionInput,setDescriptionInput] = useState('')
+    const [repeatId,setRepeatId]=useState('')
     const [warning,setWarning] = useState('')
     const { writeUserData } = useUserData()
     const [repeatReviw,setRepeatReviw]=useState(false)
-    const [repeatId,setRepeatId]=useState('')
     
     useEffect(()=>{
         if(allReviewData.length===0) return

@@ -20,8 +20,13 @@
 
 .logo a {
     text-decoration: none;
+    display: flex;
+    align-items: center;
 }
-
+.logo a img{
+    width: 40px;
+    margin-right: 5px;
+}
 nav {
     display: flex;
     flex-direction: row;

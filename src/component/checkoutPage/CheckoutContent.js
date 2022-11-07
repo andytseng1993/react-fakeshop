@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react"
-import { NavLink, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import CheckoutAddress from "./CheckoutAddress"
 import classes from './CheckoutContent.module.css'
 import { useUserAuth } from "../../context/UserAuthContext";
 import { getDatabase,ref ,onValue, query, orderByChild} from "firebase/database";
 import CheckoutComfirmAddress from "./CheckoutComfirmAddress";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faChevronLeft} from "@fortawesome/free-solid-svg-icons";
 import CardInfo from "./CardInfo";
 import OrderSummary from "./OrderSummary";
 import ItemsDetail from "./ItemsDetail";
@@ -82,10 +80,6 @@ const CheckoutContent = ()=>{
     return (
         <div className={classes.checkoutContent}>
             <div className={classes.checkoutDetail}>
-                <NavLink to={'/cart'} className={classes.backToCart}>
-                    <FontAwesomeIcon icon={faChevronLeft} className={classes.faChevronLeft} />
-                    shopping cart
-                </NavLink>
                 <div className={`${editAddress?classes.editAddress:classes.shoppingAddress}`}>
                     <div className={`${editAddress?classes.editAddressTitle:classes.shoppingAddressTitle}`}>
                         {editAddress?<p>Choose your shipping address</p>:<p>Shipping address</p>}

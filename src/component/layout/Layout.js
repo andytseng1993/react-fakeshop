@@ -1,5 +1,6 @@
 import { useEffect } from "react"
 import { useDispatch } from "react-redux"
+import { Outlet } from "react-router-dom"
 import { updateCartList } from "../../redux/actions"
 import LogIn from "../logIn/LogIn"
 import Register from "../logIn/Register"
@@ -26,7 +27,7 @@ function Layout(props){
         <>
             <Navigation scroll={scroll}/>
             <main>
-                {props.children}
+                <Outlet/>                
             </main>
             <LogIn/>
             <Register/>
