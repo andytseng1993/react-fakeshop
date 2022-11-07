@@ -14,17 +14,20 @@ const RatingSummary=({rating,reviewsNum,handleAddReview,handleStarBar,starBarPer
                 </div>
                 <button className={classes.writeReviewBtn} onClick={()=>handleAddReview()}>Write a review</button>
             </div>
-            {rating>0 && <div className={classes.ratingHistogram}>
-                {[5,4,3,2,1].map((num)=>{return(
-                    <button className={classes.starLink} onClick={()=>handleStarBar(num)} key={num}>
-                        <div className={classes.ratingText}>{num} stars</div>
-                        <div className={classes.ratingBar}>
-                            <div className={classes.barPercent} style={{width:starBarPercent[num]+'%'}}></div>
-                        </div>
-                        <span className={classes.ratingPercent}>{starBarPercent[num]+'%'}</span>
-                    </button>
-                )})}
-            </div>}
+            {rating>0?
+                <div className={classes.ratingHistogram}>
+                    {[5,4,3,2,1].map((num)=>{return(
+                        <button className={classes.starLink} onClick={()=>handleStarBar(num)} key={num}>
+                            <div className={classes.ratingText}>{num} stars</div>
+                            <div className={classes.ratingBar}>
+                                <div className={classes.barPercent} style={{width:starBarPercent[num]+'%'}}></div>
+                            </div>
+                            <span className={classes.ratingPercent}>{starBarPercent[num]+'%'}</span>
+                        </button>
+                    )})}
+                </div>
+                :null
+            }
         </>
 
     )
