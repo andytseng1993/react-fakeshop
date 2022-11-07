@@ -18,6 +18,7 @@ import AddressList from './component/address/AddressLists';
 import AddressEdit from './component/address/AddressEdit';
 import CheckOutPage from './pages/CheckOutPage';
 import ComfirmedPage from './pages/ComfirmedPage';
+import CheckoutLayout from './component/layout/CheckoutLayout';
   
 function App() {
   const myRef = useRef(null)
@@ -30,30 +31,33 @@ function App() {
   const GoogleMapsUrl = `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_MAP_API}&libraries=places`
   const AdressAuto = useWrapper(GoogleMapsUrl,Address)
   const AdressEditAuto = useWrapper(GoogleMapsUrl,AddressEdit)
-  const CheckoutAddress = useWrapper(GoogleMapsUrl,CheckOutPage)
+  const Checkout = useWrapper(GoogleMapsUrl,CheckOutPage)
 
   return (
     <div className="App">
       <UserAuthContextProvider>
         <UserDataContextProvider>
-        <Layout scroll={scrollToProduct}>
           <Routes>
-            <Route path='/' element={<HomePage refProp={myRef}/>} exact/>
-            <Route path='product/:productId' element={<ProductDetail/>}/>
-            <Route element={<ProtectedRoute/>}>
-              <Route path='account' element={<AccountPage/>} >
-                <Route index element={<AccountLists />} />
-                <Route path='home' element={<AccountLists />} />
-                <Route path='profile' element={<Profile />} />
-                <Route path='addresses' element={<AddressList/>}/> 
-                <Route path='addresses/newaddress' element={<AdressAuto/>} />
-                <Route path='addresses/editaddress/:productKey' element={<AdressEditAuto/>} />
-                <Route path='favorites' element={<FavoritePage/>}/>
+            <Route path='/' element={<Layout scroll={scrollToProduct}/>} >
+              <Route index element={<HomePage refProp={myRef}/>} exact/>
+              <Route path='product/:productId' element={<ProductDetail/>}/>
+              <Route element={<ProtectedRoute/>}>
+                <Route path='account' element={<AccountPage/>} >
+                  <Route index element={<AccountLists />} />
+                  <Route path='home' element={<AccountLists />} />
+                  <Route path='profile' element={<Profile />} />
+                  <Route path='addresses' element={<AddressList/>}/> 
+                  <Route path='addresses/newaddress' element={<AdressAuto/>} />
+                  <Route path='addresses/editaddress/:productKey' element={<AdressEditAuto/>} />
+                  <Route path='favorites' element={<FavoritePage/>}/>
+                </Route>
               </Route>
+              <Route path='cart' element={<Cart/>} /> 
+              <Route path='ordercomfirmation' element={<ComfirmedPage/>}/>
             </Route>
-            <Route path='cart' element={<Cart/>} /> 
-            <Route path='checkout/:checkoutId' element={<CheckoutAddress/>}/>
-            <Route path='ordercomfirmation' element={<ComfirmedPage/>}/>
+            <Route element={<CheckoutLayout/>} >
+              <Route path='checkout/:checkoutId' element={<Checkout/>}/>
+            </Route>
             <Route
               path="*"
               element={
@@ -63,7 +67,6 @@ function App() {
               }
             />
           </Routes>
-        </Layout>
         </UserDataContextProvider>
       </UserAuthContextProvider>
     </div>

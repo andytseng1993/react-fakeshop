@@ -1,0 +1,31 @@
+.nav{
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    padding: 0 10%;
+    height: 70px;
+    border-bottom: 2px solid #ddd;
+}
+.nav img{
+    width: 40px;
+}
+.backToCart{
+    position: absolute;
+    left: 30px;
+    font-size: 1.4rem;
+    font-weight: 600;
+    display: flex;
+    width: 170px;
+    justify-items: flex-start;
+    align-items: center;
+    color: rgb(93, 93, 93);
+}
+.backToCart:hover{
+    color: black;
+}
+.home{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
