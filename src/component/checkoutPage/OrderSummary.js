@@ -14,6 +14,7 @@ const OrderSummary = ({itemPrice,address,discountRate,editAddress,editPayment,pa
         if(address.state!=='State') setTax(price(TAX[address.state].rate*(itemPrice-discount)))
         if(discountRate!== 0) setDiscount(price(itemPrice*discountRate/100))
         else setDiscount(0)
+        // eslint-disable-next-line
     },[address.state,discountRate,discount])
 
     useEffect(()=>{
@@ -21,6 +22,7 @@ const OrderSummary = ({itemPrice,address,discountRate,editAddress,editPayment,pa
         const orderTotal = [tax,itemPrice,shippingPrice].reduce((pre,cur)=>pre+cur,0)
         setShipping(shippingPrice)
         setTotal(price(orderTotal-discount))
+        // eslint-disable-next-line
     },[tax,shipping,itemPrice])
 
     useEffect(()=>{
@@ -170,9 +172,6 @@ const TAX = {
     "MT": {
         "rate": 0.00
     },
-    "AR": {
-        "rate": 0.06,
-    },
     "LA": {
         "rate": 0.0955,
     },
@@ -232,9 +231,6 @@ const TAX = {
     },
     "VA": {
         "rate": 0.0575
-    },
-    "VA": {
-        "rate": 0.04
     },
     "NC": {
         "rate": 0.0698

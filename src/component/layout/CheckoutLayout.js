@@ -12,7 +12,7 @@ const CheckoutLayout = ()=>{
                     shopping cart
                 </NavLink>
                 <NavLink to='/' className={classes.home}>
-                    <img src={process.env.PUBLIC_URL+'/logo192.png'}></img>
+                    <img src={process.env.PUBLIC_URL+'/logo192.png'} alt={'FakeStore'}></img>
                 </NavLink> 
             </div>
             <main>

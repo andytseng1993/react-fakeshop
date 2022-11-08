@@ -86,7 +86,7 @@ function Navigation(props) {
         <header className={classes.header}>
             <div className={classes.logo}>
                 <NavLink to='/' onClick={()=> scrollToHome()}>
-                    <img src={process.env.PUBLIC_URL+'/logo192.png'}></img>
+                    <img src={process.env.PUBLIC_URL+'/logo192.png'} alt={'FakeStore'}></img>
                     FakeStore
                 </NavLink>
             </div>

@@ -1,13 +1,13 @@
 import axios from "axios"
 import { nanoid } from "nanoid"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useParams } from "react-router-dom"
 import { addCartList} from "../../redux/actions"
 import classes from './ProductDetail.module.css'
 import ProductReviews from "../reviews/ProductReviews"
 import FavoriteBtn from '../favorite/FavoriteBtn'
-import { useQuery, useQueryClient } from "@tanstack/react-query"
+import { useQuery } from "@tanstack/react-query"
 
 const ProductDetail=()=>{
     const {productId} = useParams()

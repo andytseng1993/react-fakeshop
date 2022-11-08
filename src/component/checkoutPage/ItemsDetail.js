@@ -14,6 +14,7 @@ const ItemsDetail= ({setItemPrice})=>{
         const totalICount = cartLists.reduce((pre,cur)=> pre+cur.count,0)
         setItemPrice(totalPrice)
         setTotalItems(totalICount)
+        // eslint-disable-next-line
     },[cartLists])
     
     return (
@@ -26,7 +27,7 @@ const ItemsDetail= ({setItemPrice})=>{
             <div className={classes.items}>
                 {cartLists.map((item)=>(
                     <div className={classes.item} key={item.id}>
-                        <img src={item.image} alt="image"></img>
+                        <img src={item.image} alt={'ItemImage'}></img>
                         <div className={classes.itemCount}>{item.count}</div>
                         <div className={classes.itemPrice}>${item.count*item.price}</div>
                     </div>))}   

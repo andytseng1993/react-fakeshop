@@ -11,6 +11,7 @@ const ComfirmedPage = () =>{
         if(!location.state?.id) return navigate('/',{replace: true})
         setOrderNumber(location.state?.id)
         setOrderDate(location.state?.date)
+         // eslint-disable-next-line
     }, [])
     
     return (

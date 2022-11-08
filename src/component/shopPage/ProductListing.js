@@ -21,7 +21,8 @@ const ProductListing=({currentUser})=>{
                 return data
             })
     },refetchOnWindowFocus:false,staleTime:120000,enabled:allProducts.length===0 })
-
+    
+    // eslint-disable-next-line
     const {data} = useQuery({ queryKey: ['favorites'], queryFn: async ()=>{
         const response = await readUserData('users/'+currentUser.uid+'/favorites')
         const favorites =[]
@@ -37,7 +38,7 @@ const ProductListing=({currentUser})=>{
         if(currentUser===null){
             dispatch(setFavoriteList([]))
         }
-    },[currentUser])
+    },[currentUser,dispatch])
 
     useEffect(()=>{
         if(productCategory=== 'All Products'){

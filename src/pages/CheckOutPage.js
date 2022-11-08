@@ -9,10 +9,11 @@ const CheckOutPage = ()=>{
     
     useEffect(() => {
         if(!location || location.state?.id!==checkoutId) return navigate('/',{replace: true})
+         // eslint-disable-next-line
     }, [])
     
     return (
-        <div>
+        <div style={{marginTop:90}}>
             <CheckoutContent/>
         </div>
     )

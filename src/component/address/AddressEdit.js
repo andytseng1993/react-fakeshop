@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import classes from './AddressEdit.module.css'
 import AddressForm from "./AddressForm";
 import { useUserData } from "../../context/UserDataContext";
@@ -28,7 +28,8 @@ const AddressEdit= ()=>{
         setChecked(value.default)
         return value
     }
-    const {data,isLoading} = useQuery({queryKey:["addresses",productKey],queryFn:fetchData})
+    // eslint-disable-next-line
+    const addressInfo = useQuery({queryKey:["addresses",productKey],queryFn:fetchData})
 
     const handleCancel =(e)=>{
         e.preventDefault()
