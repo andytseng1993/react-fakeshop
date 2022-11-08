@@ -19,7 +19,7 @@ const CheckoutAddress = ({currentUser,address,setAddress,handleCancel,handleSave
     const [addNewAddressForm,setAddNewAddressForm] = useState(initialAddress)
     const [error,setError] = useState('')
     const { readUserData,writeUserData } = useUserData()
-
+    
     useEffect(()=>{
         const preferrAddress = []
         const addressesData =[]
@@ -115,7 +115,7 @@ const CheckoutAddress = ({currentUser,address,setAddress,handleCancel,handleSave
                 (   <form onSubmit={handleAddressFormSubmit}>
                         {addresses.map((addressRadio)=>(                          
                             <label htmlFor={addressRadio.key} key={addressRadio.key} className={`${classes.label} ${addressRadio.key === address.key?classes.checked:''}`}>
-                                <input type="radio" id={addressRadio.key} onChange={()=>handleAddressChange(addressRadio)} checked={addressRadio.key === address.key} />
+                                <input type="radio" id={addressRadio.key} onChange={()=>handleAddressChange(addressRadio)} checked={addressRadio.key === address.key} required />
                                 <div className={classes.addressBox}>
                                     <div className={classes.addressSummary}>
                                         <div className={classes.addressName}>{addressRadio.firstName} {addressRadio.lastName}
@@ -129,7 +129,7 @@ const CheckoutAddress = ({currentUser,address,setAddress,handleCancel,handleSave
                         ))}
                             <button className={classes.addAddress} onClick={handleAddAdress}>+ Add a Address</button>
                         <div style={{display:'flex',justifyContent: 'flex-end' }}>
-                            <button className={classes.addAddressSubmit} type='submit'>Use this Address</button>
+                            <button className={classes.addAddressSubmit} type='submit' disabled={!address.key} >Use this Address</button>
                         </div>
 
                     </form>
