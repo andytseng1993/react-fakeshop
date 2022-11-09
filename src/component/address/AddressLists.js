@@ -14,7 +14,6 @@ const AddressList = ()=>{
     const {isLoading,refetch} = useAddressQuery()
     const {data:addresses} = useAddressData()
     
-
     const handleEdit =(e,key)=>{
         e.preventDefault()
         navigate('editaddress/'+key)

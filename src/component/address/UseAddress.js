@@ -17,12 +17,14 @@ export const useAddressQuery = (select,notifyOnChangeProps) =>{
     return useQuery({queryKey:["addresses"],queryFn:fetchData,refetchOnWindowFocus:false, select, notifyOnChangeProps})
 }
 export const useAddressData = () => useAddressQuery((data) =>{
+    const preferrAddress = []
     const addressesData =[]
     data?.forEach((childSnapshot)=> {
         childSnapshot.val().default?
-        addressesData.unshift(childSnapshot.val())
+        preferrAddress.push(childSnapshot.val())
         :
-        addressesData.push(childSnapshot.val())
+        addressesData.unshift(childSnapshot.val())
     })
-    return addressesData
+    const Alladdress =  preferrAddress.concat(addressesData)
+    return Alladdress
 },['data'])
