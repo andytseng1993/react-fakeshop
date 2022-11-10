@@ -4,6 +4,7 @@ import classes from './AccountFavorite.module.css'
 
 const AccountFavorite = ({productId})=>{
     const {isLoading, data:productDetail } = useFetchProductIdData(productId)
+    // eslint-disable-next-line
     const { data:ratingObj,isLoading:ratingIsLoading } = useFetchProductRating(productId)
 
     if(isLoading||ratingIsLoading) return ( <></> )

@@ -13,6 +13,7 @@ const ProductListing=({currentUser})=>{
     const allProducts = useSelector((state)=>state.allProducts.products)
     const favoriteList = useSelector((state)=>state.favorites)
     const [filterProducts,setFilterProducts] = useState([])
+    // eslint-disable-next-line
     const {isLoading,isError} = useQuery({ queryKey: ['products'], queryFn: ()=>{
         return axios.get('https://fakestoreapi.com/products')
             .then(({data})=>{

@@ -11,7 +11,6 @@ import AccountFavorite from './AccountFavorite';
 const AccountLists=()=>{
     const {currentUser}=useUserAuth()
     const [address,setAddress]=useState({})
-    const [favoriteData,setFavoriteData] = useState([])
     const {data:addresses,isLoading:addressLoading} = useAddressData()
     const {data:favoriteArray,isLoading:favoriteArrayLoading} = useFavoriteByTimeSelect()
 
