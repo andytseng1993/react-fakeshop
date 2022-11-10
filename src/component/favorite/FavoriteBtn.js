@@ -31,7 +31,7 @@ const FavoriteBtn=({favoriteList,productId})=>{
             return
         }
         dispatch(addFavoriteList(productId))
-        writeUserData(`users/${currentUser.uid}/favorites/${productId}`,true) 
+        writeUserData(`users/${currentUser.uid}/favorites/${productId}`,Date.now()) 
     }
     const lockScroll = useCallback(() => 
     {

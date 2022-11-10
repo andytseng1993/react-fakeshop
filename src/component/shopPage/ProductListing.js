@@ -19,11 +19,11 @@ const ProductListing=({currentUser})=>{
                 dispatch(setProducts(data))
                 return data
             })
-    },refetchOnWindowFocus:false,staleTime:120000,enabled:allProducts.length===0 })
+    },refetchOnWindowFocus:false,enabled:allProducts.length===0 })
     
     // eslint-disable-next-line
     const {data} = useFetchFavoriteList()
-    
+
     useEffect(()=>{
         if(currentUser==='') return
         if(currentUser===null){
@@ -43,10 +43,7 @@ const ProductListing=({currentUser})=>{
     
     return (
         <>
-            {isLoading? (
-            <div className='productList'>
-                <h3>Loading...</h3>
-            </div>):
+            {
             isError?(
             <div className='productList'>
                 <h3>Sometihing was wrong...</h3>
