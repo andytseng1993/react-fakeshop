@@ -3,7 +3,8 @@ import { useUserAuth } from "../../context/UserAuthContext"
 import { useUserData } from "../../context/UserDataContext"
 import classes from './AddressLists.module.css'
 import AddressBox from "./AddressBox"
-import { useAddressData, useAddressQuery } from "./UseAddress"
+import { useAddressData, useAddressQuery } from "../../useFn/UseAddress"
+
 
 
 const AddressList = ()=>{

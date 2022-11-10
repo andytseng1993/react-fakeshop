@@ -3,34 +3,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart as fasFaHeart} from "@fortawesome/free-solid-svg-icons";
 import { NavLink } from 'react-router-dom'
 import FavoriteItem from './FavoriteItem'
-import { useQuery } from '@tanstack/react-query'
-import { useUserAuth } from '../../context/UserAuthContext'
-import { useUserData } from '../../context/UserDataContext'
+import { useSelector } from 'react-redux';
+import { useFetchFavoriteList } from '../../useFn/UseFetchFavoriteList';
 
 const FavoritLists = ()=>{
-    const {currentUser}=useUserAuth()
-    const {readUserData} = useUserData()
-    
-    const transformFavorateArray = (data) =>{
-        let favorites =[]
-        data.forEach(element => {
-            favorites.push(parseInt(element.key))
-        })
-        return favorites
-    }
-    const {data,isLoading} = useQuery({ queryKey: ['favorites'], queryFn: async ()=>{
-        const response = await readUserData('users/'+currentUser.uid+'/favorites')
-        return response
-    },refetchOnWindowFocus:false,select:transformFavorateArray})
-    
-    const emptyFavorite = (
-        <div className={classes.emptyFavorite} >
-            <FontAwesomeIcon icon={fasFaHeart} className={classes.emptyLove}/>
-            <h2>Show some love!</h2>
-            <p className={classes.emptyLovePar}>You can add items individually or save items while you shop.</p>
-        </div>
-    )
-    console.log(isLoading,data);
+    const favoriteList = useSelector((state)=>state.favorites)
+    const {isLoading} = useFetchFavoriteList()
+
     return(
         <div className={classes.favoriteTiltle}>
             <div className={classes.routes}>
@@ -43,18 +22,21 @@ const FavoritLists = ()=>{
             {
                 isLoading? (<div>Loading...</div>)
                 :
-                data.length===0?
-                    emptyFavorite
+                favoriteList.length===0?
+                    (<div className={classes.emptyFavorite} >
+                        <FontAwesomeIcon icon={fasFaHeart} className={classes.emptyLove}/>
+                        <h2>Show some love!</h2>
+                        <p className={classes.emptyLovePar}>You can add items individually or save items while you shop.</p>
+                    </div>)
                     :
                     (<div className='productList'>
-                    {data.map((productId)=>(
-                        <FavoriteItem key={productId} productId={productId} favoriteList={data} />
+                    {favoriteList.map((productId)=>(
+                        <FavoriteItem key={productId} productId={productId} favoriteList={favoriteList} />
                     ))}
                         <span className="wrap" />
                     </div>)
             }
         </div>
-
     )
 }
 export default FavoritLists

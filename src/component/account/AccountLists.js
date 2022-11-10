@@ -3,52 +3,60 @@ import { Link } from 'react-router-dom'
 import classes from './AccountLists.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faChevronRight, faHouseChimney,faUser,faHeart} from "@fortawesome/free-solid-svg-icons";
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useUserAuth } from '../../context/UserAuthContext';
-import { getDatabase, onValue, orderByChild, query, ref } from 'firebase/database';
+import { useQueries, useQuery } from '@tanstack/react-query';
+import { useUserData } from '../../context/UserDataContext';
+import { setProducts,setFavoriteList } from "../../redux/actions";
+import axios from 'axios';
+import { fetchProductIdData } from '../shopPage/ProductDetail';
+import { useAddressData } from '../../useFn/UseAddress';
 
 const AccountLists=()=>{
+    const dispatch = useDispatch()
     const {currentUser}=useUserAuth()
     const [address,setAddress]=useState({})
     const favoriteList = useSelector((state)=>state.favorites)
     const allProducts = useSelector((state)=>state.allProducts.products)
     const [favoriteData,setFavoriteData] = useState([])
-    const db = getDatabase()
-    useEffect(()=>{
-        function filterItems(arr1, arr2) {
-            const data= arr1.filter((el) => arr2.includes(el.id));
-            if(data.length>3){ 
-                return setFavoriteData(data.slice(0,3))
-             }
-            setFavoriteData(data);
-        }
-        const readAddressData = ()=>{
-            const preferrAddress = []
-            const addressesData =[]
-            const topUserPostsRef = query(ref(db, 'users/'+currentUser.uid+'/addresses'), orderByChild('createTime'))
-             onValue(topUserPostsRef, (snapshot) => {
-                snapshot.forEach((childSnapshot)=> {
-                    if(!isCancel){
-                        if(childSnapshot.val().default){
-                            return preferrAddress.push(childSnapshot.val())
-                        }else{
-                            addressesData.unshift(childSnapshot.val())
-                        }
-                    }
-                  })
-                  const Alladdress =  preferrAddress.concat(addressesData)
-                  setAddress(Alladdress[0])
-            })
-        }
-        let isCancel = false
-        filterItems(allProducts, favoriteList)
-        readAddressData()
-        return ()=>{
-            isCancel = true 
-        }
-        // eslint-disable-next-line
-    },[allProducts,favoriteList,currentUser.uid])
 
+    const {data:addresses,isLoading} = useAddressData()
+    const {readUserData} = useUserData()
+    
+    const {data} = useQuery({ queryKey: ['favorites'], queryFn: async ()=>{
+        const response = await readUserData('users/'+currentUser.uid+'/favorites')
+        const favorites =[]
+        response.forEach(element => {
+            favorites.push(parseInt(element.key))
+        })
+        favorites.length ===0?dispatch(setFavoriteList([])):dispatch(setFavoriteList(favorites))
+        return response
+    },refetchOnWindowFocus:false,enabled:favoriteList.length===0?true:false })
+
+    // const results = useQueries({
+    //     queries: 
+    //     favoriteList.map((itemId)=>{
+    //         return{
+    //             queryKey:['products',itemId],
+    //             queryFn:()=>fetchProductIdData(itemId),
+    //             refetchOnWindowFocus:false,
+    //         }
+    //     })
+    // })
+
+    useEffect(()=>{
+        if(!addresses) return
+        setAddress(()=>addresses[0])
+    },[addresses])
+
+    if(isLoading){
+        return (
+            <div className={classes.account}>
+                <h1 style={{margin:40}}>Welcome to your Account</h1>
+                <h2>Loading...</h2>
+            </div>
+        )
+    }
     return(
         <div className={classes.account}>
             <h1 style={{margin:40}}>Welcome to your Account</h1>

@@ -13,7 +13,7 @@ const CheckOutPage = ()=>{
     }, [])
     
     return (
-        <div style={{marginTop:90}}>
+        <div style={{marginTop:50}}>
             <CheckoutContent/>
         </div>
     )

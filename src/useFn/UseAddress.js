@@ -1,7 +1,8 @@
 import { useQuery } from "@tanstack/react-query"
-import { ref , query, orderByChild, onValue} from "firebase/database";
-import { useUserAuth } from "../../context/UserAuthContext";
-import { database } from "../../firebase"
+import { onValue, orderByChild, query, ref } from "firebase/database"
+import { useUserAuth } from "../context/UserAuthContext"
+import { database } from "../firebase"
+
 
 export const useAddressQuery = (select,notifyOnChangeProps) =>{
     const { currentUser }  = useUserAuth() 

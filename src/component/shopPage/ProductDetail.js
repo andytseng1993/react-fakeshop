@@ -33,7 +33,7 @@ const ProductDetail=()=>{
     }
     const {image, title,price,description,category,id} = productDetail
     const product = {...productDetail,count,productId:id}
-    console.log(product);
+    
     return (
         <section className={classes.productmain}>
             {
