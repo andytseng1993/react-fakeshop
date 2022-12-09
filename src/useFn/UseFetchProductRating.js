@@ -15,5 +15,5 @@ export const useFetchProductRating = (productId)=>{
         return value
     }    
     return useQuery({queryKey:['productRating', productId], 
-    queryFn: ()=>fetchProductRating(productId) ,initialData:() =>({rating:0,reviewCount:0}),refetchOnWindowFocus:false})
+    queryFn: ()=>fetchProductRating(productId) ,initialData:() =>({rating:0,reviewCount:0})})
 }

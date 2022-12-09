@@ -4,14 +4,14 @@ import { faXmark} from "@fortawesome/free-solid-svg-icons";
 import { useRef, useState } from 'react';
 import {image64toCanvasRef, extractImageFileExtensionFromBase64 } from './Base64CropImage'
 import { useUserAuth } from '../../context/UserAuthContext';
-import { deleteObject, getStorage, ref, uploadString } from "firebase/storage";
-import { v4 as uuidv4 } from 'uuid';
+import { deleteObject, getStorage, ref, uploadBytesResumable } from "firebase/storage";
 import { useUserData } from '../../context/UserDataContext';
 import { useDispatch } from 'react-redux';
 import { upLoadNewImage } from '../../redux/actions';
+import { nanoid } from 'nanoid';
 
 const UploadImage= ({setUploadPicture,pictureName,freshPage,setFreshPage})=>{
-    const [picture, setPicture] = useState({src:null,imgSrcExt:null,width:null,height:null,max: 375,rectSize:null,aspectRatio:null})
+    const [picture, setPicture] = useState({src:null,imgSrcExt:null,width:null,height:null,max: 500,rectSize:null,aspectRatio:null})
     const [isCropping,setIsCropping] = useState(false)
     const [dragActive, setDragActive] = useState(false)
     const [uploadErr,setUploadErr] = useState('')
@@ -22,6 +22,10 @@ const UploadImage= ({setUploadPicture,pictureName,freshPage,setFreshPage})=>{
     const {currentUser}=useUserAuth()
     const { writeUserData } = useUserData()
     const dispatch = useDispatch()
+    const uploadTaskRef = useRef();
+    const [uploading,setUploading] = useState(false)
+    const [uploadingProgress,setUploadingProgress] = useState(0)
+
 
     
     const closeHandler =()=>{
@@ -155,26 +159,58 @@ const UploadImage= ({setUploadPicture,pictureName,freshPage,setFreshPage})=>{
             width:picture.rectSize*picture.aspectRatio,
             height:picture.rectSize*picture.aspectRatio
         }
-        const base64URL = image64toCanvasRef(pixelCrop,imageRef.current)
-        const storage = getStorage();
-        const name = uuidv4()
-        writeUserData('users/'+currentUser.uid+'/profileImage/'+name,picture.imgSrcExt)
-        if(pictureName.name){
-            const desertRef = ref(storage, '/users/'+currentUser.uid+'/images/'+pictureName.name+'.'+pictureName.extension);
-            deleteObject(desertRef).then(() => {
-                writeUserData('users/'+currentUser.uid+'/profileImage/'+pictureName.name,{})
-            }).catch((error) => {
-                console.log(error);
-            });
-        }
-        const storageRef = ref(storage, '/users/'+currentUser.uid+'/images/'+name+'.'+ picture.imgSrcExt);
-        uploadString(storageRef, base64URL, 'data_url').then((snapshot) => {
-            setFreshPage(!freshPage)
-            setUploadPicture(false)
-            setPicture(pre=>({...pre,src:null}))
-            setIsCropping(false)
-            dispatch(upLoadNewImage())
-        });
+        const newblob = image64toCanvasRef(pixelCrop,imageRef.current,picture.imgSrcExt)
+        newblob.then((blob)=>{
+            const storage = getStorage()
+            const name = nanoid()
+            const metadata = {contentType: `image/${picture.imgSrcExt}`}
+            const storageRef = ref(storage, '/users/'+currentUser.uid+'/images/'+name+'.'+ picture.imgSrcExt);
+            setUploading(true)
+            uploadTaskRef.current = uploadBytesResumable(storageRef, blob,metadata)
+            uploadTaskRef.current.on('state_changed',(snapshot)=>{
+                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                setUploadingProgress(progress)
+            },
+            (error) => {
+                setUploading(false)
+                switch (error.code) {
+                    case 'storage/unauthorized':
+                        console.error('User doesn\'t have permission to access the object'); 
+                        break;
+                    case 'storage/canceled':
+                        console.error('User canceled the upload')
+                        break;
+                    case 'storage/unknown':
+                        console.error('Unknown error occurred, inspect error.serverResponse');
+                        break;
+                }
+            },
+            ()=>{
+                writeUserData('users/'+currentUser.uid+'/profileImage/'+name,picture.imgSrcExt)
+                if(pictureName.name){
+                    const desertRef = ref(storage, '/users/'+currentUser.uid+'/images/'+pictureName.name+'.'+pictureName.extension);
+                    deleteObject(desertRef).then(() => {
+                        writeUserData('users/'+currentUser.uid+'/profileImage/'+pictureName.name,{})
+                    }).then(()=>{
+                        setFreshPage(!freshPage)
+                        setUploadPicture(false)
+                        setPicture(pre=>({...pre,src:null}))
+                        setIsCropping(false)
+                        setUploading(false)
+                        dispatch(upLoadNewImage())
+                    }).catch((error) => {
+                        console.log(error);
+                    });
+                }   
+            })
+        }).catch((err)=>{
+            console.error(err)
+            setUploading(false)
+        })
+        
+    }
+    const UploadCancel=()=>{
+        uploadTaskRef.current.cancel()
     }
     
     return (
@@ -183,7 +219,7 @@ const UploadImage= ({setUploadPicture,pictureName,freshPage,setFreshPage})=>{
                 <div className={classes.closeBtn} onClick={closeHandler}><FontAwesomeIcon icon={faXmark} /></div>
                 <h1 style={{marginBottom:30}}>Profile picture</h1>
                 <div className={classes.uploadImageZone}>
-                    {!isCropping &&<div className={`${classes.fileDragZone} ${dragActive ? classes.dragActive : "" }`} onDragEnter={handleDrag} onDragLeave={handleDrag} onDragOver={handleDrag} onDrop={handleDrag}> </div>}
+                    {!isCropping &&<div className={`${classes.fileDragZone} ${dragActive ? classes.dragActive : "" }`} onDragEnter={handleDrag} onDragLeave={handleDrag} onDragOver={handleDrag} onDrop={handleDrag}></div>}
                     {isCropping && <img className={classes.uploadImage} style={{width:picture.width,height:picture.height,maxWidth:picture.max,maxHeight:picture.max}} src={picture.src} alt='user' ref={imageRef}></img> }
                     {isCropping && 
                     (<div className={classes.uploadImageBackground} onMouseLeave={handleCropMouseUp} onMouseUp={handleCropMouseUp} onMouseMove={handleCropMouseMove}>
@@ -197,9 +233,25 @@ const UploadImage= ({setUploadPicture,pictureName,freshPage,setFreshPage})=>{
                     </div>)}   
                 </div>
                 <div>
-                    <button className={classes.uploadButton} onClick={handleLoadImage}>Upload Image</button>
-                    {isCropping && <button className={classes.uploadButton} onClick={handleSaveImage}>Save</button>}
-                    <input ref={hiddenFileInput} onChange={handleLoadImageChange} style={{display:'none'}} type="file" accept="image/png, image/jpeg, image/gif" />
+                    {uploading?
+                        uploadingProgress<100?
+                        (<div className={classes.uploadingZone} >
+                            <div className={classes.uploading}>
+                                <div className={classes.uploadingProgress} style={{width: uploadingProgress+'%'}}></div>
+                                <div className={classes.uploadingContent}>Uploading...please wait!</div>
+                            </div>
+                            <button className={classes.uploadingCancel} onClick={UploadCancel}>Cancel</button>
+                        </div>)
+                        :(<div className={classes.uploadingSucceed}>Succeed!</div>)
+                        :
+                        <>
+                            <button className={classes.uploadButton} onClick={handleLoadImage}>
+                                {!isCropping?'Select Image':'Select Other Image'}
+                            </button>
+                            {isCropping && <button className={classes.uploadButton} onClick={handleSaveImage}>Save</button>}
+                            <input ref={hiddenFileInput} onChange={handleLoadImageChange} style={{display:'none'}} type="file" accept="image/png, image/jpeg, image/gif" />
+                        </>
+                    }   
                 </div>
                 {uploadErr && <div className={classes.error}>{uploadErr}</div>}
             </div>
