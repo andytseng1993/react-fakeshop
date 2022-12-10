@@ -13,5 +13,6 @@ export const ACTIONS={
     SET_FAVORITE:'set_favorite',
     ADD_FAVORITE: 'add-favorite',
     DELETE_FAVORITE: 'delete_favorite',
-    UPLOAD_NEW_IMAGE : 'upload_new_image'
+    UPLOAD_NEW_IMAGE : 'upload_new_image',
+    DELETE_To_BAG:'delete_to_bag'
 }

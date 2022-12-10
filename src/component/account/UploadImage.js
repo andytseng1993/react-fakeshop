@@ -173,6 +173,8 @@ const UploadImage= ({setUploadPicture,pictureName,freshPage,setFreshPage})=>{
             },
             (error) => {
                 setUploading(false)
+                setUploadingProgress(0)
+                // eslint-disable-next-line
                 switch (error.code) {
                     case 'storage/unauthorized':
                         console.error('User doesn\'t have permission to access the object'); 
@@ -187,25 +189,37 @@ const UploadImage= ({setUploadPicture,pictureName,freshPage,setFreshPage})=>{
             },
             ()=>{
                 writeUserData('users/'+currentUser.uid+'/profileImage/'+name,picture.imgSrcExt)
-                if(pictureName.name){
-                    const desertRef = ref(storage, '/users/'+currentUser.uid+'/images/'+pictureName.name+'.'+pictureName.extension);
-                    deleteObject(desertRef).then(() => {
-                        writeUserData('users/'+currentUser.uid+'/profileImage/'+pictureName.name,{})
-                    }).then(()=>{
-                        setFreshPage(!freshPage)
-                        setUploadPicture(false)
-                        setPicture(pre=>({...pre,src:null}))
-                        setIsCropping(false)
-                        setUploading(false)
-                        dispatch(upLoadNewImage())
-                    }).catch((error) => {
-                        console.log(error);
-                    });
-                }   
+                if(!pictureName.name){
+                    setFreshPage(!freshPage)
+                    setUploadPicture(false)
+                    setPicture(pre=>({...pre,src:null}))
+                    setIsCropping(false)
+                    setUploading(false)
+                    dispatch(upLoadNewImage())
+                    setUploadingProgress(0)
+                    return
+                }
+                console.log(11);
+                const desertRef = ref(storage, '/users/'+currentUser.uid+'/images/'+pictureName.name+'.'+pictureName.extension);
+                deleteObject(desertRef).then(() => {
+                    writeUserData('users/'+currentUser.uid+'/profileImage/'+pictureName.name,{})
+                }).then(()=>{
+                    setFreshPage(!freshPage)
+                    setUploadPicture(false)
+                    setPicture(pre=>({...pre,src:null}))
+                    setIsCropping(false)
+                    setUploading(false)
+                    dispatch(upLoadNewImage())
+                    setUploadingProgress(0)
+                }).catch((error) => {
+                    console.log(error);
+                });
+                 
             })
         }).catch((err)=>{
             console.error(err)
             setUploading(false)
+            setUploadingProgress(0)
         })
         
     }
@@ -234,15 +248,19 @@ const UploadImage= ({setUploadPicture,pictureName,freshPage,setFreshPage})=>{
                 </div>
                 <div>
                     {uploading?
-                        uploadingProgress<100?
                         (<div className={classes.uploadingZone} >
-                            <div className={classes.uploading}>
-                                <div className={classes.uploadingProgress} style={{width: uploadingProgress+'%'}}></div>
-                                <div className={classes.uploadingContent}>Uploading...please wait!</div>
-                            </div>
-                            <button className={classes.uploadingCancel} onClick={UploadCancel}>Cancel</button>
+                            {uploadingProgress<100?
+                                <>
+                                    <div className={classes.uploading}>
+                                        <div className={classes.uploadingProgress} style={{width: uploadingProgress+'%'}}></div>
+                                        <div className={classes.uploadingContent}>Uploading...please wait!</div>
+                                    </div>
+                                    <button className={classes.uploadingCancel} onClick={UploadCancel}>Cancel</button>
+                                </>
+                                :
+                                <div className={classes.uploadingSucceed}>Succeed!</div>
+                            }
                         </div>)
-                        :(<div className={classes.uploadingSucceed}>Succeed!</div>)
                         :
                         <>
                             <button className={classes.uploadButton} onClick={handleLoadImage}>

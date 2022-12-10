@@ -145,3 +145,26 @@
     background-color: rgba(211, 209, 255, 0.7);
     color: rgb(14, 4, 197);
 }
+@media only screen and (max-width:950px) {
+    .shoppinglayout{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .shoppingSummary{
+        display: flex;
+        flex-direction: column;
+        padding: 20px 20px;
+        width: 640px;
+        border: 1px solid rgb(221, 221, 221);
+        border-radius: 5px;
+        margin-left: 0;
+    }
+    .shoppingSummary > button{
+        margin-right: 0;
+        margin-left: auto;
+        width: 350px;
+        left: 0;
+    }
+}

@@ -110,3 +110,13 @@ export const setUpLoadImageReducer = (state=false,action)=>{
             return state
     }
 }
+export const addToBagReducer = (state=[],action)=>{
+    switch(action.type){
+        case ACTIONS.ADD_CARTLIST:
+            return [action.payload.productId]
+        case ACTIONS.DELETE_To_BAG:
+            return []
+        default: 
+            return state
+    }
+}

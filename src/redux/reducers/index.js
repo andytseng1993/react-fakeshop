@@ -5,7 +5,8 @@ import { productReducer,
          setUserNameReducer, 
          setCartListReducer, 
          setFavoriteReducer,
-         setUpLoadImageReducer} from "./ProductReducer";
+         setUpLoadImageReducer,
+         addToBagReducer} from "./ProductReducer";
 
 export const reducers = combineReducers({
     allProducts: productReducer,
@@ -14,5 +15,6 @@ export const reducers = combineReducers({
     setUserName:setUserNameReducer,
     setCartList:setCartListReducer,
     favorites: setFavoriteReducer,
-    upLoadImage: setUpLoadImageReducer
+    upLoadImage: setUpLoadImageReducer,
+    addToBag:addToBagReducer
 })

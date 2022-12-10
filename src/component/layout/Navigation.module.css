@@ -173,3 +173,88 @@ nav button {
         transform: translateY(-4px);
     }
 }
+.behavioZone{
+    position: relative;
+}
+.behaviorCart{
+    position: absolute;
+    right: 0;
+    width: 270px;
+    height: 210px;
+    border: 1px solid rgba(171, 171, 171, 0.85);
+    margin-top: 20px;
+    background-color: white;
+    border-radius: 5px;
+    padding: 10px 15px;
+}
+.behaviorCart::before{
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: white;
+    right: 20px;
+    transform: rotate(45deg);
+    top: -11px;
+    border-top:1px solid rgba(171, 171, 171, 0.85);
+    border-left:1px solid rgba(171, 171, 171, 0.85);
+}
+.added{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    font-weight: 600;
+    margin: 5px;
+}
+.circleCheck{
+    color: rgb(8, 181, 8);
+    margin-right: 10px;
+}
+.behaviorImage{
+    width: auto;
+    max-width: 70px;
+    height: auto;
+    max-height: 74px;
+    margin-right: 18px;
+}
+.behaviorContent{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 7px 10px;
+    height: 75px;
+}
+.behaviorTitle{
+    align-self: flex-start;
+    display: -webkit-box;
+    width: 100%;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: 15px;
+    text-align: left;
+}
+.behaviorqty{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 8px 15px;
+
+}
+.qty{
+    margin-right: 30px;
+}
+.behaviorBag{
+    position: relative;
+    font-size: 17px;
+    margin: 0px;
+    width: 200px;
+    padding: 7px 10px;
+    background-color: black;
+    color: white;
+    border-radius: 5px;
+    border: none;
+    font-weight: 700;
+    cursor: pointer;
+}

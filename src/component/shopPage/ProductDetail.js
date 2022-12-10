@@ -22,10 +22,13 @@ const ProductDetail=()=>{
     const favoriteList = useSelector((state)=>state.favorites)
     const {isLoading,isError, data:productDetail } = useQuery({ queryKey: ['products',productId], 
     queryFn: ()=>fetchProductIdData(productId),refetchOnWindowFocus: false })
+    const [addBtn,setAddBtn] = useState('Add to Cart')
     
     const addCartHandler =  (product)=>{
         product.id =  nanoid()
         dispatch(addCartList(product))
+        setAddBtn('Added !!')
+        setTimeout(()=>setAddBtn('Add to Cart'),2000)
     }
 
     if(isLoading){
@@ -65,7 +68,7 @@ const ProductDetail=()=>{
                                     <button onClick={()=>setCount(prevCount=>prevCount+1)}>+</button>
                                 </div>
                                 <div className={classes.cart} onClick={()=>addCartHandler(product)}>
-                                    Add to Cart
+                                    {addBtn}
                                 </div>
                             </div>
                         </div>

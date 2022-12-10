@@ -2,17 +2,19 @@ import { useCallback, useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { NavLink,useNavigate } from "react-router-dom"
 import { useUserAuth } from "../../context/UserAuthContext"
-import { setLogInBox, setUserName } from "../../redux/actions"
+import { deleteToBag, setLogInBox, setUserName } from "../../redux/actions"
 import classes from './Navigation.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
+import { faCartShopping, faCircleCheck} from "@fortawesome/free-solid-svg-icons";
 import { getDownloadURL, getStorage, ref } from "firebase/storage"
 import { useUserData } from "../../context/UserDataContext"
+import { AnimatePresence, motion } from "framer-motion"
 
 function Navigation(props) {
     const openLogIn = useSelector((state) => state.openLogInbox.logIn)
     const userName = useSelector((state)=> state.setUserName) 
     const cartLists = useSelector((state)=> state.setCartList)
+    const addToBag = useSelector((state)=> state.addToBag)
     const cartCount = cartLists.reduce((pre,cur)=> pre+cur.count,0)
     const { logout,currentUser } = useUserAuth()
     const navigate = useNavigate()
@@ -20,6 +22,22 @@ function Navigation(props) {
     const { readUserData} = useUserData()
     const [profilePic,setProfilePic] = useState('')
     const upLoadNewImage =  useSelector(state => state.upLoadImage)
+    const [behaviorZone,setBehaviorZone] = useState(false)
+    const [behaviorProduct,setBehaviorProduct] =useState([])
+
+    useEffect(()=>{
+        if(addToBag.length === 0) return
+        setBehaviorZone(true)
+        const product = cartLists.filter((product)=>product.productId===addToBag[0])
+        setBehaviorProduct(product[0])
+        const timer =setTimeout(()=>{
+            setBehaviorZone(false)
+            dispatch(deleteToBag())
+        },5000)
+        return ()=>{
+            clearTimeout(timer)
+        }
+    },[addToBag,dispatch])
 
     useEffect(() => {
         let isCancel = false
@@ -53,7 +71,6 @@ function Navigation(props) {
             dispatch(setUserName(''))
     },[currentUser?.displayName,dispatch])
     
-
     const lockScroll = useCallback(
         () => {
             const scrollBarCompensation = window.innerWidth - document.body.offsetWidth;
@@ -80,7 +97,12 @@ function Navigation(props) {
         top: 0,
         behavior: 'smooth'
       })
-  }
+    }
+    const viewBag= ()=>{
+        navigate('/cart')
+        setBehaviorZone(false)
+        dispatch(deleteToBag())
+    }
 
     return (
         <header className={classes.header}>
@@ -119,15 +141,38 @@ function Navigation(props) {
                         Log In
                     </button>
                 }
-                <NavLink to='cart' className={classes.cart}>
-                    <FontAwesomeIcon icon={faCartShopping} style={cartCount>0? {color: 'black'} : {color: '#ccc' }} />
-                    {
-                        cartCount>0?
-                            <div className={classes.cartCount}>{cartCount}</div>
-                            :
-                            null
-                    }
-                </NavLink>
+                <div className={classes.behavioZone}>
+                    <NavLink to='cart' className={classes.cart}>
+                        <FontAwesomeIcon icon={faCartShopping} style={cartCount>0? {color: 'black'} : {color: '#ccc' }} />
+                        {
+                            cartCount>0?
+                                <div className={classes.cartCount}>{cartCount}</div>
+                                :
+                                null
+                        }
+                    </NavLink>
+                    <AnimatePresence>
+                        {behaviorZone?
+                            (<motion.div className={classes.behaviorCart} initial={{ opacity: 0, scale: 0.3 }}
+                                animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.5}}
+                                transition={{ duration: 0.3}}
+                            >  
+                                <div className={classes.added}><FontAwesomeIcon icon={faCircleCheck} className={classes.circleCheck}/>add to Cart</div>
+                                <div className={classes.behaviorContent}>
+                                    <img className={classes.behaviorImage}  src={behaviorProduct.image} alt={'product'} ></img>
+                                    <div className={classes.behaviorTitle}>{behaviorProduct.title}</div>
+                                </div>
+                                <div className={classes.behaviorqty}>
+                                    <div className={classes.qty}> <strong> QTY:</strong> {behaviorProduct.count}</div>
+                                    <strong>$ {(behaviorProduct.count * behaviorProduct.price).toFixed(2)}</strong>
+                                </div>
+                                
+                                <button className={classes.behaviorBag} onClick={viewBag}>View Cart ({cartCount})</button>
+                            </motion.div>)
+                            :null
+                        }
+                    </AnimatePresence>
+                </div>
             </nav>
         </header>
     )
