@@ -95,3 +95,9 @@ export const upLoadNewImage =()=>{
         type: ACTIONS.UPLOAD_NEW_IMAGE
     }
 }
+
+export const deleteToBag = ()=>{
+    return {
+        type:ACTIONS.DELETE_To_BAG,
+    }
+}

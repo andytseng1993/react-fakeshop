@@ -4,7 +4,6 @@ import AddressInput from "../address/AddressInput"
 
 const PromoCode =({setDiscountRate,setPromoCode,promoCodeTitle,setPromoCodeTitle})=>{
     const [code,setCode] = useState('')
-    const [success,setSuccess] = useState('')
     const [error,setError] = useState('')
     const handleChangePromo = (e)=>{
         e.preventDefault()

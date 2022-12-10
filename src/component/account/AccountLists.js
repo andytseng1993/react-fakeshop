@@ -3,52 +3,30 @@ import { Link } from 'react-router-dom'
 import classes from './AccountLists.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faChevronRight, faHouseChimney,faUser,faHeart} from "@fortawesome/free-solid-svg-icons";
-import { useSelector } from 'react-redux';
 import { useUserAuth } from '../../context/UserAuthContext';
-import { getDatabase, onValue, orderByChild, query, ref } from 'firebase/database';
+import { useAddressData } from '../../useFn/UseAddress';
+import { useFavoriteByTimeSelect } from '../../useFn/useFavoriteByTimeQuery';
+import AccountFavorite from './AccountFavorite';
 
 const AccountLists=()=>{
     const {currentUser}=useUserAuth()
     const [address,setAddress]=useState({})
-    const favoriteList = useSelector((state)=>state.favorites)
-    const allProducts = useSelector((state)=>state.allProducts.products)
-    const [favoriteData,setFavoriteData] = useState([])
-    const db = getDatabase()
-    useEffect(()=>{
-        function filterItems(arr1, arr2) {
-            const data= arr1.filter((el) => arr2.includes(el.id));
-            if(data.length>3){ 
-                return setFavoriteData(data.slice(0,3))
-             }
-            setFavoriteData(data);
-        }
-        const readAddressData = ()=>{
-            const preferrAddress = []
-            const addressesData =[]
-            const topUserPostsRef = query(ref(db, 'users/'+currentUser.uid+'/addresses'), orderByChild('createTime'))
-             onValue(topUserPostsRef, (snapshot) => {
-                snapshot.forEach((childSnapshot)=> {
-                    if(!isCancel){
-                        if(childSnapshot.val().default){
-                            return preferrAddress.push(childSnapshot.val())
-                        }else{
-                            addressesData.unshift(childSnapshot.val())
-                        }
-                    }
-                  })
-                  const Alladdress =  preferrAddress.concat(addressesData)
-                  setAddress(Alladdress[0])
-            })
-        }
-        let isCancel = false
-        filterItems(allProducts, favoriteList)
-        readAddressData()
-        return ()=>{
-            isCancel = true 
-        }
-        // eslint-disable-next-line
-    },[allProducts,favoriteList,currentUser.uid])
+    const {data:addresses,isLoading:addressLoading} = useAddressData()
+    const {data:favoriteArray,isLoading:favoriteArrayLoading} = useFavoriteByTimeSelect()
 
+    useEffect(()=>{
+        if(!addresses) return
+        setAddress(()=>addresses[0])
+    },[addresses])
+
+    if(addressLoading||favoriteArrayLoading){
+        return (
+            <div className={classes.account}>
+                <h1 style={{margin:40}}>Welcome to your Account</h1>
+                <h2>Loading...</h2>
+            </div>
+        )
+    }
     return(
         <div className={classes.account}>
             <h1 style={{margin:40}}>Welcome to your Account</h1>
@@ -92,24 +70,13 @@ const AccountLists=()=>{
                         <FontAwesomeIcon icon={faChevronRight} />
                     </div>
                 </Link>
-                {favoriteData.length===0?
-                    <div>You can save items while you shop.</div>
-                :
-                    (favoriteData.map((favorite)=>(
-                        <Link to={`/product/${favorite.id}`} key={favorite.id} className={classes.favoritesCard}>
-                            <div className={classes.image}>
-                                <img src={favorite.image} alt={favorite.title}></img>
-                            </div>
-                            <div className={classes.cartInfo}>
-                                <div className={classes.title}>{favorite.title}</div>
-                                <div className={classes.category}>
-                                    {favorite.category}
-                                    <div className={classes.price}>${favorite.price}</div>
-                                </div>
-                            </div>
-                        </Link>
-                    )))
-                }
+            {favoriteArray.length===0?
+                <div>You can save items while you shop.</div>
+            :
+                (favoriteArray.map(productId=>
+                    <AccountFavorite {...{productId}} key={productId} />
+                ))
+            }
             </div>
         </div>
 

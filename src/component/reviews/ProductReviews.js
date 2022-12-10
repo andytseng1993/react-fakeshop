@@ -62,6 +62,7 @@ const ProductReviews=({productId})=>{
             return setRating(ratingStars)
         }
         setRating(0)
+        // eslint-disable-next-line
     },[AllReviewsData])
 
     const handleChange=(event)=>{

@@ -2,7 +2,6 @@ import classes from './CheckoutAddress.module.css'
 import { useEffect, useState } from "react"
 import AddressForm from "../address/AddressForm"
 import { getDatabase,ref ,onValue, query, orderByChild} from "firebase/database";
-import { useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmark,faTriangleExclamation} from "@fortawesome/free-solid-svg-icons";
 import { v4 as uuidv4 } from 'uuid';

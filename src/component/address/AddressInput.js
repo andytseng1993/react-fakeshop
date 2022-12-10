@@ -20,7 +20,6 @@ const AddressInput=({inputStyle,name,title,value,handleChange,refProp,required,i
         setId(uuidv4())
     }, [])
     
-    
     return(
         <div className={classes.searchBox} onFocus={onFocus??onFocusChange} onBlur={onBlurChange} >
             <label className={classes.searchLabel} htmlFor={id} style={(isFocus||value)?isFocusStyle:{}} ref={refProp}>

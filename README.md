@@ -85,3 +85,6 @@ create a ProtectedRoute, when there is a logged in user, the Home component does
 
   ### Using hidden file input elements using the click() method
   Use input element with display:none and calling the click() method on the <input> element.
+
+  ### react-query 
+  https://tanstack.com

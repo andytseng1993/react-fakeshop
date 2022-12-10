@@ -1,4 +1,3 @@
-import { useState, useEffect} from 'react'
 import { Link } from 'react-router-dom'
 import classes from './ProductComponent.module.css'
 import FavoriteBtn from '../favorite/FavoriteBtn';

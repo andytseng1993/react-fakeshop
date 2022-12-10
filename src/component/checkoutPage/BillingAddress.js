@@ -10,6 +10,7 @@ const BillingAddress =({address,billingAddress,setBillingAddress})=>{
     const [billingAddressInput,setBillingAddressInput] = useState(initialBillingAddress)
     useEffect(()=>{
         setBillingAddress(address)
+        // eslint-disable-next-line
     },[address])
     const handleCheckBox =()=>{
         if(isChecked){
