@@ -23,10 +23,12 @@
     display: flex;
     align-items: center;
 }
-.logo a img{
+
+.logo a img {
     width: 40px;
     margin-right: 5px;
 }
+
 nav {
     display: flex;
     flex-direction: row;
@@ -39,6 +41,7 @@ nav a {
     margin-right: 1rem;
     text-decoration: none;
 }
+
 nav button {
     font-size: 1.4rem;
     font-weight: 600;
@@ -73,8 +76,10 @@ nav button {
     font-weight: 700;
     margin-right: 30px;
     padding: 5px 0px;
+    min-height: 45px;
 }
-.user::after{
+
+.user::after {
     content: '';
     position: absolute;
     right: -25px;
@@ -86,25 +91,28 @@ nav button {
     border-right: 5px solid transparent;
     border-left: 5px solid transparent;
 }
-.userPicture{
+
+.userPicture {
     width: 35px;
     margin: 0px 5px 0px 10px;
     border-radius: 50%;
     font-size: 5px;
 }
-.userBox{
+
+.userBox {
     display: none;
     position: absolute;
     border: 1px solid rgb(239, 239, 239);
     background-color: white;
-    width: calc( 100% + 30px );
+    width: calc(100% + 30px);
     min-width: 110px;
     top: 45px;
     border-radius: 5px;
     box-shadow: 2px 2px 4px 1px rgba(0, 0, 0, 0.15);
     padding: 7px 0px;
 }
-.userBox .signout{
+
+.userBox .signout {
     position: relative;
     margin: 7px 20px 7px;
     padding: 0px 5px 5px;
@@ -113,30 +121,34 @@ nav button {
     cursor: pointer;
     transition: .2s;
 }
-.signout::after{
+
+.signout::after {
     content: "";
     position: absolute;
     left: 0;
     bottom: 0;
     width: 0;
-    transition: width .4s cubic-bezier(.45,.05,.5,.1);
+    transition: width .4s cubic-bezier(.45, .05, .5, .1);
     border-bottom: 2px solid #555;
 }
-.signout:hover::after{
+
+.signout:hover::after {
     width: 100%;
 }
 
-.user:hover > .userBox{
+.user:hover>.userBox {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-.userBox:hover{
+
+.userBox:hover {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-.cart{
+
+.cart {
     position: relative;
     font-size: 1.5rem;
     margin-right: 10px;
@@ -144,7 +156,7 @@ nav button {
     padding-right: 10px;
 }
 
-.cartCount{
+.cartCount {
     position: absolute;
     width: 18px;
     font-weight: 800;
@@ -156,27 +168,34 @@ nav button {
     color: white;
     border-radius: 50%;
 }
-.cart:hover > .cartCount{
+
+.cart:hover>.cartCount {
     animation: jump .5s ease;
 }
-@keyframes jump{
-    0%{
+
+@keyframes jump {
+    0% {
         transform: translateY(0px);
     }
-    35%{
+
+    35% {
         transform: translateY(-18px);
     }
-    70%{
+
+    70% {
         transform: translateY(0px);
     }
-    85%{
+
+    85% {
         transform: translateY(-4px);
     }
 }
-.behavioZone{
+
+.behavioZone {
     position: relative;
 }
-.behaviorCart{
+
+.behaviorCart {
     position: absolute;
     right: 0;
     width: 270px;
@@ -187,7 +206,8 @@ nav button {
     border-radius: 5px;
     padding: 10px 15px;
 }
-.behaviorCart::before{
+
+.behaviorCart::before {
     content: '';
     position: absolute;
     width: 20px;
@@ -196,10 +216,11 @@ nav button {
     right: 20px;
     transform: rotate(45deg);
     top: -11px;
-    border-top:1px solid rgba(171, 171, 171, 0.85);
-    border-left:1px solid rgba(171, 171, 171, 0.85);
+    border-top: 1px solid rgba(171, 171, 171, 0.85);
+    border-left: 1px solid rgba(171, 171, 171, 0.85);
 }
-.added{
+
+.added {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -207,25 +228,29 @@ nav button {
     font-weight: 600;
     margin: 5px;
 }
-.circleCheck{
+
+.circleCheck {
     color: rgb(8, 181, 8);
     margin-right: 10px;
 }
-.behaviorImage{
+
+.behaviorImage {
     width: auto;
     max-width: 70px;
     height: auto;
     max-height: 74px;
     margin-right: 18px;
 }
-.behaviorContent{
+
+.behaviorContent {
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 7px 10px;
     height: 75px;
 }
-.behaviorTitle{
+
+.behaviorTitle {
     align-self: flex-start;
     display: -webkit-box;
     width: 100%;
@@ -235,17 +260,20 @@ nav button {
     font-size: 15px;
     text-align: left;
 }
-.behaviorqty{
+
+.behaviorqty {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin: 8px 15px;
 
 }
-.qty{
+
+.qty {
     margin-right: 30px;
 }
-.behaviorBag{
+
+.behaviorBag {
     position: relative;
     font-size: 17px;
     margin: 0px;
